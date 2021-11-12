@@ -27,3 +27,36 @@ qui sera vérifiée automatiquement) :
 
 ATTENTION : Dans l’énoncé, on utilisera la lettre N pour représenter le nombre donné en
 argument de votre programme ou devant être testé.
+
+
+
+## 1 Consignes
+
+Ainsi, vous allez devoir réaliser deux versions, une version CPU et une version GPU, de trois
+algorithmes.
+
+• Test de primalité : renvoie vrai si le nombre passé en paramètre est premier, faux sinon.
+• Recherche de nombres premiers : renvoie une liste de nombres premiers inférieur à une borne N donnée.
+
+• Décomposition en produit de facteurs de nombres premiers : renvoie la liste des facteurs ainsi que leur exposant.
+
+D’un point de vue technique, il va falloir :
+
+• Définir le type ULONGLONG comme un alias d’un entier long long non-signé ou utiliser uint64_t.
+
+• Définir la structure struct cell qui contiendra un nombre premier ainsi que l’exposant associé pour la décomposition.
+
+• Réutiliser les fichiers de mesure du temps déjà vus en TP (chronoGPU et chronoCPU).
+
+• Fournir un makefile, un script ou une commande qui permet de compiler votre projet !
+
+• Proposer une architecture logicielle cohérente.
+
+• Tester votre programme avec des entiers plus ou moins longs. Pour cela, votre programme doit accepter en ligne de commande la valeur de N.
+
+Le projet consiste à vous approprier ces problèmes sur les nombres premiers et mettre en pratique des solutions. S’il y a des optimisations à faire, particulièrement en CUDA, elles doivent avoir du sens et être justifiées un minimum. Important : 
+
+six algorithmes doivent être codés obligatoirement mais vous
+avez le droit de laisser les différentes versions écrites dans le code final. Cela permet de voir l’évolution
+du processus d’optimisation ou de compréhension du problème. Vous pouvez ajoutez des suffixes aux
+noms des fonctions pour indiquer tout cela.
