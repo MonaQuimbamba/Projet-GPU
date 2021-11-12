@@ -17,9 +17,9 @@ nombres premiers devient une façon d’attaquer certains systèmes ou de recher
 Cette décomposition nécessite la détermination d’une liste suffisante de nombres premiers et ensuite
 à tester le nombre de fois où un nombre premier divise le nombre cible. Par exemple :
 
-• 2133 = 1 ∗ 3 3 ∗ 79 1
-• 213 = 1 ∗ 3 1 ∗ 71 1 ;
-• 7 = 1 ∗ 7 1 ;
+• 2133 = 1 ∗ 3 3 ∗ 79 1 ; <br>
+• 213 = 1 ∗ 3 1 ∗ 71 1 ; <br>
+• 7 = 1 ∗ 7 1 ; <br>
 
 Vous trouverez dans la figure 1 un exemple d’exécution de votre programme final, afin que vous
 vous inspiriez fortement de l’affichage (en particulier la ligne sur les décompositions du dernier exercice,
