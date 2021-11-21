@@ -28,9 +28,11 @@ int main() {
  */
 bool isPrimeCPU(const uint64_t N)
 {
-    uint64_t divider = (uint64_t) sqrt(N);
+
+    long double divider = N-1;
     for (;divider >= 2; divider-=1){
         if (floor(N/divider) == N/divider){
+            //std::cout << "[DEBUG] floor(N/divider) = " << floor(N/divider) << " | N/divider = " << N/divider << std::endl;
             return false;
         }
     }
