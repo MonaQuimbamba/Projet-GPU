@@ -26,6 +26,16 @@ string printPrimes(std::vector<uint64_t> primeNumbers)
     return res;
 }
 
+string printFactuers(vector<uint64_t> facteurs )
+{
+    string res = "Les Facteurs premiers :  \n ";
+    for(int i = 0 ; i < facteurs.size(); i++)
+    {
+        res+=""+to_string(facteurs.at(i))+"*" ;
+    }
+    return res;
+}
+
 int main( int argc, char **argv )
 {
 
@@ -74,11 +84,11 @@ int main( int argc, char **argv )
 
 	cout << " Factorisation en nombre premier  sur CPU " << endl;
 	chrCPU.start();
-	factoCPU(N);
+    vector<uint64_t> facteurs = factoCPU(N);
 	chrCPU.stop();
 	const float timeComputeCPUFact = chrCPU.elapsedTime();
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeCPUFact << " ms" << endl;
-	cout << " Factorisation CPU : " ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
+	cout << " Factorisation CPU : " << printFactuers(facteurs) ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
 
 
 /*

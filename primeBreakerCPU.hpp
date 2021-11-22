@@ -10,6 +10,8 @@
 #include <tgmath.h> // sqrt()
 #include <vector>   // tableaux dynamiques <vector>
 
+using namespace std;
+
 /** \brief  Cette fonction va  tester la primalité d’un nombre de
             - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas.
 */
@@ -29,8 +31,10 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite);
 	trouvés avant en testant si ce nombre p divise N. Si oui, on recommence l’algorithme avec N = N/p.
 	On s’arrête quand le nombre premier à tester devient supérieur à la racine carrée de N.
 */
-void factoCPU(uint64_t N);
+vector<uint64_t> factoCPU(uint64_t N);
 
+
+string printPrimes(std::vector<uint64_t> primeNumbers);
 
 
 #endif

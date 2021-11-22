@@ -1,5 +1,7 @@
 #include "primeBreakerCPU.hpp"
 
+using namespace std;
+
 /**  \brief  Je suis la méthode qui renvoit si un certain nombre N
  *          est premier.
  *  @param N le nombre dont on doit tester la primalité.
@@ -33,7 +35,28 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
     return resultat;
 }
 
-void factoCPU(uint64_t N)
+
+
+
+
+vector<uint64_t> facteursPrimes(0);
+vector<uint64_t> factoCPU(uint64_t N)
 {
 
+    bool keepGoin=false;
+    vector<uint64_t> primesNumber = searchPrimesCPU(N);
+    if(primesNumber.size()!=0)
+    {
+        if( primesNumber.at(0) > sqrt(N)) keepGoin=true; // arriver à 1
+    }
+    for (int i = 0; i < primesNumber.size() && keepGoin==true; i++)
+    {
+            while(N % primesNumber.at(i)==0)
+            {
+                facteursPrimes.push_back(primesNumber.at(i)); // dans la liste de facteurs
+                factoCPU(N/primesNumber.at(i)); //
+            }
+    }
+
+    return facteursPrimes;
 }
