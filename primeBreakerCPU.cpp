@@ -35,7 +35,11 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
     return resultat;
 }
 
-
+/** \brief je suis la methode qui permet de décomposeur un nombre en facteurs premiers
+ *
+ * @param N
+ * @param facteursPrimes
+ */
  void factoCPU(uint64_t N, vector<uint64_t> *facteursPrimes)
 {
 
