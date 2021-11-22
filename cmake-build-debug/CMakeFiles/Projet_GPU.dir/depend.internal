@@ -3,3 +3,11 @@
 
 CMakeFiles/Projet_GPU.dir/main.cpp.o
  /Users/faisalsalhi/CLionProjects/Projet-GPU/main.cpp
+ /Users/faisalsalhi/CLionProjects/Projet-GPU/primeBreakerCPU.hpp
+ /Users/faisalsalhi/CLionProjects/Projet-GPU/utils/chronoCPU.hpp
+CMakeFiles/Projet_GPU.dir/primeBreakerCPU.cpp.o
+ /Users/faisalsalhi/CLionProjects/Projet-GPU/primeBreakerCPU.cpp
+ /Users/faisalsalhi/CLionProjects/Projet-GPU/primeBreakerCPU.hpp
+CMakeFiles/Projet_GPU.dir/utils/chronoCPU.cpp.o
+ /Users/faisalsalhi/CLionProjects/Projet-GPU/utils/chronoCPU.cpp
+ /Users/faisalsalhi/CLionProjects/Projet-GPU/utils/chronoCPU.hpp

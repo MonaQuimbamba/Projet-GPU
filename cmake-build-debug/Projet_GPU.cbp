@@ -85,6 +85,18 @@
 		<Unit filename="/Users/faisalsalhi/CLionProjects/Projet-GPU/main.cpp">
 			<Option target="Projet_GPU"/>
 		</Unit>
+		<Unit filename="/Users/faisalsalhi/CLionProjects/Projet-GPU/primeBreakerCPU.cpp">
+			<Option target="Projet_GPU"/>
+		</Unit>
+		<Unit filename="/Users/faisalsalhi/CLionProjects/Projet-GPU/primeBreakerCPU.hpp">
+			<Option target="Projet_GPU"/>
+		</Unit>
+		<Unit filename="/Users/faisalsalhi/CLionProjects/Projet-GPU/utils/chronoCPU.cpp">
+			<Option target="Projet_GPU"/>
+		</Unit>
+		<Unit filename="/Users/faisalsalhi/CLionProjects/Projet-GPU/utils/chronoCPU.hpp">
+			<Option target="Projet_GPU"/>
+		</Unit>
 		<Unit filename="/Users/faisalsalhi/CLionProjects/Projet-GPU/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>

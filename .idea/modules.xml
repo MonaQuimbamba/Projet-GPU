@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/Projet-GPU.iml" filepath="$PROJECT_DIR$/.idea/Projet-GPU.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/Projet_GPU.iml" filepath="$PROJECT_DIR$/.idea/Projet_GPU.iml" />
     </modules>
   </component>
 </project>

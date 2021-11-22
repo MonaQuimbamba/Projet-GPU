@@ -1,5 +1,7 @@
 file(REMOVE_RECURSE
   "CMakeFiles/Projet_GPU.dir/main.cpp.o"
+  "CMakeFiles/Projet_GPU.dir/primeBreakerCPU.cpp.o"
+  "CMakeFiles/Projet_GPU.dir/utils/chronoCPU.cpp.o"
   "Projet_GPU"
   "Projet_GPU.pdb"
 )

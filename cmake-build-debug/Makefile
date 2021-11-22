@@ -153,6 +153,54 @@ main.cpp.s:
 	$(MAKE) $(MAKESILENT) -f CMakeFiles/Projet_GPU.dir/build.make CMakeFiles/Projet_GPU.dir/main.cpp.s
 .PHONY : main.cpp.s
 
+primeBreakerCPU.o: primeBreakerCPU.cpp.o
+.PHONY : primeBreakerCPU.o
+
+# target to build an object file
+primeBreakerCPU.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Projet_GPU.dir/build.make CMakeFiles/Projet_GPU.dir/primeBreakerCPU.cpp.o
+.PHONY : primeBreakerCPU.cpp.o
+
+primeBreakerCPU.i: primeBreakerCPU.cpp.i
+.PHONY : primeBreakerCPU.i
+
+# target to preprocess a source file
+primeBreakerCPU.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Projet_GPU.dir/build.make CMakeFiles/Projet_GPU.dir/primeBreakerCPU.cpp.i
+.PHONY : primeBreakerCPU.cpp.i
+
+primeBreakerCPU.s: primeBreakerCPU.cpp.s
+.PHONY : primeBreakerCPU.s
+
+# target to generate assembly for a file
+primeBreakerCPU.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Projet_GPU.dir/build.make CMakeFiles/Projet_GPU.dir/primeBreakerCPU.cpp.s
+.PHONY : primeBreakerCPU.cpp.s
+
+utils/chronoCPU.o: utils/chronoCPU.cpp.o
+.PHONY : utils/chronoCPU.o
+
+# target to build an object file
+utils/chronoCPU.cpp.o:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Projet_GPU.dir/build.make CMakeFiles/Projet_GPU.dir/utils/chronoCPU.cpp.o
+.PHONY : utils/chronoCPU.cpp.o
+
+utils/chronoCPU.i: utils/chronoCPU.cpp.i
+.PHONY : utils/chronoCPU.i
+
+# target to preprocess a source file
+utils/chronoCPU.cpp.i:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Projet_GPU.dir/build.make CMakeFiles/Projet_GPU.dir/utils/chronoCPU.cpp.i
+.PHONY : utils/chronoCPU.cpp.i
+
+utils/chronoCPU.s: utils/chronoCPU.cpp.s
+.PHONY : utils/chronoCPU.s
+
+# target to generate assembly for a file
+utils/chronoCPU.cpp.s:
+	$(MAKE) $(MAKESILENT) -f CMakeFiles/Projet_GPU.dir/build.make CMakeFiles/Projet_GPU.dir/utils/chronoCPU.cpp.s
+.PHONY : utils/chronoCPU.cpp.s
+
 # Help Target
 help:
 	@echo "The following are some of the valid targets for this Makefile:"
@@ -165,6 +213,12 @@ help:
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"
+	@echo "... primeBreakerCPU.o"
+	@echo "... primeBreakerCPU.i"
+	@echo "... primeBreakerCPU.s"
+	@echo "... utils/chronoCPU.o"
+	@echo "... utils/chronoCPU.i"
+	@echo "... utils/chronoCPU.s"
 .PHONY : help
 
 

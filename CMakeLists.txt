@@ -6,4 +6,4 @@ set(CMAKE_CXX_STANDARD 14)
 include_directories(.)
 
 add_executable(Projet_GPU
-        main.cpp)
+        main.cpp primeBreakerCPU.cpp utils/chronoCPU.cpp)

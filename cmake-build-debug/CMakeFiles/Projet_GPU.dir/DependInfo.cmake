@@ -9,6 +9,8 @@ set(CMAKE_DEPENDS_LANGUAGES
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
   "/Users/faisalsalhi/CLionProjects/Projet-GPU/main.cpp" "/Users/faisalsalhi/CLionProjects/Projet-GPU/cmake-build-debug/CMakeFiles/Projet_GPU.dir/main.cpp.o"
+  "/Users/faisalsalhi/CLionProjects/Projet-GPU/primeBreakerCPU.cpp" "/Users/faisalsalhi/CLionProjects/Projet-GPU/cmake-build-debug/CMakeFiles/Projet_GPU.dir/primeBreakerCPU.cpp.o"
+  "/Users/faisalsalhi/CLionProjects/Projet-GPU/utils/chronoCPU.cpp" "/Users/faisalsalhi/CLionProjects/Projet-GPU/cmake-build-debug/CMakeFiles/Projet_GPU.dir/utils/chronoCPU.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "AppleClang")
 

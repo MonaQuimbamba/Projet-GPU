@@ -4,7 +4,9 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="CMakeRunConfigurationManager" shouldGenerate="true" shouldDeleteObsolete="true">
-    <generated />
+    <generated>
+      <config projectName="Projet_GPU" targetName="Projet_GPU" />
+    </generated>
   </component>
   <component name="CMakeSettings">
     <configurations>
@@ -12,11 +14,34 @@
     </configurations>
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="7e83da5e-4d22-4963-bf06-24840ed307cb" name="Changes" comment="Corriger une erreur de types dans la fonction isPrimeCPU&#10;Valider l'obtention des nombres premiers compris entre zéro et cent.">
+    <list default="true" id="7e83da5e-4d22-4963-bf06-24840ed307cb" name="Changes" comment="Combiner le travail des deux branches faisal-cpu et mona-cpu.&#10;Modifier les paramètres de CMake afin de construire le programme en conséquences.">
+      <change afterPath="$PROJECT_DIR$/.idea/Projet_GPU.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/TestPrimeBreaker.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/modules.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Makefile2" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/CXX.includecache" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/CXX.includecache" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/DependInfo.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/DependInfo.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/build.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/build.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/cmake_clean.cmake" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/cmake_clean.cmake" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/depend.internal" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/depend.internal" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/depend.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/depend.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/link.txt" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/link.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/main.cpp.o" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/main.cpp.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/progress.make" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/Projet_GPU.dir/progress.make" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/CMakeFiles/progress.marks" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Projet_GPU" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Projet_GPU" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Projet_GPU.cbp" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Projet_GPU.cbp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" beforeDir="false" afterPath="$PROJECT_DIR$/cmake-build-debug/Testing/Temporary/LastTest.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/primeBreakerCPU.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreakerCPU.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/primeBreakerCPU.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreakerCPU.hpp" afterDir="false" />
     </list>
-    <list id="eea3e326-f448-4347-a361-3a979591a131" name="Changes by mona-quimbamba" comment="">
-      <change beforePath="$PROJECT_DIR$/primeBreaker.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreaker.hpp" afterDir="false" />
+    <list id="eea3e326-f448-4347-a361-3a979591a131" name="Changes by mona-quimbamba" comment="Changes by mona-quimbamba">
+      <change beforePath="$PROJECT_DIR$/main.cu" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/primeBreaker.cu" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreaker.cu" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -26,13 +51,25 @@
   <component name="ClangdSettings">
     <option name="formatViaClangd" value="false" />
   </component>
+  <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
+  <component name="Git.Merge.Settings">
+    <option name="BRANCH" value="origin/faisal-cpu" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="faisal-cpu" />
+        <entry key="$PROJECT_DIR$" value="main" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="ProjectId" id="21EludAjMzDtzrKCVYnpsvK700b" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
@@ -50,7 +87,6 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
-    <property name="codeWithMe.voiceChat.enabledByDefault" value="false" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -58,7 +94,12 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager">
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Projet_GPU" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Projet_GPU" TARGET_NAME="Projet_GPU" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Projet_GPU" RUN_TARGET_NAME="Projet_GPU">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -78,7 +119,8 @@
       <option name="presentableId" value="Default" />
       <updated>1637514353153</updated>
       <workItem from="1637514360887" duration="2832000" />
-      <workItem from="1637565512944" duration="960000" />
+      <workItem from="1637565512944" duration="1591000" />
+      <workItem from="1637567140507" duration="2288000" />
     </task>
     <task id="LOCAL-00001" summary="Importer les fichiers de configuration de l'IDE CLion.">
       <created>1637514485326</created>
@@ -139,6 +181,9 @@
     <MESSAGE value="Écrire une ébauche de la fonction de recherche des nombres premiers." />
     <MESSAGE value="Écrire une ébauche de test pour la récupération des nombres premiers compris entre 0 et 100;" />
     <MESSAGE value="Corriger une erreur de types dans la fonction isPrimeCPU&#10;Valider l'obtention des nombres premiers compris entre zéro et cent." />
-    <option name="LAST_COMMIT_MESSAGE" value="Corriger une erreur de types dans la fonction isPrimeCPU&#10;Valider l'obtention des nombres premiers compris entre zéro et cent." />
+    <MESSAGE value="Formater les commentaire a la façon de Doxygen&#10;Modifier légèrement le main.&#10;Ajouter quelques fichiers de configuration CLion." />
+    <MESSAGE value="Combiner le travail des deux branches faisal-cpu et mona-cpu.&#10;Modifier les paramètres de CMake afin de construire le programme en conséquence" />
+    <MESSAGE value="Combiner le travail des deux branches faisal-cpu et mona-cpu.&#10;Modifier les paramètres de CMake afin de construire le programme en conséquences." />
+    <option name="LAST_COMMIT_MESSAGE" value="Combiner le travail des deux branches faisal-cpu et mona-cpu.&#10;Modifier les paramètres de CMake afin de construire le programme en conséquences." />
   </component>
 </project>
