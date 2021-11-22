@@ -31,7 +31,7 @@ string printFactuers(vector<uint64_t> facteurs )
     string res = "Les Facteurs premiers :  \n ";
     for(int i = 0 ; i < facteurs.size(); i++)
     {
-        res+=""+to_string(facteurs.at(i))+"*" ;
+        res+=  (i==facteurs.size()-1) ? ""+to_string(facteurs.at(i)) : ""+to_string(facteurs.at(i))+"*" ;
     }
     return res;
 }
@@ -40,7 +40,7 @@ int main( int argc, char **argv )
 {
 
 
-	uint64_t N =10;
+	uint64_t N =33;
     /*
 	if(N==0)
 	{
@@ -84,7 +84,9 @@ int main( int argc, char **argv )
 
 	cout << " Factorisation en nombre premier  sur CPU " << endl;
 	chrCPU.start();
-    vector<uint64_t> facteurs = factoCPU(N);
+    vector<uint64_t> facteurs(0);
+     factoCPU(N,&facteurs);
+
 	chrCPU.stop();
 	const float timeComputeCPUFact = chrCPU.elapsedTime();
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeCPUFact << " ms" << endl;
