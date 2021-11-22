@@ -1,0 +1,18 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/Users/faisalsalhi/CLionProjects/Projet-GPU/main.cpp
+iostream
+-
+stdint.h
+-
+tgmath.h
+-
+vector
+-
+
