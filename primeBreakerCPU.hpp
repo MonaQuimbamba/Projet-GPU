@@ -4,10 +4,10 @@
 #ifndef __PRIMEBREAKERCPU_HPP
 #define __PRIMEBREAKERCPU_HPP
 
-#include <stdint.h>
+#include <cstdint> // uint64_t
 #include <iostream> // cout, endl
-#include <stdint.h> // uint64_t
-#include <tgmath.h> // sqrt()
+#include <string> // split, strtoull
+#include <ctgmath> // sqrt()
 #include <vector>   // tableaux dynamiques <vector>
 
 using namespace std;
