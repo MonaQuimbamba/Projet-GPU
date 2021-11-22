@@ -7,12 +7,11 @@
 #define __PRIMEBREAKERCPU_HPP
 
 
-/*
-   Cette fonction va  tester la primalité d’un nombre de
-  - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas
+/** \brief  Cette fonction va  tester la primalité d’un nombre de
+            - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas.
 */
 bool isPrimeCPU(const uint64_t N);
-/*
+/** \brief
    Cette fonction permet de rechercher des nombres premiers inférieurs à N.
   - L’algorithme consiste à tester la primalité de tous les nombres inférieurs à N à l’aide de la fonction précédente.
 	 Il faut savoir que l’on ne peut connaître la taille de la liste renvoyée à l’avance.
@@ -20,7 +19,7 @@ bool isPrimeCPU(const uint64_t N);
 */
 void searchPrimesCPU(const uint64_t N);
 
-/*
+/** \brief
 	Cette fonction va faire la décomposition en facteurs premiers
 	 - Le principe de la décomposition consiste à parcourir les nombres p de la liste des nombres premiers
 	trouvés avant en testant si ce nombre p divise N. Si oui, on recommence l’algorithme avec N = N/p.
