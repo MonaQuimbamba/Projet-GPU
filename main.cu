@@ -29,11 +29,12 @@ int main( int argc, char **argv )
 {
 
 
-	uint64_t N =10;/*= argc==1 ? 		if ( sscanf( argv[++i], "%s", fileName ) != 1 ) : 0 ;
+	uint64_t N =10;
+    /*
 	if(N==0)
 	{
 		printUsage( argv[0] );
-	}*/
+	}
 
 	if( argc==1)
 	{
@@ -45,9 +46,9 @@ int main( int argc, char **argv )
 	}
 
 	cout << "%lu64" , N ;
+*/
 
 
-/*
 	cout << "============================================"	<< endl;
 	cout << "         Sequential version on CPU          " 	<< endl;
 	cout << "============================================"	<< endl << endl;
@@ -78,7 +79,7 @@ int main( int argc, char **argv )
 	cout << " Factorisation CPU : " ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
 
 
-
+/*
 	cout << "============================================"	<< endl;
 	cout << "          Parallel versions on GPU           "	<< endl;
 	cout << "============================================"	<< endl << endl;
