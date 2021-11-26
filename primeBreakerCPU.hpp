@@ -31,10 +31,10 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite);
 	trouvés avant en testant si ce nombre p divise N. Si oui, on recommence l’algorithme avec N = N/p.
 	On s’arrête quand le nombre premier à tester devient supérieur à la racine carrée de N.
 */
-vector<uint64_t> factoCPU(uint64_t N);
+void factoCPU(uint64_t N, vector<uint64_t> *facteursPrimes);
 
 
-string printPrimes(std::vector<uint64_t> primeNumbers);
+
 
 
 #endif

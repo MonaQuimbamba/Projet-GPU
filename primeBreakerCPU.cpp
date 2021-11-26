@@ -1,5 +1,5 @@
 #include "primeBreakerCPU.hpp"
-
+#include <bits/stdc++.h>
 using namespace std;
 
 /**  \brief  Je suis la méthode qui renvoit si un certain nombre N
@@ -26,7 +26,7 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
 {
     std::vector<uint64_t> resultat(0);
 
-    for (uint64_t possiblePrime = limite-1; possiblePrime >=2; possiblePrime-=1)
+    for (uint64_t possiblePrime = limite; possiblePrime >=2; possiblePrime-=1)
     {
         if (isPrimeCPU(possiblePrime)) {
             resultat.push_back(possiblePrime);
@@ -35,28 +35,36 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
     return resultat;
 }
 
-
-
-
-
-vector<uint64_t> facteursPrimes(0);
-vector<uint64_t> factoCPU(uint64_t N)
+/** \brief je suis la methode qui permet de décomposeur un nombre en facteurs premiers
+ *
+ * @param N
+ * @param facteursPrimes
+ */
+ void factoCPU(uint64_t N, vector<uint64_t> *facteursPrimes)
 {
 
-    bool keepGoin=false;
-    vector<uint64_t> primesNumber = searchPrimesCPU(N);
-    if(primesNumber.size()!=0)
-    {
-        if( primesNumber.at(0) > sqrt(N)) keepGoin=true; // arriver à 1
-    }
-    for (int i = 0; i < primesNumber.size() && keepGoin==true; i++)
-    {
-            while(N % primesNumber.at(i)==0)
-            {
-                facteursPrimes.push_back(primesNumber.at(i)); // dans la liste de facteurs
-                factoCPU(N/primesNumber.at(i)); //
-            }
-    }
 
-    return facteursPrimes;
+    if(N!=1)
+    {
+        vector<uint64_t> primesNumbers = searchPrimesCPU(N);
+        bool keepGoin=true;
+        sort(primesNumbers.begin(), primesNumbers.end());
+        if(primesNumbers.at(0) > sqrt(N)) return;
+            uint64_t  t;
+            for (int i = 0; i < primesNumbers.size() && keepGoin==true; i++)
+            {
+
+                if (N % primesNumbers.at(i) == 0)
+                {
+                    facteursPrimes->push_back(primesNumbers.at(i));
+                    t=N / primesNumbers.at(i);
+                    keepGoin=false;
+                }
+            }
+            if(keepGoin==false)  factoCPU(t,facteursPrimes);
+
+    }
+    return;
+
+
 }
