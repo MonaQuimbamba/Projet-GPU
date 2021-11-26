@@ -8,7 +8,7 @@
       <config projectName="Projet_GPU" targetName="Projet_GPU" />
     </generated>
   </component>
-  <component name="CMakeSettings">
+  <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
     </configurations>
@@ -16,9 +16,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7e83da5e-4d22-4963-bf06-24840ed307cb" name="Changes" comment="Modifier le workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/primeBreakerCPU.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreakerCPU.cpp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/primeBreakerCPU.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreakerCPU.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/primeBreaker.cu" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreaker.cu" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/primeBreaker.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreaker.hpp" afterDir="false" />
     </list>
     <list id="eea3e326-f448-4347-a361-3a979591a131" name="Changes by mona-quimbamba" comment="Changes by mona-quimbamba" />
     <option name="SHOW_DIALOG" value="false" />
@@ -36,7 +38,7 @@
   <component name="Git.Settings">
     <option name="RECENT_BRANCH_BY_REPOSITORY">
       <map>
-        <entry key="$PROJECT_DIR$" value="main" />
+        <entry key="$PROJECT_DIR$" value="clauFact" />
       </map>
     </option>
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
@@ -99,7 +101,9 @@
       <workItem from="1637514360887" duration="2832000" />
       <workItem from="1637565512944" duration="1591000" />
       <workItem from="1637567140507" duration="9202000" />
-      <workItem from="1637581898710" duration="6442000" />
+      <workItem from="1637581898710" duration="6683000" />
+      <workItem from="1637933164516" duration="4721000" />
+      <workItem from="1637955972435" duration="573000" />
     </task>
     <task id="LOCAL-00001" summary="Importer les fichiers de configuration de l'IDE CLion.">
       <created>1637514485326</created>
