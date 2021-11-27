@@ -35,12 +35,30 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
     return resultat;
 }
 
+/**   \brief je suis la methode qui va ajouter , une celule dans le vecteurs de facteurs 
+*/
+
+void addCell( cell c , vector< cell> *facteursPrimes)
+{
+    bool add=true;
+    for(int i=0 ; i < facteursPrimes->size();i++)
+    {
+       if(c.base==facteursPrimes->at(i).base)
+       {
+         facteursPrimes->at(i).expo+=1;
+         add=false;
+       }
+    }
+
+    if(add==true) facteursPrimes->push_back(c);
+}
+
 /** \brief je suis la methode qui permet de décomposeur un nombre en facteurs premiers
  *
  * @param N
  * @param facteursPrimes
  */
- void factoCPU(uint64_t N, vector<uint64_t> *facteursPrimes)
+ void factoCPU(uint64_t N, vector<cell> *facteursPrimes)
 {
 
 
@@ -56,7 +74,10 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
 
                 if (N % primesNumbers.at(i) == 0)
                 {
-                    facteursPrimes->push_back(primesNumbers.at(i));
+                     cell c;
+                    c.base=primesNumbers.at(i);
+                    c.expo=1;
+                    checkPrime(c,facteursPrimes);
                     t=N / primesNumbers.at(i);
                     keepGoin=false;
                 }
