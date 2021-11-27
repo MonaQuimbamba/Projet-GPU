@@ -1,5 +1,5 @@
 #include "primeBreakerCPU.hpp"
-#include <bits/stdc++.h>
+
 using namespace std;
 
 /**  \brief  Je suis la méthode qui renvoit si un certain nombre N
@@ -35,7 +35,7 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
     return resultat;
 }
 
-/**   \brief je suis la methode qui va ajouter , une celule dans le vecteurs de facteurs 
+/**   \brief je suis la methode qui va ajouter , une celule dans le vecteurs de facteurs
 */
 
 void addCell( cell c , vector< cell> *facteursPrimes)
@@ -77,7 +77,7 @@ void addCell( cell c , vector< cell> *facteursPrimes)
                      cell c;
                     c.base=primesNumbers.at(i);
                     c.expo=1;
-                    checkPrime(c,facteursPrimes);
+                    addCell(c,facteursPrimes);
                     t=N / primesNumbers.at(i);
                     keepGoin=false;
                 }

@@ -4,6 +4,8 @@
 #ifndef __PRIMEBREAKERCPU_HPP
 #define __PRIMEBREAKERCPU_HPP
 
+#include <bits/stdc++.h>
+#include "utils/common.hpp"
 #include <cstdint> // uint64_t
 #include <iostream> // cout, endl
 #include <string> // split, strtoull
@@ -31,7 +33,7 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite);
 	trouvés avant en testant si ce nombre p divise N. Si oui, on recommence l’algorithme avec N = N/p.
 	On s’arrête quand le nombre premier à tester devient supérieur à la racine carrée de N.
 */
-void factoCPU(uint64_t N, vector<uint64_t> *facteursPrimes);
+void factoCPU(uint64_t N, vector<cell> *facteursPrimes);
 
 /**  \brief
     Cette fonction ajoute une cell dans un vector des facteurs premiers

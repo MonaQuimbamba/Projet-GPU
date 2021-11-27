@@ -44,8 +44,8 @@ int main( int argc, char **argv )
 {
 
 
-	uint64_t N =200;
-
+	uint64_t N =64319;
+/*
 	cout << "============================================"	<< endl;
 	cout << "         Sequential version on CPU          " 	<< endl;
 	cout << "============================================"	<< endl << endl;
@@ -77,36 +77,17 @@ int main( int argc, char **argv )
 	const float timeComputeCPUFact = chrCPU.elapsedTime();
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeCPUFact << " ms" << endl;
 	cout << " Factorisation CPU : " << printFactuers(facteurs)<<endl ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
+*/
 
-
-	cout << "============================================"	<< endl;
+	/*cout << "============================================"	<< endl;
 	cout << "          Parallel versions on GPU           "	<< endl;
 	cout << "============================================"	<< endl << endl;
-
-	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;
-  unsigned int isPrimeGPU=1;
-  uint64_t *dev_N;
-	uint64_t  *tab;
-	tab = (uint64_t*)malloc( N*sizeof(uint64_t) );
-	for (uint64_t i= 0;i < N; i++)
-	{
-				if(i==0 || i==1)
-				{
-					tab[i]=2;
-				}
-				else{
-					tab[i]=i;
-				}
-  }
-
-  HANDLE_ERROR(cudaMalloc( (void**)&dev_N,  N*sizeof(uint64_t) ));
-  HANDLE_ERROR(cudaMemcpy(dev_N,tab, N * sizeof(uint64_t), cudaMemcpyHostToDevice ));
-  float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>(dev_N,isPrimeGPU,N);
-  cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
+	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;*/
+  unsigned int isPrimeGPU;
+  float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>(N,isPrimeGPU);
+//  cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
   cout << " Est Premier ? : " << N << " -> "<< isPrimeGPU <<endl;
 
-	free( tab );
-	HANDLE_ERROR(cudaFree( dev_N ));
 
 
 
