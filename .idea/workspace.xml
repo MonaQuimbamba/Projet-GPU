@@ -16,11 +16,11 @@
   <component name="ChangeListManager">
     <list default="true" id="7e83da5e-4d22-4963-bf06-24840ed307cb" name="Changes" comment="Modifier le workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/Makefile" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cu" beforeDir="false" afterPath="$PROJECT_DIR$/main.cu" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/primeBreaker.cu" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreaker.cu" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/primeBreaker.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreaker.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/primeBreakerCPU.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreakerCPU.cpp" afterDir="false" />
     </list>
     <list id="eea3e326-f448-4347-a361-3a979591a131" name="Changes by mona-quimbamba" comment="Changes by mona-quimbamba" />
     <option name="SHOW_DIALOG" value="false" />
@@ -72,14 +72,15 @@
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
     <property name="node.js.selected.package.tslint" value="(autodetect)" />
     <property name="nodejs_package_manager_path" value="npm" />
+    <property name="settings.editor.selected.configurable" value="CPPToolchains" />
   </component>
   <component name="RunManager">
-    <configuration name="Projet_GPU" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Projet_GPU" TARGET_NAME="Projet_GPU" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Projet_GPU" RUN_TARGET_NAME="Projet_GPU">
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
       </method>
     </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+    <configuration name="Projet_GPU" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Projet_GPU" TARGET_NAME="Projet_GPU" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Projet_GPU" RUN_TARGET_NAME="Projet_GPU">
       <method v="2">
         <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
@@ -103,7 +104,8 @@
       <workItem from="1637567140507" duration="9202000" />
       <workItem from="1637581898710" duration="6683000" />
       <workItem from="1637933164516" duration="4721000" />
-      <workItem from="1637955972435" duration="573000" />
+      <workItem from="1637955972435" duration="755000" />
+      <workItem from="1637998208755" duration="416000" />
     </task>
     <task id="LOCAL-00001" summary="Importer les fichiers de configuration de l'IDE CLion.">
       <created>1637514485326</created>

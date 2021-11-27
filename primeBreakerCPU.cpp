@@ -1,5 +1,7 @@
 #include "primeBreakerCPU.hpp"
-#include <bits/stdc++.h>
+
+
+
 using namespace std;
 
 /**  \brief  Je suis la méthode qui renvoit si un certain nombre N
@@ -10,8 +12,8 @@ bool isPrimeCPU(const uint64_t N)
 {
     long double divider = N-1;
     for (;divider >= 2; divider-=1){
-        if (floor(N/divider) == N/divider){
-            //std::cout << "[DEBUG] floor(N/divider) = " << floor(N/divider) << " | N/divider = " << N/divider << std::endl;
+        if (floor(N/divider) == N/divider)
+        {
             return false;
         }
     }
@@ -35,12 +37,27 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
     return resultat;
 }
 
+void checkPrime( cell c , vector< cell> *facteursPrimes)
+{
+    bool add=true;
+    for(int i=0 ; i < facteursPrimes->size();i++)
+    {
+       if(c.base==facteursPrimes->at(i).base)
+       {
+         facteursPrimes->at(i).expo+=1;
+         add=false;
+       }
+    }
+
+    if(add==true) facteursPrimes->push_back(c);
+}
+
 /** \brief je suis la methode qui permet de décomposeur un nombre en facteurs premiers
  *
  * @param N
  * @param facteursPrimes
  */
- void factoCPU(uint64_t N, vector<uint64_t> *facteursPrimes)
+ void factoCPU(uint64_t N, vector<cell> *facteursPrimes)
 {
 
 
@@ -56,7 +73,10 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
 
                 if (N % primesNumbers.at(i) == 0)
                 {
-                    facteursPrimes->push_back(primesNumbers.at(i));
+                     cell c;
+                    c.base=primesNumbers.at(i);
+                    c.expo=1;
+                    checkPrime(c,facteursPrimes);
                     t=N / primesNumbers.at(i);
                     keepGoin=false;
                 }
