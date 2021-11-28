@@ -6,16 +6,32 @@ using namespace std;
  *          est premier.
  *  @param N le nombre dont on doit tester la primalité.
  */
-bool isPrimeCPU(const uint64_t N)
+bool isPrimeCPU_v0(const uint64_t N)
 {
     long double divider = N-1;
     for (;divider >= 2; divider-=1){
         if (floor(N/divider) == N/divider){
-            //std::cout << "[DEBUG] floor(N/divider) = " << floor(N/divider) << " | N/divider = " << N/divider << std::endl;
             return false;
         }
     }
     return true;
+}
+/** \brief  Cette fonction va  tester la primalité d’un nombre de
+            - L’algorithme consiste à vérifier pour un nombre N, si les nombres entre 2 et sqrt(N) sont diviseurs de N
+*/
+bool isPrimeCPU_v1(const uint64_t N,vector<uint64_t> tab_possibles_diviseurs)
+{
+  if(N==2) return true;
+  for(int i=2; i < sqrt(N)+1;i++)
+  {    tab_possibles_diviseurs.push_back(i);}
+
+  for(int i=0;i<tab_possibles_diviseurs.size();i++)
+  {
+    if(N%tab_possibles_diviseurs[i]==0){
+      return false;
+    }
+  }
+  return true;
 }
 
 /** \brief  Je suis la méthode qui renvoit un tableau de nombre premier
@@ -28,7 +44,7 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite)
 
     for (uint64_t possiblePrime = limite; possiblePrime >=2; possiblePrime-=1)
     {
-        if (isPrimeCPU(possiblePrime)) {
+        if (isPrimeCPU_v0(possiblePrime)) {
             resultat.push_back(possiblePrime);
         }
     }
@@ -40,6 +56,7 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite)
 
 void addCell( cell c , vector< cell> *facteursPrimes)
 {
+
     bool add=true;
     for(int i=0 ; i < facteursPrimes->size();i++)
     {
@@ -58,31 +75,36 @@ void addCell( cell c , vector< cell> *facteursPrimes)
  * @param N
  * @param facteursPrimes
  */
+
+
  void factoCPU(uint64_t N, vector<cell> *facteursPrimes)
 {
+    bool arreter=false;
+    while (arreter==false)
+    {
+
+        bool  keepGoin=true;
+          vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
+          sort(primesNumbers.begin(), primesNumbers.end());
+          for( int i=0 ; i < primesNumbers.size() && keepGoin==true ;i++ )
+          {
+
+             if(sqrt(N) < primesNumbers.at(i)) arreter=true;
+              if(N%primesNumbers.at(i) == 0)
+              {
+                cell c;
+                c.base=primesNumbers.at(i);
+                c.expo=1;
+                N=N/primesNumbers.at(i);
+                addCell(c,facteursPrimes);
+                keepGoin=false;
+              }
+          }
 
 
-  bool arreter=false;
-  while (arreter==false)
-  {
 
-      bool  keepGoin=true;
-        vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
-        sort(primesNumbers.begin(), primesNumbers.end());
-        for( int i=0 ; i < primesNumbers.size() && keepGoin==true ;i++ )
-        {
 
-           if(sqrt(N) < primesNumbers.at(i)) arreter=true;
-            if(N%primesNumbers.at(i) == 0)
-            {
-              cell c;
-              c.base=primesNumbers.at(i);
-              c.expo=1;
-              N=N/primesNumbers.at(i);
-              addCell(c,facteursPrimes);
-              keepGoin=false;
-            }
-        }
+    }
 
 
 

@@ -17,7 +17,11 @@ using namespace std;
 /** \brief  Cette fonction va  tester la primalité d’un nombre de
             - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas.
 */
-bool isPrimeCPU(const uint64_t N);
+bool isPrimeCPU_v0(const uint64_t N);
+/** \brief  Cette fonction va  tester la primalité d’un nombre de
+            - L’algorithme consiste à vérifier pour un nombre N, si les nombres entre 2 et sqrt(N) sont diviseurs de N
+*/
+bool isPrimeCPU_v1(const uint64_t N,vector<uint64_t> v);
 
 /** \brief
    Cette fonction permet de rechercher des nombres premiers inférieurs à N.
@@ -26,6 +30,8 @@ bool isPrimeCPU(const uint64_t N);
 	 donc trouver une solution (structure de données dynamique, gestion de la mémoire manuelle, taille fixée, etc.).
 */
 std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite);
+
+
 
 /** \brief
 	Cette fonction va faire la décomposition en facteurs premiers
@@ -37,7 +43,6 @@ void factoCPU(uint64_t N, vector<cell> *facteursPrimes);
 
 /**  \brief
     Cette fonction ajoute une cell dans un vector des facteurs premiers
-
 */
 
 void addCell( cell c , vector< cell> *facteursPrimes);
