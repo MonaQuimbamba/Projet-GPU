@@ -44,7 +44,7 @@ int main( int argc, char **argv )
 {
 
 
-	uint64_t N =64319;
+	uint64_t N = 6;
 /*
 	cout << "============================================"	<< endl;
 	cout << "         Sequential version on CPU          " 	<< endl;
@@ -85,7 +85,7 @@ int main( int argc, char **argv )
 	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;*/
   unsigned int isPrimeGPU;
   float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>(N,isPrimeGPU);
-//  cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
+  cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
   cout << " Est Premier ? : " << N << " -> "<< isPrimeGPU <<endl;
 
 

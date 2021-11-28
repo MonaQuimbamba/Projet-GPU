@@ -25,7 +25,8 @@ template<int numKernel> __host__
 float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 {
 					 isPrime=1;
-					// prepare data to send to GPU
+					// prepare data to send to GPU , soit N un numero on fait un tableau avec des numeros inférieurs à N
+					// pour 0 et 1 on met 2 , exemple pour 10 on a [9,8,7,6,5,4,3,2,2,2]
 					  uint64_t *dev_N;
 						uint64_t  *tab;
 						tab = (uint64_t*)malloc( N*sizeof(uint64_t) );
@@ -38,18 +39,15 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 									else{
 										tab[i]=i;
 									}
+
 					  }
-
-					/*	for(int i=0; i<N;i++)
-						{
-							cout<< "voir "<< tab[i]<<endl;
-						}*/
-
 						HANDLE_ERROR(cudaMalloc( (void**)&dev_N,  N*sizeof(uint64_t) ));
 						HANDLE_ERROR(cudaMemcpy(dev_N,tab, N * sizeof(uint64_t), cudaMemcpyHostToDevice ));
 						// Set grid and block dimensions
 						unsigned int dimBlock;
 						unsigned int dimGrid;
+
+						// on va ajouter les versions ici 
 						switch ( numKernel )
 						{
 								case 0: // V0
@@ -61,18 +59,15 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 						}
 
 						verifyDimGridBlock( dimGrid, dimBlock, N ); // Are you reasonable ?
-						unsigned int *host_partialIsPrime; //= new unsigned int[dimGrid];
+						unsigned int *host_partialIsPrime;
 						host_partialIsPrime = (unsigned int*)malloc( dimGrid*sizeof(unsigned int) );
 						size_t sizePartial		= dimGrid  * sizeof(unsigned int);
 						size_t sizeSMem			= dimBlock * sizeof(unsigned int);
+						// on rempli le tableau partial avec que des 1
+						// (1) on suppose que par defaut n'importe quel N est premier
+						for( unsigned int i =0; i < dimGrid ; i++)
+						{	host_partialIsPrime[i]=1;}
 
-						//for( unsigned int i =0; i < sizePartial ; i++)
-						//{	host_partialIsPrime[i]=1;}
-
-					/*	std::cout << "Computing on " << dimGrid << " block(s) and "
-									<< dimBlock << " thread(s) - shared memory size = "
-									<< sizeSMem << " size "<< sizePartial << std::endl;
-*/
 						  unsigned int *dev_partialIsPrime;
 							HANDLE_ERROR( cudaMalloc( (void**) &dev_partialIsPrime, sizePartial ) );
 							HANDLE_ERROR( cudaMemcpy(dev_partialIsPrime,host_partialIsPrime,sizePartial, cudaMemcpyHostToDevice ));
@@ -82,17 +77,15 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 							chrGPU.stop();
 							HANDLE_ERROR( cudaMemcpy( host_partialIsPrime,dev_partialIsPrime,sizePartial, cudaMemcpyDeviceToHost ) );
 
-							// verifier s'il y'a des zeros dans le tableau partial
-
+							// on verifie si (1) est vrai
+							// verifier s'il y'a des zeros dans le tableau partial , si oui c'est pas premier
 							bool isPrimeBool =true;
-							cout << " size meme => " << dimGrid << endl;
 							for(int i =0; i < dimGrid && isPrimeBool ; i++)
 							{
-										//cout <<"\n reduce " <<host_partialIsPrime[i]<< " le i "<< i <<endl;
 									if(host_partialIsPrime[i]==0) // si il y'a un Zero c-à-d que le numéro n'est pas premier
 									{
 											isPrime=0;
-										  isPrimeBool=false;
+										  isPrimeBool=false; // on arrête la boucle
 									}
 							}
 
