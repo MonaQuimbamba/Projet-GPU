@@ -1,4 +1,3 @@
-
 #include <iostream>
 #include <cstdlib>
 #include <cstdint>
@@ -10,7 +9,7 @@
 
 using namespace std;
 
-void printUsage( const char *prg )
+void printUsage(const char *prg)
 {
 	cerr	<< "Usage: " << prg << endl
 			<< " \t N "
@@ -18,7 +17,7 @@ void printUsage( const char *prg )
 	exit( EXIT_FAILURE );
 }
 
-string printPrimes(std::vector<uint64_t> primeNumbers)
+string printPrimes(vector<uint64_t> primeNumbers)
 {
         string res =  "Nombres premiers : \n " ;
 
@@ -43,9 +42,8 @@ string printFactuers(vector<cell> facteurs )
 int main( int argc, char **argv )
 {
 
+	uint64_t N=atoll(argv[1]);
 
-	uint64_t N = 6;
-/*
 	cout << "============================================"	<< endl;
 	cout << "         Sequential version on CPU          " 	<< endl;
 	cout << "============================================"	<< endl << endl;
@@ -54,7 +52,9 @@ int main( int argc, char **argv )
 	cout << " Partie CPU sur le nombre  " + to_string(N)<< endl;
 	ChronoCPU chrCPU;
 	chrCPU.start();
-	bool isPrime = isPrimeCPU(N);
+	vector<uint64_t> tab_possibles_diviseurs(0);
+
+	bool isPrime = isPrimeCPU_v1(N,tab_possibles_diviseurs); //isPrimeCPU(N);
 	chrCPU.stop();
 	const float timeComputeCPUIsPrime = chrCPU.elapsedTime();
 	cout << "Temps du test de primalite : "	<< timeComputeCPUIsPrime << " ms" << endl;
@@ -62,10 +62,10 @@ int main( int argc, char **argv )
 
 	cout << " Recherche des nombres premiers sur CPU " << endl;
 	chrCPU.start();
-	std::vector<uint64_t> primesNumbers = searchPrimesCPU(N);
+	std::vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
 	chrCPU.stop();
 	const float timeComputeCPUSearchPrime = chrCPU.elapsedTime();
-  //cout << printPrimes(primesNumbers) << endl; //afficher les nombres premiers
+  //cout << printPrimes(primesNumbers) << endl; //afficher les nombres premiers //
     cout << "Temps de recherche : "	<< timeComputeCPUSearchPrime << " ms" << endl;
 
 	cout << " Factorisation en nombre premier  sur CPU " << endl;
@@ -77,12 +77,12 @@ int main( int argc, char **argv )
 	const float timeComputeCPUFact = chrCPU.elapsedTime();
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeCPUFact << " ms" << endl;
 	cout << " Factorisation CPU : " << printFactuers(facteurs)<<endl ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
-*/
 
-	/*cout << "============================================"	<< endl;
+
+	cout << "============================================"	<< endl;
 	cout << "          Parallel versions on GPU           "	<< endl;
 	cout << "============================================"	<< endl << endl;
-	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;*/
+	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;
   unsigned int isPrimeGPU;
   float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>(N,isPrimeGPU);
   cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
