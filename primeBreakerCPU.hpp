@@ -25,7 +25,7 @@ bool isPrimeCPU(const uint64_t N);
 	 Il faut savoir que l’on ne peut connaître la taille de la liste renvoyée à l’avance.
 	 donc trouver une solution (structure de données dynamique, gestion de la mémoire manuelle, taille fixée, etc.).
 */
-std::vector<uint64_t> searchPrimesCPU(const uint64_t limite);
+std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite);
 
 /** \brief
 	Cette fonction va faire la décomposition en facteurs premiers

@@ -22,7 +22,7 @@ bool isPrimeCPU(const uint64_t N)
  *          avec pour limite N.
  *  @param  limite La borne supérieur de l'ensemble que l'on souhaite évaluer.
  */
-std::vector<uint64_t> searchPrimesCPU(const uint64_t limite)
+std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite)
 {
     std::vector<uint64_t> resultat(0);
 
