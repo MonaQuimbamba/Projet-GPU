@@ -62,30 +62,28 @@ void addCell( cell c , vector< cell> *facteursPrimes)
 {
 
 
-    if(N!=1)
-    {
-        vector<uint64_t> primesNumbers = searchPrimesCPU(N);
-        bool keepGoin=true;
+  bool arreter=false;
+  while (arreter==false)
+  {
+
+      bool  keepGoin=true;
+        vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
         sort(primesNumbers.begin(), primesNumbers.end());
-        if(primesNumbers.at(0) > sqrt(N)) return;
-            uint64_t  t;
-            for (int i = 0; i < primesNumbers.size() && keepGoin==true; i++)
+        for( int i=0 ; i < primesNumbers.size() && keepGoin==true ;i++ )
+        {
+
+           if(sqrt(N) < primesNumbers.at(i)) arreter=true;
+            if(N%primesNumbers.at(i) == 0)
             {
-
-                if (N % primesNumbers.at(i) == 0)
-                {
-                     cell c;
-                    c.base=primesNumbers.at(i);
-                    c.expo=1;
-                    addCell(c,facteursPrimes);
-                    t=N / primesNumbers.at(i);
-                    keepGoin=false;
-                }
+              cell c;
+              c.base=primesNumbers.at(i);
+              c.expo=1;
+              N=N/primesNumbers.at(i);
+              addCell(c,facteursPrimes);
+              keepGoin=false;
             }
-            if(keepGoin==false)  factoCPU(t,facteursPrimes);
+        }
 
-    }
-    return;
 
 
 }
