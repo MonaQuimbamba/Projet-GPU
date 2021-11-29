@@ -3,7 +3,10 @@
 #include <cstdlib>
 #include <cstdint>
 #include "utils/chronoCPU.hpp"
+#include "utils/chronoGPU.hpp"
 #include "primeBreakerCPU.hpp"
+#include "primeBreaker.hpp"
+#include "utils/common.hpp"
 
 using namespace std;
 
@@ -26,12 +29,13 @@ string printPrimes(std::vector<uint64_t> primeNumbers)
     return res;
 }
 
-string printFactuers(vector<uint64_t> facteurs )
+string printFactuers(vector<cell> facteurs )
 {
     string res = "Les Facteurs premiers :  \n ";
     for(int i = 0 ; i < facteurs.size(); i++)
     {
-        res+=  (i==facteurs.size()-1) ? ""+to_string(facteurs.at(i)) : ""+to_string(facteurs.at(i))+"*" ;
+			string cell = to_string(facteurs.at(i).base)+"^"+to_string(facteurs.at(i).expo);
+    	res+= (i==facteurs.size()-1) ? ""+cell : cell+"*" ;
     }
     return res;
 }
@@ -40,32 +44,14 @@ int main( int argc, char **argv )
 {
 
 
-	uint64_t N =33;
-    /*
-	if(N==0)
-	{
-		printUsage( argv[0] );
-	}
-
-	if( argc==1)
-	{
-			if ( sscanf( argv[1],"%" SCNu64,&N ) != 1 )
-			{
-						printUsage( argv[0] );
-			}
-
-	}
-
-	cout << "%lu64" , N ;
-*/
-
+	uint64_t N =200;
 
 	cout << "============================================"	<< endl;
 	cout << "         Sequential version on CPU          " 	<< endl;
 	cout << "============================================"	<< endl << endl;
 
 
-	cout << " Partie CPU sur le nombre  " << endl; //N
+	cout << " Partie CPU sur le nombre  " + to_string(N)<< endl;
 	ChronoCPU chrCPU;
 	chrCPU.start();
 	bool isPrime = isPrimeCPU(N);
@@ -79,30 +65,52 @@ int main( int argc, char **argv )
 	std::vector<uint64_t> primesNumbers = searchPrimesCPU(N);
 	chrCPU.stop();
 	const float timeComputeCPUSearchPrime = chrCPU.elapsedTime();
-    cout << printPrimes(primesNumbers) << endl;
+  //cout << printPrimes(primesNumbers) << endl; //afficher les nombres premiers
     cout << "Temps de recherche : "	<< timeComputeCPUSearchPrime << " ms" << endl;
 
 	cout << " Factorisation en nombre premier  sur CPU " << endl;
 	chrCPU.start();
-    vector<uint64_t> facteurs(0);
-     factoCPU(N,&facteurs);
+  vector<cell> facteurs(0);
+  factoCPU(N,&facteurs);
 
 	chrCPU.stop();
 	const float timeComputeCPUFact = chrCPU.elapsedTime();
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeCPUFact << " ms" << endl;
-	cout << " Factorisation CPU : " << printFactuers(facteurs) ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
+	cout << " Factorisation CPU : " << printFactuers(facteurs)<<endl ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
 
 
-/*
 	cout << "============================================"	<< endl;
 	cout << "          Parallel versions on GPU           "	<< endl;
 	cout << "============================================"	<< endl << endl;
-	//  allouer la memoire pour le device ici
-	cout << " Partie GPU sur le nombre " << endl; //N
-	float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>( N);
-	cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
-	cout << " Est Premier ? : " ; // afficher like  2133 −> 0
 
+	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;
+  unsigned int isPrimeGPU=1;
+  uint64_t *dev_N;
+	uint64_t  *tab;
+	tab = (uint64_t*)malloc( N*sizeof(uint64_t) );
+	for (uint64_t i= 0;i < N; i++)
+	{
+				if(i==0 || i==1)
+				{
+					tab[i]=2;
+				}
+				else{
+					tab[i]=i;
+				}
+  }
+
+  HANDLE_ERROR(cudaMalloc( (void**)&dev_N,  N*sizeof(uint64_t) ));
+  HANDLE_ERROR(cudaMemcpy(dev_N,tab, N * sizeof(uint64_t), cudaMemcpyHostToDevice ));
+  float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>(dev_N,isPrimeGPU,N);
+  cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
+  cout << " Est Premier ? : " << N << " -> "<< isPrimeGPU <<endl;
+
+	free( tab );
+	HANDLE_ERROR(cudaFree( dev_N ));
+
+
+
+/*
 	cout << " Recherche des nombres premiers sur GPU " << endl;
 	float timeComputeGPUSearch = searchPrimesGPU<0>( N);
 	cout << "Temps de recherche : "	<< timeComputeGPUSearch << " ms" << endl;
