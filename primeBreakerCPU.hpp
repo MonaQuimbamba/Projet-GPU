@@ -34,7 +34,4 @@ std::vector<uint64_t> searchPrimesCPU(const uint64_t limite);
 void factoCPU(uint64_t N, vector<uint64_t> *facteursPrimes);
 
 
-
-
-
 #endif
