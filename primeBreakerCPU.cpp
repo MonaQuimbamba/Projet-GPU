@@ -22,8 +22,10 @@ bool isPrimeCPU_v0(const uint64_t N)
 bool isPrimeCPU_v1(const uint64_t N,vector<uint64_t> tab_possibles_diviseurs)
 {
   if(N==2) return true;
+
   for(int i=2; i < sqrt(N)+1;i++)
-  {    tab_possibles_diviseurs.push_back(i);}
+  {    tab_possibles_diviseurs.push_back(i);} // remplir
+
 
   for(int i=0;i<tab_possibles_diviseurs.size();i++)
   {
@@ -51,32 +53,12 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite)
     return resultat;
 }
 
-/**   \brief je suis la methode qui va ajouter , une celule dans le vecteurs de facteurs
-*/
-
-void addCell( cell c , vector< cell> *facteursPrimes)
-{
-
-    bool add=true;
-    for(int i=0 ; i < facteursPrimes->size();i++)
-    {
-       if(c.base==facteursPrimes->at(i).base)
-       {
-         facteursPrimes->at(i).expo+=1;
-         add=false;
-       }
-    }
-
-    if(add==true) facteursPrimes->push_back(c);
-}
 
 /** \brief je suis la methode qui permet de décomposeur un nombre en facteurs premiers
  *
  * @param N
  * @param facteursPrimes
  */
-
-
  void factoCPU(uint64_t N, vector<cell> *facteursPrimes)
 {
     bool arreter=false;
@@ -100,12 +82,6 @@ void addCell( cell c , vector< cell> *facteursPrimes)
                 keepGoin=false;
               }
           }
-
-
-
-
     }
-
-
 
 }

@@ -14,6 +14,10 @@ struct cell {
 };
 
 
+
+
+
+
 #define HANDLE_ERROR(_exp) do {											\
     const cudaError_t err = (_exp);										\
     if ( err != cudaSuccess ) {											\

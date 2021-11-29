@@ -6,6 +6,7 @@
 #include "primeBreakerCPU.hpp"
 #include "primeBreaker.hpp"
 #include "utils/common.hpp"
+#include "Reference.hpp"
 
 using namespace std;
 
@@ -62,7 +63,7 @@ int main( int argc, char **argv )
 
 	cout << " Recherche des nombres premiers sur CPU " << endl;
 	chrCPU.start();
-	std::vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
+	vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
 	chrCPU.stop();
 	const float timeComputeCPUSearchPrime = chrCPU.elapsedTime();
   //cout << printPrimes(primesNumbers) << endl; //afficher les nombres premiers //
@@ -94,13 +95,12 @@ int main( int argc, char **argv )
 /*
 	cout << " Recherche des nombres premiers sur GPU " << endl;
 	float timeComputeGPUSearch = searchPrimesGPU<0>( N);
-	cout << "Temps de recherche : "	<< timeComputeGPUSearch << " ms" << endl;
+	cout << "Temps de recherche : "	<< timeComputeGPUSearch << " ms" << endl;*/
 	cout << " Factorisation en nombre premier  sur GPU " << endl;
-	float timeComputeGPUFact = factoGPU<0>( N);
+	vector<cell> facteursGPU(0);
+	float timeComputeGPUFact = launchKernelFactGPU<0>(N,primesNumbers,&facteursGPU);
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeGPUFact << " ms" << endl;
-	cout << " Factorisation GPU : " ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
-	// librerer la memoire du device ici
-*/
+	cout << " Factorisation GPU : "<< printFactuers(facteursGPU)<<endl;
 
 
 	return EXIT_SUCCESS;
