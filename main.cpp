@@ -1,12 +1,8 @@
-
 #include <iostream>
 #include <cstdlib>
 #include <cstdint>
 #include "utils/chronoCPU.hpp"
-#include "utils/chronoGPU.hpp"
 #include "primeBreakerCPU.hpp"
-#include "primeBreaker.hpp"
-#include "utils/common.hpp"
 
 using namespace std;
 
@@ -98,31 +94,6 @@ int main( int argc, char **argv )
 					tab[i]=i;
 				}
   }
-
-  HANDLE_ERROR(cudaMalloc( (void**)&dev_N,  N*sizeof(uint64_t) ));
-  HANDLE_ERROR(cudaMemcpy(dev_N,tab, N * sizeof(uint64_t), cudaMemcpyHostToDevice ));
-  float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>(dev_N,isPrimeGPU,N);
-  cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
-  cout << " Est Premier ? : " << N << " -> "<< isPrimeGPU <<endl;
-
-	free( tab );
-	HANDLE_ERROR(cudaFree( dev_N ));
-
-
-
-/*
-	cout << " Recherche des nombres premiers sur GPU " << endl;
-	float timeComputeGPUSearch = searchPrimesGPU<0>( N);
-	cout << "Temps de recherche : "	<< timeComputeGPUSearch << " ms" << endl;
-
-	cout << " Factorisation en nombre premier  sur GPU " << endl;
-	float timeComputeGPUFact = factoGPU<0>( N);
-	cout << "Temps de factorisation en nombre premier : "	<< timeComputeGPUFact << " ms" << endl;
-	cout << " Factorisation GPU : " ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
-
-	// librerer la memoire du device ici
-*/
-
 
 	return EXIT_SUCCESS;
 }

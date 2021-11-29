@@ -11,7 +11,15 @@
 #include <ctgmath> // sqrt()
 #include <vector>   // tableaux dynamiques <vector>
 
+
 using namespace std;
+
+/**  \brief Je suis un tuple contenant le facteur premier et son exponentiation.
+ */
+struct cell {
+    uint64_t base;
+    int expo;
+};
 
 /** \brief  Cette fonction va  tester la primalité d’un nombre de
             - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas.

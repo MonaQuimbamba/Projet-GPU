@@ -1,15 +1,10 @@
-cmake_minimum_required(VERSION 3.20)
-project(Projet_GPU)
+cmake_minimum_required(VERSION 3.10)
 
-set(CMAKE_CUDA_STANDARD 14)
+project(ProjetGPU)
 
-include_directories(.)
+set(CMAKE_CXX_STANDARD 14)
 
-add_executable(Projet_GPU
-        main.cu
+add_executable(PrimeBreaker
+        main.cpp
         primeBreakerCPU.cpp
-        utils/chronoCPU.cpp
-        utils/chronoGPU.cu
-        TestPrimeBreaker.cpp
-        primeBreaker.cu
-        )
+        TestPrimeBreaker.cpp)
