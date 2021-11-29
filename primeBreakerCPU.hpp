@@ -1,23 +1,15 @@
-/*
-* file with all function on CPU
-*/
 #ifndef __PRIMEBREAKERCPU_HPP
 #define __PRIMEBREAKERCPU_HPP
 
+#include "helper.hpp" // structure cell
 #include <cstdint> // uint64_t
 #include <iostream> // cout, endl
 #include <string> // split, strtoull
 #include <ctgmath> // sqrt()
 #include <vector>   // tableaux dynamiques <vector>
+#include <algorithm> // sort()
 
 using namespace std;
-
-/**  \brief Je suis un tuple contenant le facteur premier et son exponentiation.
- */
-struct cell {
-    uint64_t base;
-    int expo;
-};
 
 /** \brief  Cette fonction va  tester la primalité d’un nombre de
             - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas.
@@ -35,8 +27,6 @@ bool isPrimeCPU_v1(const uint64_t N,vector<uint64_t> v);
 	 donc trouver une solution (structure de données dynamique, gestion de la mémoire manuelle, taille fixée, etc.).
 */
 std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite);
-
-
 
 /** \brief
 	Cette fonction va faire la décomposition en facteurs premiers

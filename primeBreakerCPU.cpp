@@ -42,7 +42,7 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite)
 {
     std::vector<uint64_t> resultat(0);
 
-    for (uint64_t possiblePrime = limite; possiblePrime >=2; possiblePrime-=1)
+    for (uint64_t possiblePrime = limite; possiblePrime >= 2; possiblePrime-=1)
     {
         if (isPrimeCPU_v0(possiblePrime)) {
             resultat.push_back(possiblePrime);
@@ -83,7 +83,6 @@ void addCell( cell c , vector< cell> *facteursPrimes)
          vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
          sort(primesNumbers.begin(), primesNumbers.end());
          for (int i = 0; i < primesNumbers.size() && keepGoin == true; i++) {
-
              if (sqrt(N) < primesNumbers.at(i)) arreter = true;
              if (N % primesNumbers.at(i) == 0) {
                  cell c;

@@ -5,6 +5,8 @@ project(ProjetGPU)
 set(CMAKE_CXX_STANDARD 14)
 
 add_executable(PrimeBreaker
-        main.cpp
+        utils/chronoCPU.cpp
         primeBreakerCPU.cpp
-        TestPrimeBreaker.cpp)
+        TestPrimeBreaker.cpp
+        main.cpp
+        helperFunctions.cpp)

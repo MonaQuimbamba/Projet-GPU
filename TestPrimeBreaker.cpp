@@ -1,4 +1,24 @@
+#include <cstring>
 #include "TestPrimeBreaker.hpp"
+
+/** \brief  Je suis une fonction qui lance les fonctions de tests.
+ */
+void launchUnitTest(){
+    cout << "============================================"	<< endl;
+    cout << "         Lancement des tests unitaires.     " 	<< endl;
+    cout << "============================================"	<< endl << endl;
+
+    TestIfNonPrimeIsNotAssertedWithAIntegerPrimeNumber();
+    TestIfPrimeIsAssertedWithAIntegerPrimeNumber();
+    TestIfPrimeIsAssertedWithALargeUint64PrimeNumber();
+    TestIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumber();
+    TestIfPrimesBetween0and100AreSuccessfullyRetrieved();
+
+    cout << "============================================"	<< endl;
+    cout << "    Tests unitaires éffectués avec succès.   " 	<< endl;
+    cout << "============================================"	<< endl << endl;
+}
+
 
 /**
  * \brief   Tester si un nombre premier assez grand (tenant sur un UINT32_T) est reconnu comme tel par
@@ -8,9 +28,11 @@ void TestIfPrimeIsAssertedWithAIntegerPrimeNumber(){
     std::cout << "Tester si un nombre premier assez large tenant sur un UINT32_T est reconnu comme tel." << std::endl;
     uint32_t large_uint32_prime = LARGE_UINT32_NUMBER;
 
-    assert(isPrimeCPU(large_uint32_prime));
+    mAssert("isPrimeCPU_v0(large_uint32_prime)",
+            isPrimeCPU_v0(large_uint32_prime),
+            "Le nombre premier tenant sur 32 bits n'a pas été reconnu comme tel.");
 
-    std::cout << "Le nombre premier a été reconnu avec succès." << std::endl;
+    std::cout << "Le nombre premier a été reconnu : succès." << std::endl << std::endl;
 }
 
 /**
@@ -21,9 +43,12 @@ void TestIfNonPrimeIsNotAssertedWithAIntegerPrimeNumber(){
     std::cout << "Tester si un nombre non premier assez large tenant sur un UINT32_T n'est pas reconnu comme tel." << std::endl;
     uint32_t large_uint32_non_prime = LARGE_UINT32_NUMBER-1;
 
-    assert(!isPrimeCPU(large_uint32_non_prime));
+    mAssert("!isPrimeCPU_v0(large_uint32_non_prime)",
+            !isPrimeCPU_v0(large_uint32_non_prime),
+            "Le nombre non premier tenant sur 32 bits a été reconnu comme un nombre premier."
+            );
 
-    std::cout << "Le nombre premier a été reconnu avec succès." << std::endl;
+    std::cout << "Le nombre non premier n'a pas été reconnu : succès." << std::endl << std::endl;
 }
 
 /**
@@ -34,9 +59,12 @@ void TestIfPrimeIsAssertedWithALargeUint64PrimeNumber(){
     std::cout << "Tester si un nombre premier tenant sur un UINT64_T est reconnu comme tel." << std::endl;
     uint64_t large_uint64_prime = LARGE_UINT64_NUMBER;
 
-    assert(isPrimeCPU(large_uint64_prime));
+    mAssert("isPrimeCPU_v0(large_uint64_prime)",
+            isPrimeCPU_v0(large_uint64_prime),
+            "Le nombre premier tenant sur 64 bits n'a pas été reconnu comme tel."
+            );
 
-    std::cout << "Le nombre premier a été reconnu avec succès." << std::endl;
+    std::cout << "Le nombre premier a été reconnu : succès." << std::endl << std::endl;
 }
 
 /**
@@ -47,9 +75,12 @@ void TestIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumber(){
     std::cout << "Tester si un nombre non premier tenant sur un UINT64_T n'est pas reconnu comme tel." << std::endl;
     uint64_t large_uint64_non_prime = LARGE_UINT64_NUMBER-1;
 
-    assert(!isPrimeCPU(large_uint64_non_prime));
+    mAssert("!isPrimeCPU_v0(large_uint64_non_prime)",
+            !isPrimeCPU_v0(large_uint64_non_prime),
+            "Le nombre non premier tenant sur 64 bits a été reconnu comme un nombre premier.");
 
-    std::cout << "Le nombre qui n'est pas premier n'a été reconnu comme un nombre premier : succès " << std::endl;
+    std::cout << "Le nombre non premier n'a pas été reconnu : succès " << std::endl
+    << std::endl;
 }
 
 /**
@@ -60,12 +91,36 @@ void TestIfPrimesBetween0and100AreSuccessfullyRetrieved()
     std::cout << "Tester la récupération des nombres premiers entre 0 et 100." << std::endl;
 
     vector<uint64_t> controlPrimeSet = getPrimesFrom0to100FromControlPrimeSetFile();
-    vector<uint64_t> primesNumberFrom0to100 = searchPrimesCPU(100);
+    vector<uint64_t> primesNumberFrom0to100 = searchPrimesCPU_v0(100);
 
-    assert(controlPrimeSet.size() == primesNumberFrom0to100.size());
+    if (VERBOSE) {
+        std::cout << "Liste de nombres premier du fichier témoin. [indice,nPremier]" << std::endl;
+        for (int i = controlPrimeSet.size() - 1; i >= 0; i--) {
+            std::cout << "[" << std::to_string(i) << "," << controlPrimeSet.at(i) << "]";
+        }
+        std::cout << endl;
+        std::cout << "Liste de nombres premier obtenu par la fonction testée. [indice,nPremier]" << std::endl;
+        for (int i = 0; i < primesNumberFrom0to100.size(); i++) {
+            std::cout << "[" << std::to_string(i) << "," << primesNumberFrom0to100.at(i) << "]";
+        }
+        std::cout << endl;
+    }
 
-    for (int i = 0; i < controlPrimeSet.size(); i++){
-        assert(controlPrimeSet.at(i) == primesNumberFrom0to100.at(i));
+    mAssert("controlPrimeSet.size() == primesNumberFrom0to100.size()",
+            controlPrimeSet.size() == primesNumberFrom0to100.size(),
+            string("La fonction ne renvoit pas le même nombre de nombres premiers que dans le groupe de controle.\n")
+            + string("controlPrimeSet.size() = ") + std::to_string(controlPrimeSet.size()) +
+            string("\nprimesNumberFrom0to100.size() = ") + std::to_string(primesNumberFrom0to100.size())
+            + string("\n")
+    );
+
+    int i = controlPrimeSet.size()-1;
+    int j = 0;
+    for (; i >= 0; i-- && j++){
+        mAssert("controlPrimeSet.at(i) == primesNumberFrom0to100.at(1)",
+                controlPrimeSet.at(i) == primesNumberFrom0to100.at(j),
+                ("On ne retrouve pas le " + std::to_string(i) + "ème nombre premier.")
+                );
     }
 
     std::cout << "On retrouve bien tout les nombres premiers compris dans l'interval : Succès." << std::endl;
@@ -76,15 +131,27 @@ void TestIfPrimesBetween0and100AreSuccessfullyRetrieved()
  *   @return La liste des nombres premiers sous la forme d'un vector<uint64_t>
  */
 vector<uint64_t> getPrimesFrom0to100FromControlPrimeSetFile(){
+    if (INFO) {
+        std::cout << "getPrimesFrom0to100FromControlPrimeSetFile" << endl;
+    }
+
     vector<uint64_t> output(0);
-    string filename = "primes0to100.txt";
-    string line = "";
-    ifstream primes0to100 (filename);
-    if (primes0to100.is_open()){
-        while (getline(primes0to100, line)){
+    string filename = "../primes0to100.txt";
+    char line[1024];
+    ifstream controlFileStream;
+
+    controlFileStream.open(filename, std::ifstream::in);
+    if (controlFileStream.is_open()){
+        if (INFO) {
+            std::cout << "Control File Opened" << endl;
+        }
+        while (controlFileStream.getline(line,1024)){
             putPrimesFromLineInOutput(line, &output);
         }
-        primes0to100.close();
+        controlFileStream.close();
+    } else {
+        std::cout << "Control File didn't open. Error : " << strerror(errno);
+        exit(1);
     }
     return output;
 }
@@ -96,10 +163,20 @@ vector<uint64_t> getPrimesFrom0to100FromControlPrimeSetFile(){
  * @param output Tableau de nombre premier à remplir.
  */
 void putPrimesFromLineInOutput(string line,vector<uint64_t> *output){
+    if (INFO) {
+        std::cout << "putPrimesFromLineInOutput" << endl;
+    }
     vector<uint64_t> primes = splitNumbersFromLine(line);
 
     for (int i = 0; i < primes.size(); i++){
         (*output).push_back(primes.at(i));
+    }
+    if (VERBOSE) {
+        assert(primes.size() != 0);
+        for (int i = 0; i < primes.size(); i++) {
+            cout << "DEBUG 0 " << endl;
+            cout << primes.at(i) << endl;
+        }
     }
 }
 
@@ -110,6 +187,9 @@ void putPrimesFromLineInOutput(string line,vector<uint64_t> *output){
  * @return Un vector<uint64_t> de nos nombres premiers.
  */
 vector<uint64_t> splitNumbersFromLine(string line){
+    if (INFO) {
+        std::cout << "splitNumbersFromLine" << endl;
+    }
     vector<uint64_t> output(0);
     stringstream ss(line); // Utilisé pour lire une chaine de caractère comme un flux.
     char *numberOfCharProcessed = 0; // strtoull param.
@@ -121,5 +201,27 @@ vector<uint64_t> splitNumbersFromLine(string line){
         );
         buffer = "";
     }
+
+    if (VERBOSE) {
+        assert(output.size() != 0);
+        for (int i = 0; i < output.size(); i++) {
+            cout << "DEBUG 1 " << endl;
+            cout << output.at(i) << endl;
+        }
+    }
     return output;
 }
+
+/** \brief Je suis une fonction pour effectuer un meilleur affichage en cas
+ *          d'échec d'une assertion.
+ */
+ void mAssert(char *const expr_str, bool expr, basic_string<char> msg){
+    if (!expr){
+        std::cout << "Echec de l'assertion: " << msg << endl
+        << "Resultat Attendu : " << expr_str << endl
+        << "a renvoyé : False." << endl;
+
+        std::cout << "Echec du test, fin du programme." << endl;
+        exit(1);
+    }
+ }
