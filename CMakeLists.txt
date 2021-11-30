@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 
 add_executable(PrimeBreaker
         utils/chronoCPU.cpp
+        helperFunctions.cpp
         primeBreakerCPU.cpp
         TestPrimeBreaker.cpp
-        main.cpp
-        helperFunctions.cpp)
+        benchmark.cpp
+        main.cpp)
