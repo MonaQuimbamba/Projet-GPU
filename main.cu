@@ -44,7 +44,7 @@ int main( int argc, char **argv )
 
 	uint64_t N=atoll(argv[1]);
 
-	cout << "============================================"	<< endl;
+	/*cout << "============================================"	<< endl;
 	cout << "         Sequential version on CPU          " 	<< endl;
 	cout << "============================================"	<< endl << endl;
 
@@ -76,7 +76,7 @@ int main( int argc, char **argv )
 	chrCPU.stop();
 	const float timeComputeCPUFact = chrCPU.elapsedTime();
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeCPUFact << " ms" << endl;
-	cout << " Factorisation CPU : " << printFactuers(facteurs)<<endl ; // ajouter une focntion pour afficher la factorisation de cette façon 2133=1 ∗ 3^3 ∗ 79^1
+	cout << " Factorisation CPU : " << printFactuers(facteurs)<<endl ; */
 
 
 	cout << "============================================"	<< endl;
