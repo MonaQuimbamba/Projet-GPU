@@ -1,4 +1,5 @@
 #include "TestPrimeBreaker.hpp"
+#include "benchmark.h"
 #include <iostream>
 #include <cstdlib>
 
@@ -10,7 +11,13 @@ int main( int argc, char **argv )
 	cout << "                           Version séquentielle sur CPU                                 " 	<< endl;
 	cout << "========================================================================================"	<< endl << endl;
 
-    launchUnitTest();
+    //launchUnitTest();
+
+    cout << "========================================================================================"	<< endl;
+    cout << "                           Tests de performances (CPU)                                  " 	<< endl;
+    cout << "========================================================================================"	<< endl << endl;
+
+    generatePlots();
 
 	return EXIT_SUCCESS;
 }
