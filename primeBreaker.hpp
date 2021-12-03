@@ -17,32 +17,27 @@ using namespace std;
    Cette fonction va  tester la primalité d’un nombre de
   - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas
 */
-__global__ void isPrimeGPU(uint64_t *const dev_N,unsigned int  *const isPrime, uint64_t const N,size_t const taille);
+__global__ void isPrimeGPU(uint64_t *const dev_tab_possibles_diviseurs,unsigned int  *const dev_resOperations, uint64_t const N,size_t const taille);
 // ==================================================== Kernels launches
 template<int numKernel> __host__
 float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 {
-					 isPrime=1;
-					 if(N!=2 && N!=3) // pour s'assurer qu'on lance pas le kernel si le N est 2 ou 3
-					 {
-										// prepare data to send to GPU , soit N un numero on fait un tableau avec des numeros inférieurs à N
-										// pour 0 et 1 on met 2 , exemple pour 10 on a [9,8,7,6,5,4,3,2,2,2]
-										  uint64_t *dev_N;
-											uint64_t  *tab_possibles_diviseurs;
-											int taille = sqrt(N)+1;
-											tab_possibles_diviseurs = (uint64_t*)malloc( taille*sizeof(uint64_t) );
+											isPrime=1; // on part du principe qu'un nombre est premier
 
+										  uint64_t *dev_possibles_diviseurs;
+											uint64_t  *host_possibles_diviseurs;
+											int taille = sqrt(N)+1;
+											host_possibles_diviseurs = (uint64_t*)malloc( taille*sizeof(uint64_t) );
 
 										  uint64_t n=2;
-
-												for (uint64_t i= 0; i < taille; i++)
-												{
-														tab_possibles_diviseurs[i]=n;
+											for (uint64_t i= 2; i < taille; i++)
+											{
+														host_possibles_diviseurs[i-2]=n;
 														n++;
-												}
+											}
 
-											HANDLE_ERROR(cudaMalloc( (void**)&dev_N,  taille*sizeof(uint64_t) ));
-											HANDLE_ERROR(cudaMemcpy(dev_N,tab_possibles_diviseurs,taille*sizeof(uint64_t), cudaMemcpyHostToDevice ));
+											HANDLE_ERROR(cudaMalloc( (void**)&dev_possibles_diviseurs,  taille*sizeof(uint64_t) ));
+											HANDLE_ERROR(cudaMemcpy(dev_possibles_diviseurs,host_possibles_diviseurs,taille*sizeof(uint64_t), cudaMemcpyHostToDevice ));
 											// Set grid and block dimensions
 											unsigned int dimBlock;
 											unsigned int dimGrid;
@@ -59,8 +54,8 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 											}
 
 											verifyDimGridBlock( dimGrid, dimBlock, taille ); // Are you reasonable ?
-											unsigned int *host_partialIsPrime;
-											host_partialIsPrime = (unsigned int*)malloc( dimGrid*sizeof(unsigned int) );
+											unsigned int *resOperations;
+											resOperations = (unsigned int*)malloc( dimGrid*sizeof(unsigned int) );
 										  size_t sizePartial		= dimGrid  * sizeof(unsigned int);
 											size_t sizeSMem			= dimBlock * sizeof(unsigned int);
 
@@ -69,34 +64,24 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 									   	<< sizeSMem << std::endl;
 
 
-									  unsigned int *dev_partialIsPrime;
-										HANDLE_ERROR( cudaMalloc( (void**) &dev_partialIsPrime, sizePartial ) );
-										HANDLE_ERROR( cudaMemcpy(dev_partialIsPrime,host_partialIsPrime,sizePartial, cudaMemcpyHostToDevice ));
+									  unsigned int *dev_resOperations;
+										HANDLE_ERROR( cudaMalloc( (void**) &dev_resOperations, sizePartial ) );
+										HANDLE_ERROR( cudaMemcpy(dev_resOperations,resOperations,sizePartial, cudaMemcpyHostToDevice ));
 
 										ChronoGPU chrGPU;
 										chrGPU.start();
-										isPrimeGPU<<<dimGrid, dimBlock,sizeSMem>>>(dev_N,dev_partialIsPrime,N,taille);
+										isPrimeGPU<<<dimGrid, dimBlock,sizeSMem>>>(dev_possibles_diviseurs,dev_resOperations,N,taille);
 										chrGPU.stop();
-										HANDLE_ERROR( cudaMemcpy( host_partialIsPrime,dev_partialIsPrime,sizePartial, cudaMemcpyDeviceToHost ) );
-										// on verifie si (1) est vrai
-										// verifier s'il y'a des zeros dans le tableau partial , si oui c'est pas premier
-										bool isPrimeBool =true;
-										for(int i =0; i < dimGrid && isPrimeBool ; i++)
-										{
-												if(host_partialIsPrime[i]==0) // si il y'a un Zero c-à-d que le numéro n'est pas premier
-												{
-															isPrime=0;
-															isPrimeBool=false; // on arrête la boucle
-												}
-										}
-										free(host_partialIsPrime);
-									  cudaFree( dev_partialIsPrime );
-										free(tab_possibles_diviseurs);
-										cudaFree(dev_N);
+										HANDLE_ERROR( cudaMemcpy( resOperations,dev_resOperations,sizePartial, cudaMemcpyDeviceToHost ) );
+										isPrime=resOperations[0];
+
+										free(resOperations);
+									  cudaFree( dev_resOperations );
+										free(host_possibles_diviseurs);
+										cudaFree(dev_possibles_diviseurs);
 
 					        	return chrGPU.elapsedTime();
-	}
-	return 0.0;
+
 }
 
 #endif
