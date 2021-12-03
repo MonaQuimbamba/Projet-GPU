@@ -23,13 +23,11 @@ bool isPrimeCPU_v1(const uint64_t N,vector<uint64_t> tab_possibles_diviseurs)
 {
   if(N==2) return true;
   for(int i=2; i < sqrt(N)+1;i++)
-  {    tab_possibles_diviseurs.push_back(i);}
+  {    tab_possibles_diviseurs.push_back(i);}  // une seul boucle , commencer à 2 par defaut et ajouter 3 et prendre que le les primes
 
   for(int i=0;i<tab_possibles_diviseurs.size();i++)
   {
-    if(N%tab_possibles_diviseurs[i]==0){
-      return false;
-    }
+    if(N%tab_possibles_diviseurs[i]==0){ return false;}
   }
   return true;
 }
@@ -80,7 +78,7 @@ void addCell( cell c , vector< cell> *facteursPrimes)
  void factoCPU(uint64_t N, vector<cell> *facteursPrimes)
 {
     bool arreter=false;
-    while (arreter==false)
+    while (arreter==false)  // ameliorer 
     {
 
         bool  keepGoin=true;

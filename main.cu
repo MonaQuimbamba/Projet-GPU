@@ -91,10 +91,13 @@ int main( int argc, char **argv )
 
 
 
-/*
+
 	cout << " Recherche des nombres premiers sur GPU " << endl;
-	float timeComputeGPUSearch = searchPrimesGPU<0>( N);
-	cout << "Temps de recherche : "	<< timeComputeGPUSearch << " ms" << endl;
+	uint64_t *primesNumbersGPU;
+	//primesNumbersGPU=(uint64_t*)malloc((N+1)*sizeof(uint64_t))
+	float timeComputeGPUSearchGPU = launchKernelSearchPrimeGPU<0>(N,primesNumbersGPU);
+	cout << "Temps de recherche : "	<< timeComputeGPUSearchGPU << " ms" << endl;
+	/*
 	cout << " Factorisation en nombre premier  sur GPU " << endl;
 	float timeComputeGPUFact = factoGPU<0>( N);
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeGPUFact << " ms" << endl;
