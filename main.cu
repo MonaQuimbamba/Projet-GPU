@@ -84,23 +84,19 @@ int main( int argc, char **argv )
 	cout << "          Parallel versions on GPU           "	<< endl;
 	cout << "============================================"	<< endl << endl;
 	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;
-  unsigned int isPrimeGPU;
-  float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>(N,isPrimeGPU);
-  cout << "Temps du test de primalite : "	<< timeComputeGPUIsPrime << " ms" << endl;
-  cout << " Est Premier ? : " << N << " -> "<< isPrimeGPU <<endl;
 
-
-
-
-/*
-	cout << " Recherche des nombres premiers sur GPU " << endl;
-	float timeComputeGPUSearch = searchPrimesGPU<0>( N);
-	cout << "Temps de recherche : "	<< timeComputeGPUSearch << " ms" << endl;*/
 	cout << " Factorisation en nombre premier  sur GPU " << endl;
-	vector<cell> facteursGPU(0);
-	float timeComputeGPUFact = launchKernelFactGPU<0>(N,primesNumbers,&facteursGPU);
+	uint64_t *primesNumbersGPU;
+	int taille=primesNumbers.size();
+	primesNumbersGPU=(uint64_t*)malloc(taille*sizeof(uint64_t));
+	for(int i=0;i<taille;i++)
+	{
+		primesNumbersGPU[i]=primesNumbers.at(i);
+	}
+	cell *facteursGPU;
+	float timeComputeGPUFact = launchKernelFactGPU<0>(N,primesNumbersGPU,facteursGPU);
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeGPUFact << " ms" << endl;
-	cout << " Factorisation GPU : "<< printFactuers(facteursGPU)<<endl;
+	//cout << " Factorisation GPU : "<< printFactuers(facteursGPU)<<endl;
 
 
 	return EXIT_SUCCESS;

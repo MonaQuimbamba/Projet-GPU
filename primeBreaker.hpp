@@ -16,7 +16,7 @@ using namespace std;
 
 
 
-__global__ void facGPU(uint64_t const N,uint64_t *const dev_primes,cell *const dev_facteurs);
+__global__ void facGPU(uint64_t  N,uint64_t *const dev_primes,cell *const dev_facteurs);
 template<int numKernel> __host__
 float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs)
 {
@@ -29,8 +29,8 @@ float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs)
 						for (int i= 0; i < taille; i++)
 						{
 
-							  facteurs[i]->base=primes[i];
-								facteurs[i]->expo=0;
+							  facteurs[i].base=primes[i];
+								facteurs[i].expo=0;
 
 						}
 
@@ -60,10 +60,18 @@ float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs)
 						std::cout << "Computing on " << dimGrid << " block(s) and " << dimBlock  << std::endl;
 						ChronoGPU chrGPU;
 						chrGPU.start();
-						facGPU<<<dimGrid, dimBlock>>>(dev_primes,dev_FactPrime,N);
+						facGPU<<<dimGrid, dimBlock>>>(N,dev_primes,dev_facteurs);
 						chrGPU.stop();
 						HANDLE_ERROR( cudaMemcpy( facteurs,dev_facteurs,taille*sizeof(cell), cudaMemcpyDeviceToHost ) );
 
+						for(int i=0 ; i < taille ; i++)
+						{
+							if(facteurs[i].expo!=0)
+							{
+								std::cout << "/* message */"<< facteurs[i].base <<"^"<<facteurs[i].expo << '\n';
+							}
+
+						}
 
 							free(primes);
 						  cudaFree( dev_facteurs);
