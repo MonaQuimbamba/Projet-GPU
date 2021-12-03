@@ -43,7 +43,6 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 											// Set grid and block dimensions
 											unsigned int dimBlock;
 											unsigned int dimGrid;
-
 											// on va ajouter les versions ici
 											switch ( numKernel )
 											{
@@ -64,8 +63,7 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 											std::cout << "Computing on " << dimGrid << " block(s) and "
 										  << dimBlock << " thread(s) - shared memory size = "
 									   	<< sizeSMem << std::endl;
-
-
+											
 									  unsigned int *dev_partialIsPrime;
 										HANDLE_ERROR( cudaMalloc( (void**) &dev_partialIsPrime, sizePartial ) );
 										HANDLE_ERROR( cudaMemcpy(dev_partialIsPrime,host_partialIsPrime,sizePartial, cudaMemcpyHostToDevice ));
