@@ -8,7 +8,7 @@
       <config projectName="Projet_GPU" targetName="Projet_GPU" />
     </generated>
   </component>
-  <component name="CMakeSettings">
+  <component name="CMakeSettings" AUTO_RELOAD="true">
     <configurations>
       <configuration PROFILE_NAME="Debug" ENABLED="true" CONFIG_NAME="Debug" />
     </configurations>
@@ -16,9 +16,12 @@
   <component name="ChangeListManager">
     <list default="true" id="7e83da5e-4d22-4963-bf06-24840ed307cb" name="Changes" comment="Modifier le workspace.xml">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/main.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/CMakeLists.txt" beforeDir="false" afterPath="$PROJECT_DIR$/CMakeLists.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.cpp" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/primeBreakerCPU.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreakerCPU.cpp" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/primeBreakerCPU.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/primeBreakerCPU.hpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/chronoCPU.cpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/chronoCPU.cpp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/utils/common.hpp" beforeDir="false" afterPath="$PROJECT_DIR$/utils/common.hpp" afterDir="false" />
     </list>
     <list id="eea3e326-f448-4347-a361-3a979591a131" name="Changes by mona-quimbamba" comment="Changes by mona-quimbamba" />
     <option name="SHOW_DIALOG" value="false" />
@@ -49,6 +52,17 @@
       <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
     </file-type-list>
   </component>
+  <component name="HighlightingSettingsPerFile">
+    <setting file="file://$PROJECT_DIR$/primeBreaker.cu" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/utils/chronoCPU.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/TestPrimeBreaker.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/primeBreakerCPU.cpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/primeBreakerCPU.hpp" root0="SKIP_HIGHLIGHTING" />
+    <setting file="file://$PROJECT_DIR$/primeBreaker.hpp" root0="SKIP_HIGHLIGHTING" />
+  </component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
   <component name="ProjectId" id="21EludAjMzDtzrKCVYnpsvK700b" />
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectViewState">
@@ -56,6 +70,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="ASKED_SHARE_PROJECT_CONFIGURATION_FILES" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
@@ -65,6 +80,7 @@
     <property name="cf.first.check.clang-format" value="false" />
     <property name="cidr.known.project.marker" value="true" />
     <property name="cmake.loaded.for.project" value="true" />
+    <property name="last_opened_file_path" value="$USER_HOME$/Téléchargements" />
     <property name="node.js.detected.package.eslint" value="true" />
     <property name="node.js.detected.package.tslint" value="true" />
     <property name="node.js.selected.package.eslint" value="(autodetect)" />
@@ -72,19 +88,19 @@
     <property name="nodejs_package_manager_path" value="npm" />
   </component>
   <component name="RunManager">
-    <configuration name="Projet_GPU" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Projet_GPU" TARGET_NAME="Projet_GPU" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Projet_GPU" RUN_TARGET_NAME="Projet_GPU">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
-    <configuration default="true" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
-      <method v="2">
-        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="GradleAppRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
       <method v="2">
         <option name="com.jetbrains.cidr.cpp.gradle.execution.GradleNativeBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="CLionExternalRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true">
+      <method v="2">
+        <option name="CLION.EXTERNAL.BUILD" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="Projet_GPU" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="Projet_GPU" TARGET_NAME="Projet_GPU" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="Projet_GPU" RUN_TARGET_NAME="Projet_GPU">
+      <method v="2">
+        <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
       </method>
     </configuration>
   </component>
@@ -100,6 +116,7 @@
       <workItem from="1637565512944" duration="1591000" />
       <workItem from="1637567140507" duration="9202000" />
       <workItem from="1637581898710" duration="6442000" />
+      <workItem from="1638518628567" duration="795000" />
     </task>
     <task id="LOCAL-00001" summary="Importer les fichiers de configuration de l'IDE CLion.">
       <created>1637514485326</created>
@@ -194,7 +211,6 @@
         </entry>
       </map>
     </option>
-    <option name="oldMeFiltersMigrated" value="true" />
   </component>
   <component name="VcsManagerConfiguration">
     <MESSAGE value="Importer les fichiers de configuration de l'IDE CLion." />
@@ -213,5 +229,16 @@
     <MESSAGE value="Ajouter des commentaires sur les inclusions (méthodes) effectuée dans primeBreakerCPU.hpp" />
     <MESSAGE value="Modifier le workspace.xml" />
     <option name="LAST_COMMIT_MESSAGE" value="Modifier le workspace.xml" />
+  </component>
+  <component name="XDebuggerManager">
+    <breakpoint-manager>
+      <breakpoints>
+        <line-breakpoint enabled="true" type="com.jetbrains.cidr.execution.debugger.OCBreakpointType">
+          <url>file://$PROJECT_DIR$/primeBreakerCPU.cpp</url>
+          <line>124</line>
+          <option name="timeStamp" value="1" />
+        </line-breakpoint>
+      </breakpoints>
+    </breakpoint-manager>
   </component>
 </project>

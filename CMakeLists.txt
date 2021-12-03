@@ -9,5 +9,5 @@ add_executable(Projet_GPU
         main.cpp
         primeBreakerCPU.cpp
         utils/chronoCPU.cpp
-        TestPrimeBreaker.cpp
+
         )

@@ -1,5 +1,4 @@
 #include "chronoCPU.hpp"
-
 #include <iostream>
 
 ChronoCPU::ChronoCPU() 
