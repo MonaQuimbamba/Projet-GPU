@@ -88,7 +88,7 @@ int main( int argc, char **argv )
 		primesNumbersGPU[i]=primesNumbers.at(i);
 	}
 	cell *facteursGPU;
-	float timeComputeGPUFact = launchKernelFactGPU<0>(N,primesNumbersGPU,facteursGPU);
+	float timeComputeGPUFact = launchKernelFactGPU<0>(N,primesNumbersGPU,facteursGPU,taille);
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeGPUFact << " ms" << endl;
 	//cout << " Factorisation GPU : "<< printFactuers(facteursGPU)<<endl;
 
