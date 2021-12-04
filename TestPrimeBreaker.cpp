@@ -136,7 +136,7 @@ vector<uint64_t> getPrimesFrom0to100FromControlPrimeSetFile(){
     }
 
     vector<uint64_t> output(0);
-    string filename = "../primes0to100.txt";
+    string filename = "primes0to100.txt";
     char line[1024];
     ifstream controlFileStream;
 
