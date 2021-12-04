@@ -24,6 +24,5 @@ void TestIfPrimesBetween0and100AreSuccessfullyRetrieved();
 vector<uint64_t> getPrimesFrom0to100FromControlPrimeSetFile();
 void putPrimesFromLineInOutput(string line, vector<uint64_t> *output);
 vector<uint64_t> splitNumbersFromLine(string line);
-void mAssert(char *const expr_str, bool expr, basic_string<char> msg);
 
 #endif //PROJET_GPU_TESTPRIMEBREAKER_HPP
