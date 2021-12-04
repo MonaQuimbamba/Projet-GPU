@@ -52,24 +52,6 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite)
     return resultat;
 }
 
-/**   \brief je suis la methode qui va ajouter , une celule dans le vecteurs de facteurs
-*/
-
-void addCell( cell c , vector< cell> *facteursPrimes)
-{
-
-    bool add=true;
-    for(int i=0 ; i < facteursPrimes->size();i++)
-    {
-       if(c.base==facteursPrimes->at(i).base)
-       {
-         facteursPrimes->at(i).expo+=1;
-         add=false;
-       }
-    }
-
-    if(add==true) facteursPrimes->push_back(c);
-}
 
 /** \brief je suis la methode qui permet de décomposeur un nombre en facteurs premiers
  *

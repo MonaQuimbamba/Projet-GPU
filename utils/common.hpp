@@ -8,15 +8,6 @@
 #include <device_launch_parameters.h>
 
 
-struct cell {
-  uint64_t base;
-  int expo;
-};
-
-
-
-
-
 
 #define HANDLE_ERROR(_exp) do {											\
     const cudaError_t err = (_exp);										\
@@ -27,13 +18,10 @@ struct cell {
     }																	\
 } while (0)
 
-struct cell {
-  uint64_t base;
-  int expo;
-};
 
 static void verifyDimGridBlock( const unsigned int dimGrid, const unsigned int dimBlock,
-							    const unsigned int N ) {
+							    const unsigned int N )
+                  {
 	cudaDeviceProp prop;
     int device;
     HANDLE_ERROR(cudaGetDevice(&device));

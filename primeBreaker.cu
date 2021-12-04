@@ -66,9 +66,9 @@ __global__ void searchPrimeGPU(uint64_t *const dev_possiblesPremiers,uint64_t  *
     while(gid < taille)
     {
 
-        isPrimeGPU(dev_tab_possibles_diviseurs,dev_resOperations,N,taille);
+        //isPrimeGPU(dev_tab_possibles_diviseurs,dev_resOperations,N,taille);
 
-        dev_primes[gid]=dev_resOperations[0];
+      //  dev_primes[gid]=dev_resOperations[0];
         gid+=blockDim.x*gridDim.x;
     }
 

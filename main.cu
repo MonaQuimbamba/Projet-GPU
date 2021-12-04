@@ -6,46 +6,17 @@
 #include "primeBreakerCPU.hpp"
 #include "primeBreaker.hpp"
 #include "utils/common.hpp"
-#include "Reference.hpp"
-
+#include "helperFunctions.hpp"
 using namespace std;
 
-void printUsage(const char *prg)
-{
-	cerr	<< "Usage: " << prg << endl
-			<< " \t N "
-			<< endl << endl;
-	exit( EXIT_FAILURE );
-}
 
-string printPrimes(vector<uint64_t> primeNumbers)
-{
-        string res =  "Nombres premiers : \n " ;
-
-        for(int i =0 ; i < primeNumbers.size() ; i++)
-        {
-           res += "[" + std::to_string(primeNumbers.at(i)) + "]";
-        }
-    return res;
-}
-
-string printFactuers(vector<cell> facteurs )
-{
-    string res = "Les Facteurs premiers :  \n ";
-    for(int i = 0 ; i < facteurs.size(); i++)
-    {
-			string cell = to_string(facteurs.at(i).base)+"^"+to_string(facteurs.at(i).expo);
-    	res+= (i==facteurs.size()-1) ? ""+cell : cell+"*" ;
-    }
-    return res;
-}
 
 int main( int argc, char **argv )
 {
 
 	uint64_t N=atoll(argv[1]);
 
-	/*cout << "============================================"	<< endl;
+	cout << "============================================"	<< endl;
 	cout << "         Sequential version on CPU          " 	<< endl;
 	cout << "============================================"	<< endl << endl;
 	cout << " Partie CPU sur le nombre  " + to_string(N)<< endl;
@@ -71,13 +42,21 @@ int main( int argc, char **argv )
 	chrCPU.stop();
 	const float timeComputeCPUFact = chrCPU.elapsedTime();
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeCPUFact << " ms" << endl;
-	cout << " Factorisation CPU : " << printFactuers(facteurs)<<endl ; */
+	cout << " Factorisation CPU : " << printFacteurs(facteurs)<<endl ;
 
 
-	cout << "============================================"	<< endl;
+  cout << "============================================"	<< endl;
 	cout << "          Parallel versions on GPU           "	<< endl;
 	cout << "============================================"	<< endl << endl;
 	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;
+	unsigned int isPrimeGPU;
+	const float timeComputeGPUIsPrime = launchKernelIsPrimeGPU(N,isPrimeGPU);
+	cout << "Temps du test de primalite : "	<< timeComputeCPUIsPrime << " ms" << endl;
+	cout << " Est Premier ? " << isPrimeGPU << endl;
+
+
+
+	/*
 
 	cout << " Factorisation en nombre premier  sur GPU " << endl;
 	uint64_t *primesNumbersGPU;
@@ -89,7 +68,7 @@ int main( int argc, char **argv )
 	}
 	cell *facteursGPU;
 	float timeComputeGPUFact = launchKernelFactGPU<0>(N,primesNumbersGPU,facteursGPU,taille);
-	cout << "Temps de factorisation en nombre premier : "	<< timeComputeGPUFact << " ms" << endl;
+	cout << "Temps de factorisation en nombre premier : "	<< timeComputeGPUFact << " ms" << endl;*/
 	//cout << " Factorisation GPU : "<< printFactuers(facteursGPU)<<endl;
 
 
