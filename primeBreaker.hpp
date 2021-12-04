@@ -1,3 +1,4 @@
+
 #ifndef __PREMEBREAKER_HPP
 #define __PREMEBREAKER_HPP
 
@@ -145,6 +146,62 @@ float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs)
     cudaFree(dev_primes);
 
     return chrGPU.elapsedTime();
+}
+
+/** /brief
+Cette fonction permet de rechercher des nombres premiers inférieurs à N.
+- L’algorithme consiste à tester la primalité de tous les nombres inférieurs à N à l’aide de la fonction isprimeGPU.
+*/
+__global__ void searchPrimeGPU(uint64_t *const dev_possiblesPremiers,uint64_t  *const dev_primes,uint64_t const limiter, int const taille);
+// ==================================================== Kernels launches
+template<int numKernel> __host__
+float launchKernelSearchPrimeGPU(const uint64_t limiter,uint64_t *primes)
+{
+
+
+    uint64_t *dev_possiblesPremiers,*dev_primes;
+    uint64_t  *possiblesPremiers;
+    int taille =limiter-1;
+    primes = (uint64_t*)malloc( taille*sizeof(uint64_t) );
+    possiblesPremiers =(uint64_t*)malloc(taille*sizeof(uint64_t) );
+
+    uint64_t n=2;
+    for (uint64_t i= 2; i < taille; i++) // remplir le tableu avec les numeros en 2 à N
+    {
+        possiblesPremiers[i-2]=n;
+        n++;
+    }
+
+    HANDLE_ERROR(cudaMalloc( (void**)&dev_possiblesPremiers,  taille*sizeof(uint64_t) ));
+    HANDLE_ERROR(cudaMemcpy(dev_possiblesPremiers,possiblesPremiers,taille*sizeof(uint64_t), cudaMemcpyHostToDevice ));
+
+    HANDLE_ERROR(cudaMalloc( (void**)&dev_primes,  taille*sizeof(uint64_t) ));
+    HANDLE_ERROR(cudaMemcpy(dev_primes,primes,taille*sizeof(uint64_t), cudaMemcpyHostToDevice ));
+    // Set grid and block dimensions
+    unsigned int dimBlock;
+    unsigned int dimGrid;
+
+    // on va ajouter les versions ici
+    switch ( numKernel )
+    {
+        case 0: // V0
+            dimBlock = 256;
+            dimGrid =(taille+dimBlock-1)/dimBlock;
+            break;
+        default:
+            break;
+    }
+
+    verifyDimGridBlock( dimGrid, dimBlock, taille ); // Are you reasonable ?
+    ChronoGPU chrGPU;
+    chrGPU.start();
+    searchPrimeGPU<<<dimGrid, dimBlock>>>(dev_possiblesPremiers,dev_primes,limiter,taille);
+    chrGPU.stop();
+    HANDLE_ERROR( cudaMemcpy( primesNumbers,dev_res,taille*sizeof(uint64_t), cudaMemcpyDeviceToHost ) );
+
+
+    return chrGPU.elapsedTime();
+
 }
 
 #endif

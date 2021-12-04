@@ -48,19 +48,15 @@ int main( int argc, char **argv )
 	/*cout << "============================================"	<< endl;
 	cout << "         Sequential version on CPU          " 	<< endl;
 	cout << "============================================"	<< endl << endl;
-
-
 	cout << " Partie CPU sur le nombre  " + to_string(N)<< endl;
 	ChronoCPU chrCPU;
 	chrCPU.start();
 	vector<uint64_t> tab_possibles_diviseurs(0);
-
 	bool isPrime = isPrimeCPU_v1(N,tab_possibles_diviseurs); //isPrimeCPU(N);
 	chrCPU.stop();
 	const float timeComputeCPUIsPrime = chrCPU.elapsedTime();
 	cout << "Temps du test de primalite : "	<< timeComputeCPUIsPrime << " ms" << endl;
 	cout << " Est Premier ? " << isPrime << endl;
-
 	cout << " Recherche des nombres premiers sur CPU " << endl;
 	chrCPU.start();
 	vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
@@ -68,12 +64,10 @@ int main( int argc, char **argv )
 	const float timeComputeCPUSearchPrime = chrCPU.elapsedTime();
   //cout << printPrimes(primesNumbers) << endl; //afficher les nombres premiers //
     cout << "Temps de recherche : "	<< timeComputeCPUSearchPrime << " ms" << endl;
-
 	cout << " Factorisation en nombre premier  sur CPU " << endl;
 	chrCPU.start();
   vector<cell> facteurs(0);
   factoCPU(N,&facteurs);
-
 	chrCPU.stop();
 	const float timeComputeCPUFact = chrCPU.elapsedTime();
 	cout << "Temps de factorisation en nombre premier : "	<< timeComputeCPUFact << " ms" << endl;

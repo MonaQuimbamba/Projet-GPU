@@ -1,7 +1,5 @@
 #include "primeBreaker.hpp"
 
-
-
 __device__ uint64_t atomicExch_d(uint64_t* address, uint64_t val)
 {
   uint64_t old = *address;
@@ -59,6 +57,21 @@ __global__ void isPrimeGPU(uint64_t *const dev_tab_possibles_diviseurs,unsigned 
            __syncthreads();
            j/=2;
         }
+}
+
+__global__ void searchPrimeGPU(uint64_t *const dev_possiblesPremiers,uint64_t  *const dev_primes,uint64_t const limiter, int const taille)
+{
+    int gid = threadIdx.x + blockIdx.x*blockDim.x;
+
+    while(gid < taille)
+    {
+
+        isPrimeGPU(dev_tab_possibles_diviseurs,dev_resOperations,N,taille);
+
+        dev_primes[gid]=dev_resOperations[0];
+        gid+=blockDim.x*gridDim.x;
+    }
+
 }
 
 /** \brief
