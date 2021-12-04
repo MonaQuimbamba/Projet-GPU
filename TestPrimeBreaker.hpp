@@ -4,7 +4,7 @@
 #define LARGE_UINT64_NUMBER 214767739
 #define LARGE_UINT32_NUMBER 214748357
 
-#include "helper.hpp" // cell, booléens de niveau d'affichage du débug
+#include "helper.hpp" // cell, booléens de niveau d'affichage du débug, mAssert
 #include "primeBreakerCPU.hpp"
 #include <cassert> // assert
 #include <stdint.h> // uint64_t, uint32_t

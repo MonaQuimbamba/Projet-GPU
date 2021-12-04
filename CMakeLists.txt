@@ -10,5 +10,6 @@ add_executable(PrimeBreaker
 	helper.cpp
 	primeBreakerCPU.cpp
 	primeBreaker.cu
+	TestPrimeBreakerGPU.cu
 	main.cu
 	)

@@ -31,5 +31,7 @@ void printUsage( const char *prg );
 string printPrimes(vector<uint64_t> primeNumbers);
 string printFacteurs(vector<cell> facteurs);
 void addCell( cell c , vector< cell> *facteursPrimes);
+void mAssert(char *const expr_str, bool expr, basic_string<char> msg);
+
 
 #endif //PROJETGPU_HELPER_H

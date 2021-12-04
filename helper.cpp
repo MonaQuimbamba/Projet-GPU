@@ -56,3 +56,17 @@ void addCell( cell c , vector< cell> *facteursPrimes)
 
     if(add==true) facteursPrimes->push_back(c);
 }
+
+/** \brief Je suis une fonction pour effectuer un meilleur affichage en cas
+ *          d'échec d'une assertion.
+ */
+ void mAssert(char *const expr_str, bool expr, basic_string<char> msg){
+    if (!expr){
+        std::cout << "Echec de l'assertion: " << msg << endl
+        << "Resultat Attendu : " << expr_str << endl
+        << "a renvoyé : False." << endl;
+
+        std::cout << "Echec du test, fin du programme." << endl;
+        exit(1);
+    }
+ }
