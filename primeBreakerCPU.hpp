@@ -7,6 +7,7 @@
 #include <bits/stdc++.h>
 #include "utils/common.hpp"
 #include "Reference.hpp"
+#include "utils/common.hpp"
 #include <cstdint> // uint64_t
 #include <iostream> // cout, endl
 #include <string> // split, strtoull
@@ -32,8 +33,6 @@ bool isPrimeCPU_v1(const uint64_t N,vector<uint64_t> v);
 */
 std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite);
 
-
-
 /** \brief
 	Cette fonction va faire la décomposition en facteurs premiers
 	 - Le principe de la décomposition consiste à parcourir les nombres p de la liste des nombres premiers
@@ -42,6 +41,12 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite);
 */
 void factoCPU(uint64_t N, vector<cell> *facteursPrimes);
 
+/**  \brief
+    Cette fonction ajoute une cell dans un vector des facteurs premiers
+*/
+void addCell( cell c , vector< cell> *facteursPrimes);
+
+void factoCPU_v1(uint64_t N, vector<cell> *facteursPrimes);
 
 
 

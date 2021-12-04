@@ -1,5 +1,5 @@
 #include "primeBreakerCPU.hpp"
-
+#include <bits/stdc++.h>
 using namespace std;
 
 /**  \brief  Je suis la méthode qui renvoit si un certain nombre N
@@ -16,6 +16,7 @@ bool isPrimeCPU_v0(const uint64_t N)
     }
     return true;
 }
+
 /** \brief  Cette fonction va  tester la primalité d’un nombre de
             - L’algorithme consiste à vérifier pour un nombre N, si les nombres entre 2 et sqrt(N) sont diviseurs de N
 */
@@ -42,7 +43,7 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite)
 {
     std::vector<uint64_t> resultat(0);
 
-    for (uint64_t possiblePrime = limite; possiblePrime >=2; possiblePrime-=1)
+    for (uint64_t possiblePrime = limite; possiblePrime >= 2; possiblePrime-=1)
     {
         if (isPrimeCPU_v0(possiblePrime)) {
             resultat.push_back(possiblePrime);
@@ -75,29 +76,46 @@ void addCell( cell c , vector< cell> *facteursPrimes)
  * @param N
  * @param facteursPrimes
  */
- void factoCPU(uint64_t N, vector<cell> *facteursPrimes)
+ void factoCPU(uint64_t N, vector<cell> *facteursPrimes) {
+     bool arreter = false;
+
+     while (arreter == false) {
+         bool keepGoin = true;
+         vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
+         sort(primesNumbers.begin(), primesNumbers.end());
+         for (int i = 0; i < primesNumbers.size() && keepGoin == true; i++) {
+             if (sqrt(N) < primesNumbers.at(i)) arreter = true;
+             if (N % primesNumbers.at(i) == 0) {
+                 cell c;
+                 c.base = primesNumbers.at(i);
+                 c.expo = 1;
+                 N = N / primesNumbers.at(i);
+                 addCell(c, facteursPrimes);
+                 keepGoin = false;
+             }
+         }
+     }
+ }
+
+
+void factoCPU_v1(uint64_t N, vector<cell> *facteursPrimes)
 {
-    bool arreter=false;
-    while (arreter==false)  // ameliorer
-    {
-
-        bool  keepGoin=true;
-          vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
-          sort(primesNumbers.begin(), primesNumbers.end());
-          for( int i=0 ; i < primesNumbers.size() && keepGoin==true ;i++ )
-          {
-
-             if(sqrt(N) < primesNumbers.at(i)) arreter=true;
-              if(N%primesNumbers.at(i) == 0)
-              {
-                cell c;
-                c.base=primesNumbers.at(i);
-                c.expo=1;
-                N=N/primesNumbers.at(i);
-                addCell(c,facteursPrimes);
-                keepGoin=false;
+     vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
+     int i=0;
+     while(N!=1)
+     {
+               if(N%primesNumbers.at(i) == 0)
+               {
+                 cell c;
+                 c.base=primesNumbers.at(i);
+                 c.expo=1;
+                 N=N/primesNumbers.at(i);
+                 addCell(c,facteursPrimes);
+                }
+               else
+               {
+                  if( i < primesNumbers.size())
+                  { i++;  }
               }
-          }
-    }
-
+     }
 }
