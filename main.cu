@@ -50,7 +50,7 @@ int main( int argc, char **argv )
 	cout << "============================================"	<< endl << endl;
 	cout << " Partie GPU sur le nombre : " + to_string(N)<< endl;
 	unsigned int isPrimeGPU;
-	const float timeComputeGPUIsPrime = launchKernelIsPrimeGPU(N,isPrimeGPU);
+	const float timeComputeGPUIsPrime = launchKernelIsPrimeGPU<0>(N,isPrimeGPU);
 	cout << "Temps du test de primalite : "	<< timeComputeCPUIsPrime << " ms" << endl;
 	cout << " Est Premier ? " << isPrimeGPU << endl;
 
