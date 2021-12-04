@@ -17,7 +17,8 @@
 } while (0)
 
 static void verifyDimGridBlock( const unsigned int dimGrid, const unsigned int dimBlock,
-							    const unsigned int N ) {
+							    const unsigned int N )
+                  {
 	cudaDeviceProp prop;
     int device;
     HANDLE_ERROR(cudaGetDevice(&device));

@@ -10,8 +10,7 @@
 #include "utils/chronoCPU.hpp"
 #include "utils/chronoGPU.hpp"
 #include <bits/stdc++.h>
-#include "Reference.hpp"
-
+#include "helperFunctions.hpp"
 
 using namespace std;
 
@@ -216,7 +215,7 @@ float launchKernelSearchPrimeGPU(const uint64_t limiter,uint64_t *primes)
     chrGPU.start();
     searchPrimeGPU<<<dimGrid, dimBlock>>>(dev_possiblesPremiers,dev_primes,limiter,taille);
     chrGPU.stop();
-    HANDLE_ERROR( cudaMemcpy( primesNumbers,dev_res,taille*sizeof(uint64_t), cudaMemcpyDeviceToHost ) );
+    HANDLE_ERROR( cudaMemcpy( primes,dev_primes,taille*sizeof(uint64_t), cudaMemcpyDeviceToHost ) );
 
 
     return chrGPU.elapsedTime();

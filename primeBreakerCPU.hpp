@@ -4,9 +4,8 @@
 #ifndef __PRIMEBREAKERCPU_HPP
 #define __PRIMEBREAKERCPU_HPP
 
+#include "helperFunctions.hpp"
 #include <bits/stdc++.h>
-#include "utils/common.hpp"
-#include "Reference.hpp"
 #include "utils/common.hpp"
 #include <cstdint> // uint64_t
 #include <iostream> // cout, endl
@@ -40,11 +39,6 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite);
 	On s’arrête quand le nombre premier à tester devient supérieur à la racine carrée de N.
 */
 void factoCPU(uint64_t N, vector<cell> *facteursPrimes);
-
-/**  \brief
-    Cette fonction ajoute une cell dans un vector des facteurs premiers
-*/
-void addCell( cell c , vector< cell> *facteursPrimes);
 
 void factoCPU_v1(uint64_t N, vector<cell> *facteursPrimes);
 

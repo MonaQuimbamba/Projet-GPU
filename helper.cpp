@@ -1,5 +1,7 @@
-#include "helper.hpp"
+#include "helperFunctions.hpp"
 
+
+using namespace std;
 // TODO : Commenter
 void printUsage( const char *prg )
 {
@@ -10,7 +12,7 @@ void printUsage( const char *prg )
 }
 
 // TODO : Commenter
-string printPrimes(std::vector<uint64_t> primeNumbers)
+string printPrimes(vector<uint64_t> primeNumbers)
 {
     string res =  "Nombres premiers : \n " ;
 
@@ -31,4 +33,26 @@ string printFacteurs(vector<cell> facteurs )
         res+= (i==facteurs.size()-1) ? ""+cell : cell+"*" ;
     }
     return res;
+}
+
+// TODO : commenter
+
+
+/**   \brief je suis la methode qui va ajouter , une celule dans le vecteurs de facteurs
+*/
+
+void addCell( cell c , vector< cell> *facteursPrimes)
+{
+
+    bool add=true;
+    for(int i=0 ; i < facteursPrimes->size();i++)
+    {
+       if(c.base==facteursPrimes->at(i).base)
+       {
+         facteursPrimes->at(i).expo+=1;
+         add=false;
+       }
+    }
+
+    if(add==true) facteursPrimes->push_back(c);
 }

@@ -77,9 +77,9 @@ __global__ void searchPrimeGPU(
     while(gid < taille)
     {
 
-        isPrimeGPU(dev_possiblesPremiers,dev_resOperations,N,taille);
+        //isPrimeGPU(dev_tab_possibles_diviseurs,dev_resOperations,N,taille);
 
-        dev_primes[gid]=dev_resOperations[0];
+      //  dev_primes[gid]=dev_resOperations[0];
         gid+=blockDim.x*gridDim.x;
     }
 
@@ -96,5 +96,4 @@ void facGPU(
 		cell *const dev_facteurs
 )
 {
-
 }
