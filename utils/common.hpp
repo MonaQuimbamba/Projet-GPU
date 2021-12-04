@@ -7,17 +7,6 @@
 #include <cuda_runtime.h>
 #include <device_launch_parameters.h>
 
-
-struct cell {
-  uint64_t base;
-  int expo;
-};
-
-
-
-
-
-
 #define HANDLE_ERROR(_exp) do {											\
     const cudaError_t err = (_exp);										\
     if ( err != cudaSuccess ) {											\
