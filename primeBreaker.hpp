@@ -16,14 +16,15 @@ using namespace std;
 
 
 
-__global__ void facGPU(uint64_t  N,uint64_t *const dev_primes,cell *const dev_facteurs);
+
+__global__ void facGPU(uint64_t  N,uint64_t *const dev_primes,cell *const dev_facteurs,int *mutex);
 template<int numKernel> __host__
-float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs)
+float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs,int taille)
 {
 
 					  uint64_t *dev_primes;
 						cell *dev_facteurs;
-						int  taille = N-1; // la taille da la liste des nombres premiers
+						//int  taille = N-1; // la taille da la liste des nombres premiers
 						facteurs=(cell*)malloc(taille*sizeof(cell));
 
 						for (int i= 0; i < taille; i++)
@@ -33,6 +34,11 @@ float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs)
 								facteurs[i].expo=0;
 
 						}
+
+						int *mutex;
+						cudaMalloc(&mutex, sizeof(int));
+						cudaMemset(mutex, 0, sizeof(int));
+
 
 						HANDLE_ERROR(cudaMalloc( (void**)&dev_primes, taille*sizeof(uint64_t) ));
 						HANDLE_ERROR(cudaMemcpy(dev_primes,primes,taille*sizeof(uint64_t), cudaMemcpyHostToDevice ));
@@ -60,7 +66,7 @@ float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs)
 						std::cout << "Computing on " << dimGrid << " block(s) and " << dimBlock  << std::endl;
 						ChronoGPU chrGPU;
 						chrGPU.start();
-						facGPU<<<dimGrid, dimBlock>>>(N,dev_primes,dev_facteurs);
+						facGPU<<<dimGrid, dimBlock>>>(N,dev_primes,dev_facteurs,mutex);
 						chrGPU.stop();
 						HANDLE_ERROR( cudaMemcpy( facteurs,dev_facteurs,taille*sizeof(cell), cudaMemcpyDeviceToHost ) );
 
