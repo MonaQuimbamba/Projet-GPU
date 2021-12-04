@@ -1,5 +1,6 @@
 #include "primeBreakerCPU.hpp"
 #include <bits/stdc++.h>
+
 using namespace std;
 
 /**  \brief  Je suis la méthode qui renvoit si un certain nombre N

@@ -2,9 +2,12 @@
 #include <cstdlib>
 #include <cstdint>
 #include "utils/chronoGPU.hpp"
+#include "utils/chronoCPU.hpp"
 #include "primeBreaker.hpp"
+#include "primeBreakerCPU.hpp"
 #include "utils/common.hpp"
-#include "helperFunctions.hpp"
+#include "helper.hpp"
+
 using namespace std;
 
 

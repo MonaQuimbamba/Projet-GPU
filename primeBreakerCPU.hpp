@@ -4,9 +4,8 @@
 #ifndef __PRIMEBREAKERCPU_HPP
 #define __PRIMEBREAKERCPU_HPP
 
-#include "helperFunctions.hpp"
+#include "helper.hpp"
 #include <bits/stdc++.h>
-#include "utils/common.hpp"
 #include <cstdint> // uint64_t
 #include <iostream> // cout, endl
 #include <string> // split, strtoull
@@ -41,7 +40,5 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite);
 void factoCPU(uint64_t N, vector<cell> *facteursPrimes);
 
 void factoCPU_v1(uint64_t N, vector<cell> *facteursPrimes);
-
-
 
 #endif

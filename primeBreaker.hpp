@@ -10,7 +10,7 @@
 #include "utils/chronoCPU.hpp"
 #include "utils/chronoGPU.hpp"
 #include <bits/stdc++.h>
-#include "helperFunctions.hpp"
+#include "helper.hpp"
 
 using namespace std;
 
