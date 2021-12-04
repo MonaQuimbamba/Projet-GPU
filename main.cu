@@ -1,9 +1,7 @@
 #include <iostream>
 #include <cstdlib>
 #include <cstdint>
-#include "utils/chronoCPU.hpp"
 #include "utils/chronoGPU.hpp"
-#include "primeBreakerCPU.hpp"
 #include "primeBreaker.hpp"
 #include "utils/common.hpp"
 #include "Reference.hpp"

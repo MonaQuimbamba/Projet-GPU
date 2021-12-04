@@ -16,11 +16,6 @@
     }																	\
 } while (0)
 
-struct cell {
-  uint64_t base;
-  int expo;
-};
-
 static void verifyDimGridBlock( const unsigned int dimGrid, const unsigned int dimBlock,
 							    const unsigned int N ) {
 	cudaDeviceProp prop;

@@ -19,7 +19,11 @@ using namespace std;
    Cette fonction va  tester la primalité d’un nombre de
   - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas
 */
-__global__ void isPrimeGPU(uint64_t *const dev_tab_possibles_diviseurs,unsigned int  *const dev_resOperations, uint64_t const N,size_t const taille);
+__global__ void isPrimeGPU(
+		uint64_t *const dev_tab_possibles_diviseurs,
+		unsigned int  *const dev_resOperations, 
+		uint64_t const N,
+		size_t const taille);
 // ==================================================== Kernels launches
 template<int numKernel> __host__
 float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
@@ -85,7 +89,12 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
     return chrGPU.elapsedTime();
 }
 
-__global__ void facGPU(uint64_t  N,uint64_t *const dev_primes,cell *const dev_facteurs,int *mutex);
+__global__ void facGPU(
+		uint64_t  N,
+		uint64_t *const dev_primes,
+		cell *const dev_facteurs
+		);
+/*
 template<int numKernel> __host__
 float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs,int taille)
 {
@@ -142,7 +151,7 @@ float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs,int 
     {
         if(facteurs[i].expo!=0)
         {
-            std::cout << "/* message */"<< facteurs[i].base <<"^"<<facteurs[i].expo << '\n';
+            std::cout << facteurs[i].base <<"^"<<facteurs[i].expo << '\n';
         }
 
     }
@@ -153,12 +162,16 @@ float launchKernelFactGPU(const uint64_t N,uint64_t *primes, cell *facteurs,int 
 
     return chrGPU.elapsedTime();
 }
-
+*/
 /** /brief
 Cette fonction permet de rechercher des nombres premiers inférieurs à N.
 - L’algorithme consiste à tester la primalité de tous les nombres inférieurs à N à l’aide de la fonction isprimeGPU.
-*/
-__global__ void searchPrimeGPU(uint64_t *const dev_possiblesPremiers,uint64_t  *const dev_primes,uint64_t const limiter, int const taille);
+*
+__global__ void searchPrimeGPU(
+		uint64_t *const dev_possiblesPremiers,
+		uint64_t  *const dev_primes,
+		uint64_t const limiter, 
+		int const taille);
 // ==================================================== Kernels launches
 template<int numKernel> __host__
 float launchKernelSearchPrimeGPU(const uint64_t limiter,uint64_t *primes)
@@ -209,5 +222,5 @@ float launchKernelSearchPrimeGPU(const uint64_t limiter,uint64_t *primes)
     return chrGPU.elapsedTime();
 
 }
-
+*/
 #endif
