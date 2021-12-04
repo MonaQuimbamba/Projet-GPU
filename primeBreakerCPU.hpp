@@ -6,6 +6,7 @@
 
 #include <bits/stdc++.h>
 #include "utils/common.hpp"
+#include "Reference.hpp"
 #include <cstdint> // uint64_t
 #include <iostream> // cout, endl
 #include <string> // split, strtoull
@@ -41,11 +42,6 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite);
 */
 void factoCPU(uint64_t N, vector<cell> *facteursPrimes);
 
-/**  \brief
-    Cette fonction ajoute une cell dans un vector des facteurs premiers
-*/
-
-void addCell( cell c , vector< cell> *facteursPrimes);
 
 
 
