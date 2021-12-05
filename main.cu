@@ -19,19 +19,13 @@ int main( int argc, char **argv )
     cout << "         			Partie CPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 
-//    	launchUnitTest();
+    launchUnitTest();
 
     cout << "=========================================================================="	<< endl;
     cout << "         			Partie GPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
-/*
-    	unsigned int isPrime = -1;
-    	uint64_t N = 214748357;
-	launchKernelIsPrimeGPU<0>(N, isPrime);
-
-	cout << "isPrime = " << isPrime << endl << endl;
-*/
-	launchUnitTestGPU();
+	
+    launchUnitTestGPU();
 
 	return EXIT_SUCCESS;
 }

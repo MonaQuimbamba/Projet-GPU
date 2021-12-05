@@ -21,6 +21,7 @@ void TestIfNonPrimeIsNotAssertedWithAIntegerPrimeNumber();
 void TestIfPrimeIsAssertedWithALargeUint64PrimeNumber();
 void TestIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumber();
 void TestIfPrimesBetween0and100AreSuccessfullyRetrieved();
+void TestIfNumberIsFactorized();
 vector<uint64_t> getPrimesFrom0to100FromControlPrimeSetFile();
 void putPrimesFromLineInOutput(string line, vector<uint64_t> *output);
 vector<uint64_t> splitNumbersFromLine(string line);
