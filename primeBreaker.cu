@@ -12,6 +12,7 @@ void isPrime(
 		){
 
 	int gid = threadIdx.x + blockIdx.x * blockDim.x;
+	int initial_gid = gid;
 	int bid = blockIdx.x;
 	int tid = threadIdx.x;
 	extern __shared__ unsigned int cache[];
@@ -35,6 +36,9 @@ void isPrime(
 		
 		gid += gridDim.x * blockDim.x;	
 	}
+
+	if (initial_gid < gridDim.x)
+		res_operations[0] = ((res_operations[0] != 0) && (res_operations[initial_gid] != 0));
 }
 
 /*

@@ -49,11 +49,7 @@ void testIfNonPrimeIsNotAssertedWithAIntegerPrimeNumberOnGPU(){
 	isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM(BLOCKDIM)>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
 	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
 
-	for (int i = 0; i < GRIDDIM(sqrtN); i++){
-		res_operations[i] == 0 ? res_operations[0] = 0 : 0;
-	}
-    
-    	mAssert("isPrimeGPU(\tdev_possibles_diviseurs\n\tdev_resOperations\n\tUINT32_T_PRIME-1\n\ttaille)\n",
+	mAssert("isPrimeGPU(\tdev_possibles_diviseurs\n\tdev_resOperations\n\tUINT32_T_PRIME-1\n\ttaille)\n",
 		res_operations[0] == 0,
 		"Le nombre non premier a été reconnu comme un nombre premier.\n");
 
@@ -92,11 +88,7 @@ void testIfPrimeIsAssertedWithAIntegerPrimeNumberOnGPU(){
 	isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM(BLOCKDIM)>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
 	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
 
-	for (int i = 0; i < GRIDDIM(sqrtN); i++){
-		res_operations[i] == 0 ? res_operations[0] = 0 : 0;
-	}
-    
-    	mAssert("isPrimeGPU(\tdev_possibles_diviseurs\n\tdev_resOperations\n\tUINT32_T_PRIME\n\ttaille)\n",
+	mAssert("isPrimeGPU(\tdev_possibles_diviseurs\n\tdev_resOperations\n\tUINT32_T_PRIME\n\ttaille)\n",
 		res_operations[0] == 1,
 		"Le nombre premier n'a pas été reconnu comme tel.\n");
 	
@@ -135,10 +127,6 @@ void testIfPrimeIsAssertedWithALargeUint64PrimeNumberOnGPU(){
 	isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM(BLOCKDIM)>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
 	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
 
-	for (int i = 0; i < GRIDDIM(sqrtN); i++){
-		res_operations[i] == 0 ? res_operations[0] = 0 : 0;
-	}
-    
     	mAssert("isPrimeGPU(\tdev_possibles_diviseurs\n\tdev_resOperations\n\tUINT64_T_PRIME\n\ttaille)\n",
 		res_operations[0] == 1,
 		"Le nombre premier n'a pas été reconnu comme tel.\n");
@@ -179,10 +167,6 @@ void testIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumberOnGPU(){
 	isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM(BLOCKDIM)>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
 	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
 
-	for (int i = 0; i < GRIDDIM(sqrtN); i++){
-		res_operations[i] == 0 ? res_operations[0] = 0 : 0;
-	}
-    
     	mAssert("isPrimeGPU(\tdev_possibles_diviseurs\n\tdev_resOperations\n\tUINT64_T_PRIME-1\n\ttaille)\n",
 		res_operations[0] == 0,
 		"Le nombre non premier a été reconnu comme un nombre premier.\n");
