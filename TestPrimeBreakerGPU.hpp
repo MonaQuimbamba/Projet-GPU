@@ -1,7 +1,8 @@
 #ifndef __TESTPRIMEBREAKERGPU__H
 #define __TESTPRIMEBREAKERGPU__H
 
-#define GRIDDIM(X) (X+BLOCKDIM-1)/BLOCKDIM
+#define GRIDDIM(X) ((X+BLOCKDIM-1)/BLOCKDIM)
+#define SIZEMEM(X) (BLOCKDIM * sizeof(unsigned int))
 #define BLOCKDIM 256
 #define UINT32_T_PRIME 214748357
 

@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.10)
 project(ProjetGPU LANGUAGES CUDA CXX)
 
 set(CMAKE_CUDA_STANDARD 14)
+set(CUDA_NVCC_FLAGS "-g -G")
 
 add_executable(PrimeBreaker
       	utils/chronoGPU.cu

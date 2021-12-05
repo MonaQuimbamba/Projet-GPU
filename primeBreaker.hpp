@@ -14,30 +14,31 @@
 
 using namespace std;
 
-/** /brief
-   Cette fonction va  tester la primalité d’un nombre de
-  - L’algorithme consiste à vérifier pour un nombre N, si tous les nombres inférieurs ne le divisent pas
+/** /brief Je suis une fonction qui évalue partiellement la primalité d'un nombre, un traitement
+ * final doit être effectué par la fonction appelante afin d'évaluer la primalitée.
 */
-__global__ void isPrimeGPU(
-		uint64_t *const dev_tab_possibles_diviseurs,
-		unsigned int  *const dev_resOperations, 
-		uint64_t const N,
-		size_t const taille);
+__global__
+void isPrime(	unsigned int *possibles_premiers,
+		unsigned int *res_operations,
+		unsigned int  N,
+		unsigned int sqrtN);
+
 // ==================================================== Kernels launches
+/*
 template<int numKernel> __host__
 float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 {
-    isPrime=1; // on part du principe qu'un nombre est premier
+    isPrime=1; // on part du principe qu'un nombre est premier TODO : Pourquoi ?
 
     uint64_t *dev_possibles_diviseurs;
     uint64_t  *host_possibles_diviseurs;
-    int taille = sqrt(N)+1;
+    int taille = sqrt(N)+1; // TODO : Sachant que l'ensembles des possibles diviseurs est [[2;sqrt(N)]], pourquoi une taille de sqrt(N)+1 ?
     host_possibles_diviseurs = (uint64_t*)malloc( taille*sizeof(uint64_t) );
 
     uint64_t n=2;
     for (uint64_t i= 2; i < taille; i++)
     {
-        host_possibles_diviseurs[i-2]=n;
+        host_possibles_diviseurs[i-2]=n; // TODO : Tab[taille-2], Tab[taille-1] laissés vide car i allant de 2 à taille
         n++;
     }
 
@@ -60,7 +61,7 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 
     verifyDimGridBlock( dimGrid, dimBlock, taille ); // Are you reasonable ?
     unsigned int *resOperations;
-    resOperations = (unsigned int*)malloc( dimGrid*sizeof(unsigned int) );
+    resOperations = (unsigned int*)malloc( dimGrid*sizeof(unsigned int) ); // TODO : Les valeurs ne sont pas initialisés dans ce tableau ?
     size_t sizePartial		= dimGrid  * sizeof(unsigned int);
     size_t sizeSMem			= dimBlock * sizeof(unsigned int);
 
@@ -71,7 +72,7 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 
     unsigned int *dev_resOperations;
     HANDLE_ERROR( cudaMalloc( (void**) &dev_resOperations, sizePartial ) );
-    HANDLE_ERROR( cudaMemcpy(dev_resOperations,resOperations,sizePartial, cudaMemcpyHostToDevice ));
+    HANDLE_ERROR( cudaMemcpy(dev_resOperations,resOperations,sizePartial, cudaMemcpyHostToDevice )); 
 
     ChronoGPU chrGPU;
     chrGPU.start();
@@ -87,6 +88,7 @@ float launchKernelIsPrimeGPU(const uint64_t N,unsigned int &isPrime)
 
     return chrGPU.elapsedTime();
 }
+*/
 
 __global__ void facGPU(
 		uint64_t  N,
