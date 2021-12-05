@@ -12,6 +12,7 @@
 #include <vector> // vector<T>
 /* #include <boost/tuple/tuple.hpp> // tuple<T,T,..,T> */
 #include "primeBreakerCPU.hpp" // Fonctions de calcul CPU
+#include "TestPrimeBreakerGPU.hpp" // getPrimes helper func
 #include "helper.hpp" // cell
 #include <cmath> // pow
 #include "primeBreaker.hpp" // Fonctions de calcul GPU

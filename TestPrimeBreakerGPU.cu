@@ -292,6 +292,13 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
                 );
     }
 
+    cudaFree(dev_possibles_premiers);
+    cudaFree(dev_square_roots);
+    cudaFree(dev_premiers);
+    free(possibles_premiers);
+    free(square_roots);
+    free(premiers);
+
     std::cout << "On retrouve bien tout les nombres premiers compris dans l'interval : Succès." << std::endl << std::endl;
 }
 
@@ -346,7 +353,10 @@ void  testIfNumberIsFactorized()
 	mAssert("facteurs[2].expo == cinq.expo[0]",
 		facteurs[2].expo == cinq.expo,
 		"La puissance de 5 n'est pas correcte pour N = 100 expo = " + std::to_string(facteurs[2].expo) + "\n");
-	
+	cudaFree(dev_primes);
+	cudaFree(dev_facteurs);
+	free(primes);
+	free(facteurs);	
 	cout << "La factorisation a bien fonctionné : Succès "<<endl<<endl;
 	
 }

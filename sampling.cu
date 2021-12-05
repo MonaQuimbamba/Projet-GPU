@@ -113,9 +113,9 @@ void generatePrimeFactorisationDataFileCPU(){
 
 void generateDataFilesGPU(){
 	cout << " Lancement des tests de performances et génération des fichiers de données " << endl;
-    //generateResearchOfPrimesDataFileGPU();
+    generateResearchOfPrimesDataFileGPU();
     generatePrimalityTestDataFileGPU();
-    //generatePrimeFactorisationDataFileGPU(); 
+    generatePrimeFactorisationDataFileGPU(); 
     	cout << " Fin des tests de performances, les fichiers des résultats sont dans data/" << endl << endl;
 }
 
@@ -354,12 +354,42 @@ vector<float> generateResearchOfPrimesMeasurement(vector<uint64_t> limits){
 vector<float> generateGPUResearchOfPrimesMeasurement(vector<uint64_t> limits){
     vector<float> res(0);
     for (int i = 0; i < limits.size(); i++){
-        ChronoCPU *currentChrono = new ChronoCPU();
+	uint64_t borne_sup = limits.at(i);
+	uint64_t *possibles_premiers = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); possibles_premiers[i] = i+2, i++);
+	uint64_t *square_roots = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); square_roots[i] = sqrt(i+2), i++);
+	uint64_t *premiers = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); premiers[i] = 0, i++);
+       
+	uint64_t *dev_possibles_premiers;
+	uint64_t *dev_square_roots;
+	uint64_t *dev_premiers;
+
+	cudaMalloc((void**)&dev_possibles_premiers,sizeof(uint64_t)*(borne_sup-2));
+	cudaMalloc((void**)&dev_square_roots,sizeof(uint64_t)*(borne_sup-2));
+	cudaMalloc((void**)&dev_premiers,sizeof(uint64_t)*(borne_sup-2));
+	
+	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_square_roots, square_roots, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_premiers, premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+	
+	ChronoCPU *currentChrono = new ChronoCPU();
         currentChrono->start();
-        searchPrimesCPU_v0(limits.at(i));
+	searchPrimeGPU<<<GRIDDIM(borne_sup-2),BLOCKDIM,SIZEMEM>>>(
+			dev_possibles_premiers, 
+			dev_square_roots, 
+			borne_sup, 
+			dev_premiers);
         currentChrono->stop();
         res.push_back(currentChrono->elapsedTime());
         delete currentChrono;
+    	cudaFree(dev_possibles_premiers);
+    	cudaFree(dev_square_roots);
+    	cudaFree(dev_premiers);
+    	free(possibles_premiers);
+    	free(square_roots);
+    	free(premiers);
     }
     return res;
 }
@@ -427,13 +457,43 @@ vector<float> generatePrimeFactorisationMeasurement(vector<uint64_t> samples){
 vector<float> generateGPUPrimeFactorisationMeasurement(vector<uint64_t> samples){
     vector<float> res(0);
     for (int i = 0; i < samples.size(); i++){
-        ChronoCPU *currentChrono = new ChronoCPU();
-        vector<cell> factors(0);
-        currentChrono->start();
-        factoCPU(samples.at(i), &factors);
+        uint64_t N=samples.at(i);
+	ChronoCPU *currentChrono = new ChronoCPU();
+
+	vector<uint64_t> premiers_packed = getPrimes(N);
+	int taille = premiers_packed.size(); 
+	uint64_t *primes = (uint64_t*)malloc(sizeof(uint64_t) * taille);
+	for(int i = 0; i < taille; primes[i]=premiers_packed.at(i),i++);
+
+	cell  *facteurs=(cell*)malloc(sizeof(cell)*taille);
+	for(int i =0 ; i<taille; i++) {
+			facteurs[i].base=primes[i];
+			facteurs[i].expo=0;
+	}
+
+	uint64_t *dev_primes;
+	cell *dev_facteurs;
+	
+	cudaMalloc((void**)&dev_primes,sizeof(uint64_t)*taille);
+        cudaMalloc((void**)&dev_facteurs,sizeof(cell)*taille);
+       
+	cudaMemcpy(dev_primes,primes,sizeof(uint64_t)*taille,cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_facteurs,facteurs,sizeof(cell)*taille,cudaMemcpyHostToDevice);
+	currentChrono->start();
+        
+	factGPU<<<GRIDDIM(taille),BLOCKDIM>>>(
+			N,
+			dev_primes,
+			taille,
+			dev_facteurs);
         currentChrono->stop();
-        res.push_back(currentChrono->elapsedTime());
+        
+	res.push_back(currentChrono->elapsedTime());
         delete currentChrono;
+	cudaFree(dev_primes);
+	cudaFree(dev_facteurs);
+	free(primes);
+	free(facteurs);	
     }
     return res;
 }
