@@ -239,9 +239,9 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
 	if (VERBOSE) {
 		cout << "Affichage du tableau premiers après calcul GPU" << endl;
 		for (int i = 0; i < borne_sup-2; i++){
-			cout << "[" << premiers[i] << "]";
+			cout << "[" << i+2 << "," << premiers[i] << "]";
 		}
-		cout << "Fin Affichage" << endl << endl; 
+		cout << endl << "Fin Affichage" << endl << endl; 
 	}
 
     // Début Assertions
@@ -257,8 +257,20 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
 
 		while (premiers[j] == 0 && j < (borne_sup-2))
 			j++;
-		premiers_packed[i] = premiers[j];
+		premiers_packed[i] = (j+2);
 		premiers[j] = 0;
+	}
+
+	if (VERBOSE) {
+		printf("Liste de nombres premiers récupérés du GPU : \n");
+		for (int i = 0; i < nombresDePremiers; i++){
+			printf("[%d]", premiers_packed[i]);
+		}
+
+		printf("\n\nListe des nombres premiers récupérés du témoin : \n");
+		for (int i = 0; i < controlPrimeSet.size(); i++){
+			printf("[%d]", controlPrimeSet.at(i));
+		}
 	}
 
     mAssert("controlPrimeSet.size() == nombresDePremiers",
@@ -269,11 +281,9 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
             + string("\n")
     );
 
-    int i = controlPrimeSet.size()-1;
-    int j = 0;
-    for (; i >= 0; i-- && j++){
+    for (int i = 0; i < controlPrimeSet.size(); i++){
         mAssert("controlPrimeSet.at(i) == primesNumberFrom0to100.at(1)",
-                controlPrimeSet.at(i) == premiers_packed[j],
+                controlPrimeSet.at(i) == premiers_packed[i],
                 ("On ne retrouve pas le " + std::to_string(i) + "ème nombre premier.")
                 );
     }

@@ -7,7 +7,7 @@
 /**
  * \brief Booléens de génération de log pour le débug.
  */
-#define VERBOSE 1
+#define VERBOSE 0
 #define INFO    0
 
 /** \brief Inclusions et prototypes liés aux fonctions et structures à usage général.
