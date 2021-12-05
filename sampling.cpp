@@ -26,6 +26,42 @@ createPrimalityTestsDatas()
 }
 */
 
+void generateResearchOfPrimesDataFile(){
+    vector<uint64_t> limits = generateResearchOfPrimesLimits();
+    vector<float> timeMeasurements = generateResearchOfPrimesMeasurement(limits);
+
+    for (uint64_t log2Samples = 2,
+                 i = 0;
+         i < LOG2MAX_ROP-4;
+         log2Samples++,
+                 i++){
+        /// Après la mesure des échantillons, remplacer les
+        /// échantillons dans le tableau d'échantillons par
+        /// leur logarithme en base 2.
+        limits.at(i) = log2Samples;
+    }
+
+    // Créer un fichier
+    ofstream datafile;
+    datafile.open("data/researchOfPrimesCPU.dat",ios::out);
+    if (datafile.bad()){
+	cout << "Problème à l'ouverture du fichier" << endl;
+    }else {
+	for (int i =0; i < limits.size(); i++){
+		datafile << limits.at(i) << '\t' << timeMeasurements.at(i) << '\n';
+	}
+    }
+}
+
+void generatePrimalityTestDataFile(){
+
+}
+
+void generatePrimeFactorisationDataFile(){
+
+}
+
+
 /** \brief  Je suis une fonction qui génère des nombres
  *          avec une longeur allant de 4 à 35 bits.
  *  @return vector<uint64_t> Les échantillons.

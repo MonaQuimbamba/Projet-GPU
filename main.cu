@@ -9,6 +9,7 @@
 #include "TestPrimeBreaker.hpp"
 #include "utils/common.hpp"
 #include "helper.hpp"
+#include "benchmark.h"
 
 using namespace std;
 
@@ -19,13 +20,15 @@ int main( int argc, char **argv )
     cout << "         			Partie CPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 
-    launchUnitTest();
+    generateResearchOfPrimesDataFile(); 
+    //generatePlots();
+    //launchUnitTest();
 
     cout << "=========================================================================="	<< endl;
     cout << "         			Partie GPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 	
-    launchUnitTestGPU();
+    //launchUnitTestGPU();
 
 	return EXIT_SUCCESS;
 }

@@ -14,9 +14,9 @@ void generatePlots()
 {
     Gnuplot gnuplot;
 
-    //drawPlotForPrimalityTestAlgorithms(gnuplot);
+    drawPlotForPrimalityTestAlgorithms(gnuplot);
     //drawPlotForResearchOfPrimes(gnuplot);
-    drawPlotForPrimesFactorisation(gnuplot);
+    //drawPlotForPrimesFactorisation(gnuplot);
 }
 
 /** \brief  Je suis une fonction qui fait des mesures de temps pour analyser les performances
@@ -52,7 +52,7 @@ void drawPlotForPrimalityTestAlgorithms(Gnuplot gnuplot)
             timeMeasurements,
              "Mesure de temps (en ms) pour un nombre binaire de N bits"
              );
-    wait_for_key();
+    gnuplot.savetofigure("PrimalityTestCPU.pdf");
 }
 
 /** \brief  Je suis une fonction qui fait des mesures de temps pour analyser les performances
