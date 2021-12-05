@@ -4,6 +4,6 @@
 
 Dépendence à Gnuplot
 
-> cmake .
-> make
-> ./PrimeBreaker:
+> cmake . ;
+> make ;
+> ./PrimeBreaker
