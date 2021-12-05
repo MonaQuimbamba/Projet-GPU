@@ -13,7 +13,7 @@ void launchUnitTestGPU(){
     testIfPrimeIsAssertedWithALargeUint64PrimeNumberOnGPU();
     testIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumberOnGPU();
     testIfPrimesBetween0and100AreComputedOnGPU();
-
+    //testIfNumberIsFactorized();
     cout << "============================================"	<< endl;
     cout << "    Tests unitaires éffectués avec succès.   " 	<< endl;
     cout << "============================================"	<< endl << endl;
@@ -38,6 +38,7 @@ void testIfNonPrimeIsNotAssertedWithAIntegerPrimeNumberOnGPU(){
 
 	uint64_t *dev_possibles_premiers;
 	cudaMalloc((void**)&dev_possibles_premiers, sizeof(uint64_t) * (nombresDePossiblesPremiers));
+
 	unsigned int *dev_res_operations;
 	cudaMalloc((void**)&dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN));
 
@@ -261,15 +262,17 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
 		premiers[j] = 0;
 	}
 
-	if (VERBOSE) {
+	if (VERBOSE)
+
+        {
 		printf("Liste de nombres premiers récupérés du GPU : \n");
 		for (int i = 0; i < nombresDePremiers; i++){
-			printf("[%d]", premiers_packed[i]);
+			printf("[%lld]", premiers_packed[i]);
 		}
 
 		printf("\n\nListe des nombres premiers récupérés du témoin : \n");
 		for (int i = 0; i < controlPrimeSet.size(); i++){
-			printf("[%d]", controlPrimeSet.at(i));
+			printf("[%lld]", controlPrimeSet.at(i));
 		}
 	}
 
@@ -289,4 +292,80 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
     }
 
     std::cout << "On retrouve bien tout les nombres premiers compris dans l'interval : Succès." << std::endl;
+
+
+	// appeler le tes Fact  en profitant  de la liste des premiers 
+       testIfNumberIsFactorized(premiers_packed,nombresDePremiers);
+
 }
+
+
+
+void  testIfNumberIsFactorized(uint64_t *primes,int taille)
+{
+
+
+        uint64_t N=100;
+	cell cinq;
+	cinq.base=5;
+	cinq.expo=2;
+	cell deux;
+	deux.base=2;
+	deux.expo=2;
+        cell  *facteurs=(cell*)malloc(sizeof(cell)*taille);
+	// on remplie le tableua de cell avec l'ensemble des nombres premiers tous avec un exposant de 0 
+	for(int i =0 ; i<taille; facteurs[i].base=primes[i],facteurs[i].expo=0,i++);
+
+	uint64_t *dev_primes;
+	cell *dev_facteurs;
+	
+	cudaMalloc((void**)&dev_primes,sizeof(uint64_t)*taille);
+        cudaMalloc((void**)&dev_facteurs,sizeof(cell)*taille);
+       
+	cudaMemcpy(dev_primes,primes,sizeof(uint64_t)*taille,cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_facteurs,facteurs,sizeof(cell)*taille,cudaMemcpyHostToDevice);
+     
+      uint64_t *val;
+      
+     cudaMallocManaged(&val,sizeof(uint64_t));
+     *val=N;
+     while(*val!=1)
+      {
+           N=*val;
+          // printf("val: {%lld} ",N);
+           factGPU<<<GRIDDIM(taille),BLOCKDIM>>>(N,dev_primes,dev_facteurs,taille,val);
+           cudaDeviceSynchronize();
+      } 
+	cudaMemcpy(facteurs,dev_facteurs,sizeof(cell)*taille,cudaMemcpyDeviceToHost);
+
+	cell cinq_;
+        cell deux_;
+        cinq_.base=5;
+      
+        deux_.base=2;
+        for(int i=0 ; i< taille ; i++)
+	{
+
+	cout << " :  "<< facteurs[i].base <<"^"<<facteurs[i].expo<<endl<<endl;
+
+		if(facteurs[i].base==cinq_.base)
+		{cinq_.expo=facteurs[i].expo;}
+
+		if(facteurs[i].base==deux_.base)
+		{deux_.expo=facteurs[i].expo;}
+	}
+
+
+      	 mAssert("l'exposant de la base cinq  ",
+               cinq.expo==cinq_.expo,
+              "la base cinq n'as pas le bon exposant  ");
+
+	mAssert("l'exposant de la base deux ",
+		deux.expo==deux_.expo,
+		"la base deux n'a pas le bon exposant");
+
+	cout<<" La factorisation a bien focntionnée : Succès "<<endl<<endl;
+	
+}
+	
+		

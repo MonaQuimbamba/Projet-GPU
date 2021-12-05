@@ -30,10 +30,12 @@ void searchPrimeGPU(
 		uint64_t borne_sup,
 		uint64_t *premiers);
 
-__global__ void facGPU(
+__global__ void factGPU(
 		uint64_t  N,
 		uint64_t *const dev_primes,
-		cell *const dev_facteurs
+		cell *const dev_facteurs,
+                int const taille,
+                uint64_t *val
 		);
 /*
 template<int numKernel> __host__

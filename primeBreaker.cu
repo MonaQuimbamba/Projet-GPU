@@ -83,10 +83,31 @@ __global__ void searchPrimeGPU(
     je suis la fonction qui permet de decomposeur un numero en facteurs premiers
 */
 __global__ 
-void facGPU(
+void factGPU(
 		uint64_t  N,
 		uint64_t *const dev_primes,
-		cell *const dev_facteurs
+		cell *const dev_facteurs,
+               int const taille,
+               uint64_t *val
 )
 {
+
+	int gid = threadIdx.x+blockIdx.x*blockDim.x;
+        while(gid < taille)
+       {
+
+        	if(N%dev_primes[gid]==0)
+                {
+                      
+			dev_facteurs[gid].expo+=1;
+                        val[0]=N/dev_primes[gid];
+		 }
+		
+            gid+=blockDim.x*gridDim.x;
+        }
+
+
+  
+
+
 }
