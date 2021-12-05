@@ -20,14 +20,15 @@ int main( int argc, char **argv )
     cout << "         			Partie CPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 
-    generateDataFiles();
+    //generateDataFilesCPU();
     //generatePlots();
     //launchUnitTest();
 
     cout << "=========================================================================="	<< endl;
     cout << "         			Partie GPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
-	
+
+	generateDataFilesGPU();    
     //launchUnitTestGPU();
 
 	return EXIT_SUCCESS;
