@@ -5,6 +5,7 @@
 #define SIZEMEM(X) (BLOCKDIM * sizeof(unsigned int))
 #define BLOCKDIM 256
 #define UINT32_T_PRIME 214748357
+#define UINT64_T_PRIME 214767739
 
 #include "helper.hpp" // cell, booléens de niveau d'affichage du débug, mAssert
 #include "primeBreaker.hpp"

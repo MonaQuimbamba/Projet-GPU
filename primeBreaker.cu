@@ -1,25 +1,14 @@
 #include "primeBreaker.hpp"
 
-__device__ uint64_t atomicExch_d(uint64_t* address, uint64_t val)
-{
-  uint64_t old = *address;
-
- do{
-    *address = val;
-
-  }while (old==val);
-
-  return old;
-}
 
 /**	\brief Je suis une fonction d'évaluation partielle de la primalité d'un nombre premier.
   */
 __global__
 void isPrime(
-		unsigned int *possibles_premiers,
+		uint64_t *possibles_premiers,
 		unsigned int *res_operations,
-		unsigned int N,
-		unsigned int sqrtN
+		uint64_t N,
+		uint64_t sqrtN
 		){
 
 	int gid = threadIdx.x + blockIdx.x * blockDim.x;

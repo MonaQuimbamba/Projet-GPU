@@ -28,22 +28,22 @@ void launchUnitTestGPU(){
 void testIfNonPrimeIsNotAssertedWithAIntegerPrimeNumberOnGPU(){
     	std::cout << "Tester si un nombre non premier assez large tenant sur un UINT32_T n'est pas reconnu comme tel." << std::endl;
 
-	unsigned int N = UINT32_T_PRIME-1;
-	unsigned int sqrtN = sqrt(N) + 1;
-	unsigned int nombresDePossiblesPremiers = N-2;
+	uint64_t N = UINT32_T_PRIME-1;
+	uint64_t sqrtN = sqrt(N) + 1;
+	uint64_t nombresDePossiblesPremiers = N-2;
 
-	unsigned int *possibles_premiers = (unsigned int*)malloc(sizeof(unsigned int) * (nombresDePossiblesPremiers));
+	uint64_t *possibles_premiers = (uint64_t*)malloc(sizeof(uint64_t) * (nombresDePossiblesPremiers));
 	for (int i = 0, j = 2.0; j < N; possibles_premiers[i] = j,i++,j++);
 	unsigned int *res_operations = (unsigned int*)malloc(sizeof(unsigned int) * GRIDDIM(sqrtN));
 	for (int i = 0; i < GRIDDIM(sqrtN); res_operations[i] = 1,i++);
 
-	unsigned int *dev_possibles_premiers;
-	cudaMalloc((void**)&dev_possibles_premiers, sizeof(unsigned int) * (nombresDePossiblesPremiers));
+	uint64_t *dev_possibles_premiers;
+	cudaMalloc((void**)&dev_possibles_premiers, sizeof(uint64_t) * (nombresDePossiblesPremiers));
 	unsigned int *dev_res_operations;
 	cudaMalloc((void**)&dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN));
 
 
-	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(unsigned int) * (nombresDePossiblesPremiers), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(uint64_t) * (nombresDePossiblesPremiers), cudaMemcpyHostToDevice);
        	cudaMemcpy(dev_res_operations, res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyHostToDevice);
 	isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM(BLOCKDIM)>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
 	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
@@ -71,22 +71,22 @@ void testIfNonPrimeIsNotAssertedWithAIntegerPrimeNumberOnGPU(){
 void testIfPrimeIsAssertedWithAIntegerPrimeNumberOnGPU(){
     	std::cout << "Tester si un nombre premier assez large tenant sur un UINT32_T est reconnu comme tel." << std::endl;
     
-	unsigned int N = UINT32_T_PRIME;
-	unsigned int sqrtN = sqrt(N) + 1;
-	unsigned int nombresDePossiblesPremiers = N-2;
+	uint64_t N = UINT32_T_PRIME;
+	uint64_t sqrtN = sqrt(N) + 1;
+	uint64_t nombresDePossiblesPremiers = N-2;
 
-	unsigned int *possibles_premiers = (unsigned int*)malloc(sizeof(unsigned int) * (nombresDePossiblesPremiers));
+	uint64_t *possibles_premiers = (uint64_t*)malloc(sizeof(uint64_t) * (nombresDePossiblesPremiers));
 	for (int i = 0, j = 2.0; j < N; possibles_premiers[i] = j,i++,j++);
 	unsigned int *res_operations = (unsigned int*)malloc(sizeof(unsigned int) * GRIDDIM(sqrtN));
 	for (int i = 0; i < GRIDDIM(sqrtN); res_operations[i] = 1,i++);
 
-	unsigned int *dev_possibles_premiers;
-	cudaMalloc((void**)&dev_possibles_premiers, sizeof(unsigned int) * (nombresDePossiblesPremiers));
+	uint64_t *dev_possibles_premiers;
+	cudaMalloc((void**)&dev_possibles_premiers, sizeof(uint64_t) * (nombresDePossiblesPremiers));
 	unsigned int *dev_res_operations;
 	cudaMalloc((void**)&dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN));
 
 
-	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(unsigned int) * (nombresDePossiblesPremiers), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(uint64_t) * (nombresDePossiblesPremiers), cudaMemcpyHostToDevice);
        	cudaMemcpy(dev_res_operations, res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyHostToDevice);
 	isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM(BLOCKDIM)>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
 	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
