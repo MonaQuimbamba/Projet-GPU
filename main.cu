@@ -20,7 +20,7 @@ int main( int argc, char **argv )
     cout << "         			Partie CPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 
-    generateResearchOfPrimesDataFile(); 
+    generateDataFiles();
     //generatePlots();
     //launchUnitTest();
 

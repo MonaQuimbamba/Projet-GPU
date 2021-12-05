@@ -30,7 +30,7 @@ createPrimeFactorisationDatas();*/
 vector<uint64_t> generatePrimeFactorisationSamples();
 vector<float> generatePrimeFactorisationMeasurement(vector<uint64_t> samples);
 
-
+void generateDataFiles();
 void generateResearchOfPrimesDataFile();
 void generatePrimalityTestDataFile();
 void generatePrimeFactorisationDataFile();

@@ -26,7 +26,16 @@ createPrimalityTestsDatas()
 }
 */
 
+void generateDataFiles(){
+	cout << " Lancement des tests de performances et génération des fichiers de données " << endl;
+    generateResearchOfPrimesDataFile();
+    generatePrimalityTestDataFile();
+    generatePrimeFactorisationDataFile(); 
+    	cout << " Fin des tests de performances, les fichiers des résultats sont dans data/" << endl << endl;
+}
+
 void generateResearchOfPrimesDataFile(){
+	cout << " Génération des données pour la recherche de nombres premiers sur le CPU " << endl;
     vector<uint64_t> limits = generateResearchOfPrimesLimits();
     vector<float> timeMeasurements = generateResearchOfPrimesMeasurement(limits);
 
@@ -51,14 +60,55 @@ void generateResearchOfPrimesDataFile(){
 		datafile << limits.at(i) << '\t' << timeMeasurements.at(i) << '\n';
 	}
     }
+    	cout << " Fin Génération " << endl;
 }
 
 void generatePrimalityTestDataFile(){
+	cout << " Génération des données pour le test de primalité sur le CPU " << endl;
+    vector<uint64_t> samples = generatePrimalityTestsSamples();
+    vector<float> timeMeasurements = generatePrimalityTestsMeasurement(samples);
+
+    for (uint64_t log2Samples = 2,
+                 i = 0;
+         i < LOG2MAX_ISP-4;
+         log2Samples++,
+                 i++){
+        /// Après la mesure des échantillons, remplacer les
+        /// échantillons dans le tableau d'échantillons par
+        /// leur logarithme en base 2.
+        samples.at(i) = log2Samples;
+    }
+
+    // Créer un fichier
+    ofstream datafile;
+    datafile.open("data/primalityTestsDatasCPU.dat",ios::out);
+    if (datafile.bad()){
+	cout << "Problème à l'ouverture du fichier" << endl;
+    }else {
+	for (int i =0; i < samples.size(); i++){
+		datafile << samples.at(i) << '\t' << timeMeasurements.at(i) << '\n';
+	}
+    }
+	cout << " Fin Génération. " << endl;
 
 }
 
 void generatePrimeFactorisationDataFile(){
+	cout << " Génération des données pour la factorisation sur le CPU " << endl;
+    vector<uint64_t> samples = generatePrimeFactorisationSamples();
+    vector<float> timeMeasurements = generatePrimeFactorisationMeasurement(samples);
 
+    // Créer un fichier
+    ofstream datafile;
+    datafile.open("data/factorisationDatasCPU.dat",ios::out);
+    if (datafile.bad()){
+	cout << "Problème à l'ouverture du fichier" << endl;
+    }else {
+	for (int i =0; i < samples.size(); i++){
+		datafile << samples.at(i) << '\t' << timeMeasurements.at(i) << '\n';
+	}
+    }
+	cout << " Fin Génération. " << endl;
 }
 
 
