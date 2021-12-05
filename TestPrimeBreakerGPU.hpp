@@ -29,5 +29,5 @@ void testIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumberOnGPU();
 void testIfPrimesBetween0and100AreComputedOnGPU();
 void testIfNumberIsFactorized();
 vector<uint64_t> getPrimes(uint64_t borne_sup);
-
+void  lancerFactorizedWithInputGPU(int argc,char **argv);
 #endif

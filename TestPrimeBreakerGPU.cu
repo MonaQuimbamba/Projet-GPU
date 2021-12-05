@@ -401,3 +401,65 @@ vector<uint64_t> getPrimes(uint64_t borne_sup){
 
 	return premiers_packed;
 }	
+
+
+
+ void lancerFactorizedWithInputGPU(int argc,char **argv)
+{
+
+          if(argc < 2) printUsage(argv[0]);
+
+
+
+          uint64_t N = atoll(argv[1]);
+        
+	vector<uint64_t> premiers_packed = getPrimes(N);
+	int taille = premiers_packed.size(); 
+	uint64_t *primes = (uint64_t*)malloc(sizeof(uint64_t) * taille);
+	for(int i = 0; i < taille; primes[i]=premiers_packed.at(i),i++);
+
+	cell  *facteurs=(cell*)malloc(sizeof(cell)*taille);
+	for(int i =0 ; i<taille; i++) {
+			facteurs[i].base=primes[i];
+			facteurs[i].expo=0;
+	}
+
+	uint64_t *dev_primes;
+	cell *dev_facteurs;
+	
+	cudaMalloc((void**)&dev_primes,sizeof(uint64_t)*taille);
+        cudaMalloc((void**)&dev_facteurs,sizeof(cell)*taille);
+       
+	cudaMemcpy(dev_primes,primes,sizeof(uint64_t)*taille,cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_facteurs,facteurs,sizeof(cell)*taille,cudaMemcpyHostToDevice);
+      
+    	ChronoGPU chrGPU;
+      chrGPU.start();
+        factGPU<<<GRIDDIM(taille),BLOCKDIM>>>(
+			N,
+			dev_primes,
+			taille,
+			dev_facteurs);
+	
+     	cudaMemcpy(facteurs,dev_facteurs,sizeof(cell)*taille,cudaMemcpyDeviceToHost);
+        chrGPU.stop();
+       
+     vector<cell> resulat(0);
+    for(int i=0 ; i <taille;i++)
+    {
+
+          if(facteurs[i].expo!=0)
+         {
+            cell c;
+           c.base=facteurs[i].base;
+          c.expo=facteurs[i].expo;
+          resulat.push_back(c);
+     }
+
+ }
+          const float timeComputeGPUFact = chrGPU.elapsedTime();
+           cout << " Temps de factorisation en nombre premier : " << timeComputeGPUFact << " ms "<<endl;
+          cout << " Factorisation GPU " <<printFacteurs(resulat)<<endl;
+
+
+}

@@ -254,3 +254,22 @@ vector<uint64_t> splitNumbersFromLine(string line){
     }
     return output;
 }
+
+
+
+void lancerFactorizedWithInput(int argc,char **argv)
+{
+
+        if(argc< 2) printUsage(argv[0]);
+
+         uint64_t N = atoll(argv[1]);
+         ChronoCPU chrCPU;
+         vector<cell> resultat(0);
+         chrCPU.start();
+         factoCPU_v1(N,&resultat);
+         chrCPU.stop();
+         const float timeComputeCPUFact = chrCPU.elapsedTime();
+         cout <<"Temps de factorisation en nombre premier : "<< timeComputeCPUFact <<" ms "<<endl;
+        cout <<"Factorisation CPU " << printFacteurs(resultat)<<endl;
+
+}

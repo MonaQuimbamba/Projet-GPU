@@ -5,8 +5,7 @@ using namespace std;
 // TODO : Commenter
 void printUsage( const char *prg )
 {
-    cerr	<< "Usage: " << prg << endl
-            << " \t N "
+    cerr	<< "Usage: " << prg << "  N "
             << endl << endl;
     exit( EXIT_FAILURE );
 }

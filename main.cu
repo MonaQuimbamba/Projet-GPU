@@ -19,13 +19,15 @@ int main( int argc, char **argv )
     cout << "         			Partie CPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 
-    launchUnitTest();
-
+  //  launchUnitTest();
+   lancerFactorizedWithInput(argc,argv);
     cout << "=========================================================================="	<< endl;
     cout << "         			Partie GPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 	
-    launchUnitTestGPU();
+    //launchUnitTestGPU();
 
-	return EXIT_SUCCESS;
+   lancerFactorizedWithInputGPU(argc,argv);
+
+ 	return EXIT_SUCCESS;
 }
