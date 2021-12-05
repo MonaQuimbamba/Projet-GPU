@@ -85,29 +85,38 @@ __global__ void searchPrimeGPU(
 __global__ 
 void factGPU(
 		uint64_t  N,
-		uint64_t *const dev_primes,
-		cell *const dev_facteurs,
-               int const taille,
-               uint64_t *val
+		uint64_t *dev_primes,
+               	int taille,
+		cell *dev_facteurs
 )
 {
-
 	int gid = threadIdx.x+blockIdx.x*blockDim.x;
-        while(gid < taille)
-       {
+	int tid = threadIdx.x;
+        extern __shared__ unsigned int cache[];
 
-        	if(N%dev_primes[gid]==0)
-                {
-                      
-			dev_facteurs[gid].expo+=1;
-                        val[0]=N/dev_primes[gid];
-		 }
+	while(gid < taille)
+       	{
+        	cache[tid] = 0;
+		uint64_t temp_N = N;
+
+		while(temp_N%dev_primes[gid]==0)
+                {             
+			cache[tid] += 1;
+			temp_N /= dev_primes[gid];
+		}
 		
+		__syncthreads();
+		
+		if (tid == 0){
+			for (int i = 0; i < blockDim.x; i++){
+				if (cache[i]) {
+					dev_facteurs[i+blockIdx.x*blockDim.x].expo += cache[i];
+					N -= (dev_facteurs[i+blockIdx.x*blockDim.x].base * cache[i]);
+				}		
+			}
+		}
+		__syncthreads();
+
             gid+=blockDim.x*gridDim.x;
         }
-
-
-  
-
-
 }

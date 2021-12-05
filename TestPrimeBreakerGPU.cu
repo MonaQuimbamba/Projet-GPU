@@ -13,7 +13,8 @@ void launchUnitTestGPU(){
     testIfPrimeIsAssertedWithALargeUint64PrimeNumberOnGPU();
     testIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumberOnGPU();
     testIfPrimesBetween0and100AreComputedOnGPU();
-    //testIfNumberIsFactorized();
+    testIfNumberIsFactorized();
+    
     cout << "============================================"	<< endl;
     cout << "    Tests unitaires éffectués avec succès.   " 	<< endl;
     cout << "============================================"	<< endl << endl;
@@ -291,30 +292,33 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
                 );
     }
 
-    std::cout << "On retrouve bien tout les nombres premiers compris dans l'interval : Succès." << std::endl;
-
-
-	// appeler le tes Fact  en profitant  de la liste des premiers 
-       testIfNumberIsFactorized(premiers_packed,nombresDePremiers);
-
+    std::cout << "On retrouve bien tout les nombres premiers compris dans l'interval : Succès." << std::endl << std::endl;
 }
 
 
-
-void  testIfNumberIsFactorized(uint64_t *primes,int taille)
+void  testIfNumberIsFactorized()
 {
-
-
+    std::cout << "Tester la factorisation d'un nombre entier sur le GPU" << std::endl;
         uint64_t N=100;
+	
 	cell cinq;
 	cinq.base=5;
 	cinq.expo=2;
+
 	cell deux;
 	deux.base=2;
 	deux.expo=2;
-        cell  *facteurs=(cell*)malloc(sizeof(cell)*taille);
-	// on remplie le tableua de cell avec l'ensemble des nombres premiers tous avec un exposant de 0 
-	for(int i =0 ; i<taille; facteurs[i].base=primes[i],facteurs[i].expo=0,i++);
+
+	vector<uint64_t> premiers_packed = getPrimes(100);
+	int taille = premiers_packed.size(); 
+	uint64_t *primes = (uint64_t*)malloc(sizeof(uint64_t) * taille);
+	for(int i = 0; i < taille; primes[i]=premiers_packed.at(i),i++);
+
+	cell  *facteurs=(cell*)malloc(sizeof(cell)*taille);
+	for(int i =0 ; i<taille; i++) {
+			facteurs[i].base=primes[i];
+			facteurs[i].expo=0;
+	}
 
 	uint64_t *dev_primes;
 	cell *dev_facteurs;
@@ -324,48 +328,76 @@ void  testIfNumberIsFactorized(uint64_t *primes,int taille)
        
 	cudaMemcpy(dev_primes,primes,sizeof(uint64_t)*taille,cudaMemcpyHostToDevice);
 	cudaMemcpy(dev_facteurs,facteurs,sizeof(cell)*taille,cudaMemcpyHostToDevice);
-     
-      uint64_t *val;
       
-     cudaMallocManaged(&val,sizeof(uint64_t));
-     *val=N;
-     while(*val!=1)
-      {
-           N=*val;
-          // printf("val: {%lld} ",N);
-           factGPU<<<GRIDDIM(taille),BLOCKDIM>>>(N,dev_primes,dev_facteurs,taille,val);
-           cudaDeviceSynchronize();
-      } 
-	cudaMemcpy(facteurs,dev_facteurs,sizeof(cell)*taille,cudaMemcpyDeviceToHost);
+    	
+        factGPU<<<GRIDDIM(taille),BLOCKDIM>>>(
+			N,
+			dev_primes,
+			taille,
+			dev_facteurs);
+	
+     	cudaMemcpy(facteurs,dev_facteurs,sizeof(cell)*taille,cudaMemcpyDeviceToHost);
 
-	cell cinq_;
-        cell deux_;
-        cinq_.base=5;
-      
-        deux_.base=2;
-        for(int i=0 ; i< taille ; i++)
-	{
+	mAssert("facteurs[0].expo == deux.expo[0]",
+		facteurs[0].expo == deux.expo,
+		"La puissance de 2 n'est pas correcte pour N = 100 expo = " + std::to_string(facteurs[0].expo) + "\n"
+		);
 
-	cout << " :  "<< facteurs[i].base <<"^"<<facteurs[i].expo<<endl<<endl;
-
-		if(facteurs[i].base==cinq_.base)
-		{cinq_.expo=facteurs[i].expo;}
-
-		if(facteurs[i].base==deux_.base)
-		{deux_.expo=facteurs[i].expo;}
-	}
-
-
-      	 mAssert("l'exposant de la base cinq  ",
-               cinq.expo==cinq_.expo,
-              "la base cinq n'as pas le bon exposant  ");
-
-	mAssert("l'exposant de la base deux ",
-		deux.expo==deux_.expo,
-		"la base deux n'a pas le bon exposant");
-
-	cout<<" La factorisation a bien focntionnée : Succès "<<endl<<endl;
+	mAssert("facteurs[2].expo == cinq.expo[0]",
+		facteurs[2].expo == cinq.expo,
+		"La puissance de 5 n'est pas correcte pour N = 100 expo = " + std::to_string(facteurs[2].expo) + "\n");
+	
+	cout << "La factorisation a bien fonctionné : Succès "<<endl<<endl;
 	
 }
 	
+/* \brief	Je suis une fonction qui permet d'obtenir un tableau de
+   		nombres premiers jusqu'à une certaine borne.
+*/
+vector<uint64_t> getPrimes(uint64_t borne_sup){
+	vector<uint64_t> premiers_packed(0);
 		
+	uint64_t *possibles_premiers = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); possibles_premiers[i] = i+2, i++);
+	uint64_t *square_roots = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); square_roots[i] = sqrt(i+2), i++);
+	uint64_t *premiers = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); premiers[i] = 0, i++);
+
+
+	uint64_t *dev_possibles_premiers;
+	uint64_t *dev_square_roots;
+	uint64_t *dev_premiers;
+	cudaMalloc((void**)&dev_possibles_premiers,sizeof(uint64_t)*(borne_sup-2));
+	cudaMalloc((void**)&dev_square_roots,sizeof(uint64_t)*(borne_sup-2));
+	cudaMalloc((void**)&dev_premiers,sizeof(uint64_t)*(borne_sup-2));
+	
+	
+	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_square_roots, square_roots, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_premiers, premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+	searchPrimeGPU<<<GRIDDIM(borne_sup-2),BLOCKDIM,SIZEMEM>>>(
+			dev_possibles_premiers, 
+			dev_square_roots, 
+			borne_sup, 
+			dev_premiers);
+
+	cudaMemcpy(premiers, dev_premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyDeviceToHost);
+
+	int nombresDePremiers = 0;
+	for(int i = 0; i < (borne_sup-2); i++){
+		if (premiers[i] != 0)
+			nombresDePremiers++;
+	}
+
+	for (int i = 0; i < nombresDePremiers; i++){
+		int j = 0;
+
+		while (premiers[j] == 0 && j < (borne_sup-2))
+			j++;
+		premiers_packed.push_back(j+2);
+		premiers[j] = 0;
+	}
+
+	return premiers_packed;
+}	

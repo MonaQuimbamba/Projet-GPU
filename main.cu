@@ -19,7 +19,7 @@ int main( int argc, char **argv )
     cout << "         			Partie CPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 
-    launchUnitTest();
+//    launchUnitTest();
 
     cout << "=========================================================================="	<< endl;
     cout << "         			Partie GPU	                               " 	<< endl;
