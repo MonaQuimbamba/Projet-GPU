@@ -16,6 +16,7 @@ add_executable(PrimeBreaker
 	primeBreaker.cu
 	TestPrimeBreaker.cpp
 	TestPrimeBreakerGPU.cu
+	sampling.cpp
 	benchmark.cpp
 	main.cu
 	)

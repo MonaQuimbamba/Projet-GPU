@@ -5,7 +5,7 @@ void drawPlotForPrimalityTestAlgorithms(Gnuplot gnuplot);
 void drawPlotForResearchOfPrimes(Gnuplot gnuplot);
 void drawPlotForPrimesFactorisation(Gnuplot gnuplot);
 
-using namespace boost;
+/*using namespace boost;*/
 
 /** \brief  Je suis une fonction qui vient enrouler les fonctions de créations de
  *          graphes de visualisation des performances des algorithmes.
@@ -30,15 +30,26 @@ void generatePlots()
  */
 void drawPlotForPrimalityTestAlgorithms(Gnuplot gnuplot)
 {
-    boost::tuple<vector<float>, vector<uint64_t>> datas = createPrimalityTestsDatas(); // (T_x,T_y)
+    vector<uint64_t> samples = generatePrimalityTestsSamples();
+    vector<float> timeMeasurements = generatePrimalityTestsMeasurement(samples);
+    for (uint64_t log2Samples = 4,
+            i = 0;
+            i < LOG2MAX_ISP-4;
+            log2Samples++,
+            i++){
+        /// Après la mesure des échantillons, remplacer les
+        /// échantillons dans le tableau d'échantillons par
+        /// leur logarithme en base 2.
+        samples.at(i) = log2Samples;
+    }
 
     gnuplot.reset_plot();
     cout << endl << endl << "*** Graphe pour le test de Primalité ***" << endl;
     gnuplot.set_grid();
     gnuplot.set_style("lines")
     .plot_xy(
-            datas.tail.head,
-            datas.head,
+            samples,
+            timeMeasurements,
              "Mesure de temps (en ms) pour un nombre binaire de N bits"
              );
     wait_for_key();
@@ -54,15 +65,27 @@ void drawPlotForPrimalityTestAlgorithms(Gnuplot gnuplot)
  */
 void drawPlotForResearchOfPrimes(Gnuplot gnuplot)
 {
-    boost::tuple<vector<float>, vector<uint64_t>> datas = createResearchOfPrimesDatas(); // (T_x,T_y)
+    vector<uint64_t> limits = generateResearchOfPrimesLimits();
+    vector<float> timeMeasurements = generateResearchOfPrimesMeasurement(limits);
+
+    for (uint64_t log2Samples = 2,
+                 i = 0;
+         i < LOG2MAX_ROP-4;
+         log2Samples++,
+                 i++){
+        /// Après la mesure des échantillons, remplacer les
+        /// échantillons dans le tableau d'échantillons par
+        /// leur logarithme en base 2.
+        limits.at(i) = log2Samples;
+    }
 
     gnuplot.reset_plot();
     cout << endl << endl << "*** Graphe pour la recherche de nombres premiers ***" << endl;
     gnuplot.set_grid();
     gnuplot.set_style("lines")
             .plot_xy(
-                    datas.tail.head,
-                    datas.head,
+                    limits,
+                    timeMeasurements,
                     "Mesure de temps (en ms) pour une borne superieure N."
             );
     wait_for_key();
@@ -78,15 +101,16 @@ void drawPlotForResearchOfPrimes(Gnuplot gnuplot)
  */
 void drawPlotForPrimesFactorisation(Gnuplot gnuplot)
 {
-    boost::tuple<vector<float>, vector<uint64_t>> datas = createPrimeFactorisationDatas(); // (T_x,T_y)
+    vector<uint64_t> samples = generatePrimeFactorisationSamples();
+    vector<float> timeMeasurements = generatePrimeFactorisationMeasurement(samples);
 
     gnuplot.reset_plot();
     cout << endl << endl << "*** Graphe pour la Factorisation en Nombres Premiers ***" << endl;
     gnuplot.set_grid();
     gnuplot.set_style("lines")
             .plot_xy(
-                    datas.tail.head,
-                    datas.head,
+                    samples,
+                    timeMeasurements,
                     "Mesure de temps (en ms) pour un entier N."
             );
     wait_for_key();

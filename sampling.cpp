@@ -4,7 +4,7 @@
  *          nos tests de performances pour une création de
  *          graphes ultérieure avec GnuPlot.
  * @return boost::tuple<vector<float>,vector<int>> couple de (Tableau de Mesures de temps, Tableau de Logarithme en base 2 des échantillons).
- */
+ *
 boost::tuple<vector<float>,vector<uint64_t>>
 createPrimalityTestsDatas()
 {
@@ -24,6 +24,7 @@ createPrimalityTestsDatas()
 
     return boost::tuple<vector<float>, vector<uint64_t>>{timeMeasurements,samples};
 }
+*/
 
 /** \brief  Je suis une fonction qui génère des nombres
  *          avec une longeur allant de 4 à 35 bits.
@@ -67,7 +68,7 @@ vector<uint64_t> generatePrimalityTestsSamples() {
 *          nos tests de performances de la recherche de nombre premiers
 *          pour une création de graphes ultérieure avec GnuPlot.
 * @return boost::tuple<vector<float>,vector<int>> couple de (Tableau de Mesures de temps, Tableau de Logarithme en base 2 des échantillons).
-*/
+*
 boost::tuple<vector<float>,vector<uint64_t>>
 createResearchOfPrimesDatas()
 {
@@ -87,6 +88,7 @@ createResearchOfPrimesDatas()
 
     return boost::tuple<vector<float>, vector<uint64_t>>{timeMeasurements,limits};
 }
+*/
 
 /** \brief  Je suis une fonction qui génère des puissances de 2.
  *  @return vector<uint64_t> Les échantillons.
@@ -130,7 +132,7 @@ vector<float> generateResearchOfPrimesMeasurement(vector<uint64_t> limits){
 *          nos tests de performances de la recherche de nombre premiers
 *          pour une création de graphes ultérieure avec GnuPlot.
 * @return boost::tuple<vector<float>,vector<int>> couple de (Tableau de Mesures de temps, Tableau de Logarithme en base 2 des échantillons).
-*/
+*
 boost::tuple<vector<float>,vector<uint64_t>>
 createPrimeFactorisationDatas()
 {
@@ -139,6 +141,7 @@ createPrimeFactorisationDatas()
 
     return boost::tuple<vector<float>, vector<uint64_t>>{timeMeasurements,samples};
 }
+*/
 
 /** \brief  Je suis une fonction qui génère des puissances de 2.
  *  @return vector<uint64_t> Les échantillons.

@@ -4,7 +4,7 @@
 #include <vector> // vector<T>
 #include <cstdint> // uint64_t
 #include "sampling.h" // Fonctions de créations d'échantillons pour les graphes.
-#include <boost/tuple/tuple.hpp> // tuple<T,T,...,T>
+/*#include <boost/tuple/tuple.hpp> // tuple<T,T,...,T>*/
 #include "utils/chronoCPU.hpp"
 #include "primeBreakerCPU.hpp"
 
