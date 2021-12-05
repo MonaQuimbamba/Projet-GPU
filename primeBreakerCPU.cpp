@@ -1,4 +1,5 @@
 #include "primeBreakerCPU.hpp"
+#include <bits/stdc++.h>
 
 using namespace std;
 
@@ -16,20 +17,21 @@ bool isPrimeCPU_v0(const uint64_t N)
     }
     return true;
 }
+
 /** \brief  Cette fonction va  tester la primalité d’un nombre de
             - L’algorithme consiste à vérifier pour un nombre N, si les nombres entre 2 et sqrt(N) sont diviseurs de N
 */
 bool isPrimeCPU_v1(const uint64_t N,vector<uint64_t> tab_possibles_diviseurs)
 {
   if(N==2) return true;
+
   for(int i=2; i < sqrt(N)+1;i++)
-  {    tab_possibles_diviseurs.push_back(i);}
+  {    tab_possibles_diviseurs.push_back(i);} // remplir
+
 
   for(int i=0;i<tab_possibles_diviseurs.size();i++)
   {
-    if(N%tab_possibles_diviseurs[i]==0){
-      return false;
-    }
+    if(N%tab_possibles_diviseurs[i]==0){ return false;}
   }
   return true;
 }
@@ -51,24 +53,6 @@ std::vector<uint64_t> searchPrimesCPU_v0(const uint64_t limite)
     return resultat;
 }
 
-/**   \brief je suis la methode qui va ajouter , une celule dans le vecteurs de facteurs
-*/
-
-void addCell( cell c , vector< cell> *facteursPrimes)
-{
-
-    bool add=true;
-    for(int i=0 ; i < facteursPrimes->size();i++)
-    {
-       if(c.base==facteursPrimes->at(i).base)
-       {
-         facteursPrimes->at(i).expo+=1;
-         add=false;
-       }
-    }
-
-    if(add==true) facteursPrimes->push_back(c);
-}
 
 /** \brief je suis la methode qui permet de décomposeur un nombre en facteurs premiers
  *
@@ -95,3 +79,26 @@ void addCell( cell c , vector< cell> *facteursPrimes)
          }
      }
  }
+
+
+void factoCPU_v1(uint64_t N, vector<cell> *facteursPrimes)
+{
+     vector<uint64_t> primesNumbers = searchPrimesCPU_v0(N);
+     int i=0;
+     while(N!=1)
+     {
+               if(N%primesNumbers.at(i) == 0)
+               {
+                 cell c;
+                 c.base=primesNumbers.at(i);
+                 c.expo=1;
+                 N=N/primesNumbers.at(i);
+                 addCell(c,facteursPrimes);
+                }
+               else
+               {
+                  if( i < primesNumbers.size())
+                  { i++;  }
+              }
+     }
+}

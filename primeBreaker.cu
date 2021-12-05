@@ -1,36 +1,122 @@
 #include "primeBreaker.hpp"
 
 
-/** \brief
-      je suis la focntion qui verifie la primalité d'un numero ,
-      exemple d'éxecution : chaque thread verifie un numero inférieu à N peut diviser N
-      si oui on ajout 0 dans le tableu de la memoire partage sinon on ajoute 1 , et au final on fait
-      une reduction pour verifier si y'a des 0 dans la memoire partagée et on retourne un tableu de la taille
-      d'un block avec que des 0 et 1 et dans CPU on verifie si ya des 0 c-à-d qu'il n'est pas premier sinon oui
-*/
+/**	\brief Je suis une fonction d'évaluation de la primalité d'un nombre premier.
+  */
+__global__
+void isPrime(
+		uint64_t *possibles_premiers,
+		unsigned int *res_operations,
+		uint64_t N,
+		uint64_t sqrtN
+		){
 
-__global__ void isPrimeGPU(uint64_t *const dev_N,unsigned int  *const isPrime, uint64_t const N,size_t const taille)
+	int gid = threadIdx.x + blockIdx.x * blockDim.x;
+	int initial_gid = gid;
+	int bid = blockIdx.x;
+	int tid = threadIdx.x;
+	extern __shared__ unsigned int cache[];
+
+	cache[tid] = 1;
+	while (gid < sqrtN){
+		cache[tid] = (N%possibles_premiers[gid] != 0); // Si il n'y a pas de reste (le nombre est divisé entièrement par un autre nombre) j'inscrit zero dans le cache 
+
+		__syncthreads();
+
+		int offset = blockDim.x/2;
+		while (offset != 0) {
+			if (tid < offset) {
+				cache[tid] = umin ( cache[tid], cache[tid+offset] );
+			}
+			__syncthreads();
+			offset /= 2;
+		}
+		
+		if (tid == 0) {
+			res_operations[bid] = cache[0]; 
+		}
+		
+		gid += gridDim.x * blockDim.x;	
+	}
+
+	
+	if (initial_gid < ((sqrtN+blockDim.x-1)/blockDim.x))
+		res_operations[0] = ((res_operations[0] != 0) && (res_operations[initial_gid] != 0));
+
+}
+
+/*	/brief	Je suis une fonction qui récupère les nombres premiers inférieur à une borne renseignée
+		à paramètre.
+  
+ */
+__global__ void searchPrimeGPU(
+		uint64_t *possibles_premiers,
+		uint64_t *square_roots,
+		uint64_t borne_sup,
+		uint64_t *premiers)
 {
-       int global_t_id = threadIdx.x +  blockIdx.x*blockDim.x;
-      int t_id = threadIdx.x;
-      extern __shared__ unsigned int cache[];
-      while( global_t_id < taille)
-      {
-          	cache[t_id]=  (N%dev_N[global_t_id])==0 ? 0 : 1;
-            global_t_id+=blockDim.x * gridDim.x;
+	int gid = threadIdx.x + blockIdx.x * blockDim.x;
+	while (gid < borne_sup-2) {
+		if (gid == 0) {
+			premiers[gid] = 1;
+		} else {
+			int res_operations_size = ((square_roots[gid]+blockDim.x-1)/blockDim.x)+1;
+			unsigned int *res_operations = (unsigned int*)malloc(sizeof(unsigned int)*res_operations_size);
+			isPrime<<<gridDim.x,blockDim.x,blockDim.x*sizeof(unsigned int)>>>
+				(possibles_premiers,
+			 	res_operations,
+			 	possibles_premiers[gid],
+			 	square_roots[gid]
+			 	);
+			cudaDeviceSynchronize();
+		
+			premiers[gid] = res_operations[0];	
+			free(res_operations);
+		}
+		gid += gridDim.x * blockDim.x;
+	}
+	
+}
+
+
+/** \brief
+    je suis la fonction qui permet de decomposeur un numero en facteurs premiers
+*/
+__global__ 
+void factGPU(
+		uint64_t  N,
+		uint64_t *dev_primes,
+               	int taille,
+		cell *dev_facteurs
+)
+{
+	int gid = threadIdx.x+blockIdx.x*blockDim.x;
+	int tid = threadIdx.x;
+        extern __shared__ unsigned int cache[];
+
+	while(gid < taille)
+       	{
+        	cache[tid] = 0;
+		uint64_t temp_N = N;
+
+		while(temp_N%dev_primes[gid]==0)
+                {             
+			cache[tid] += 1;
+			temp_N /= dev_primes[gid];
+		}
+		
+		__syncthreads();
+		
+		if (tid == 0){
+			for (int i = 0; i < blockDim.x; i++){
+				if (cache[i]) {
+					dev_facteurs[i+blockIdx.x*blockDim.x].expo += cache[i];
+					N -= (dev_facteurs[i+blockIdx.x*blockDim.x].base * cache[i]);
+				}		
+			}
+		}
+		__syncthreads();
+
+            gid+=blockDim.x*gridDim.x;
         }
-      	__syncthreads();
-        unsigned int i = blockDim.x/2;
-      	while(i!=0)
-      	{
-      		 if(t_id < i)
-      		 {
-      			 cache[t_id]=umin( cache[t_id], cache[t_id + i] );
-      		 }
-      		 __syncthreads();
-      		 i/=2;
-      	}
-       if(threadIdx.x==0)  isPrime[blockIdx.x] = cache[0];
-
-
 }

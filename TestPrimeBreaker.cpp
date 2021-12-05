@@ -13,6 +13,7 @@ void launchUnitTest(){
     TestIfPrimeIsAssertedWithALargeUint64PrimeNumber();
     TestIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumber();
     TestIfPrimesBetween0and100AreSuccessfullyRetrieved();
+    TestIfNumberIsFactorized();
 
     cout << "============================================"	<< endl;
     cout << "    Tests unitaires éffectués avec succès.   " 	<< endl;
@@ -123,7 +124,49 @@ void TestIfPrimesBetween0and100AreSuccessfullyRetrieved()
                 );
     }
 
-    std::cout << "On retrouve bien tout les nombres premiers compris dans l'interval : Succès." << std::endl;
+    std::cout << "On retrouve bien tout les nombres premiers compris dans l'interval : Succès." << std::endl << std::endl;
+}
+
+/*	\brief	Tester si la factorisation d'un nombre entier en produit de nombres premiers fonctionne.
+ */
+void TestIfNumberIsFactorized(){
+	cout << "Tester si notre fonction de test pour l'algorithme de factorisation sur le CPU." << endl;
+	
+	/* Initialisation du témoin. 2133 = 3^3 * 79 */
+	cell trois;
+	trois.base = 3;
+	trois.expo = 3;
+	cell soixante_dix_neuf;
+	soixante_dix_neuf.base = 79;
+	soixante_dix_neuf.expo = 1;
+	vector<cell> temoin(0);
+	temoin.push_back(soixante_dix_neuf);
+	temoin.push_back(trois);
+
+	/* Initialisation du résulat. */
+	vector<cell> resultat(0);
+	factoCPU_v1(2133,&resultat);
+
+	/* Assertions */
+	mAssert(	"resultat.size() == temoin.size()",
+			resultat.size() == temoin.size(),
+			"La fonction ne renvoit pas le même nombres de premiers distincts.");
+
+	for (int i = 0; i < resultat.size(); i++) {
+		cell current_cell_res = resultat.at(i);
+		cell current_cell_temoin = temoin.at(i);
+
+		mAssert(	"current_cell_res.base == current_cell_temoin.base",
+				current_cell_res.base == current_cell_temoin.base,
+				"La base a l'indice " + std::to_string(i) + " n'est pas la même pour le resultat et le témoin");
+
+		mAssert(	"current_cell_res.expo == current_cell_temoin.expo",
+				current_cell_res.expo == current_cell_temoin.expo,
+				"L'exposant de la base " + std::to_string(current_cell_res.base) + " n'est pas le même pour le résultat et le témoin.");	
+	}
+
+	cout << "La factorisation a bien fonctionnée : Succès" << endl << endl;
+
 }
 
 /**  \brief Je suis la méthode qui récupère à partir du fichier temoin
@@ -211,17 +254,3 @@ vector<uint64_t> splitNumbersFromLine(string line){
     }
     return output;
 }
-
-/** \brief Je suis une fonction pour effectuer un meilleur affichage en cas
- *          d'échec d'une assertion.
- */
- void mAssert(char *const expr_str, bool expr, basic_string<char> msg){
-    if (!expr){
-        std::cout << "Echec de l'assertion: " << msg << endl
-        << "Resultat Attendu : " << expr_str << endl
-        << "a renvoyé : False." << endl;
-
-        std::cout << "Echec du test, fin du programme." << endl;
-        exit(1);
-    }
- }
