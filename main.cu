@@ -15,19 +15,64 @@ using namespace std;
 
 int main( int argc, char **argv )
 {
-    cout << "=========================================================================="	<< endl;
-    cout << "         			Partie CPU	                               " 	<< endl;
-    cout << "=========================================================================="	<< endl << endl;
 
-  //  launchUnitTest();
-   lancerFactorizedWithInput(argc,argv);
+   cout << " Mode d'utilisation " << endl;
+   cout <<  argv[0] <<" 0  : Pour lancer les test unitaires" << endl;
+   cout << argv[0] << " 1 N : "  << " Pour lancer les fontions isprime CPU et GPU"<< endl;
+   cout << argv[0] << " 2 N : " << " pour lancer les fonctions searchPrime CPU et GPU "<< endl;
+   cout<< argv[0] << "  3 N  : " << " pour lancer les fonctions Fact CPU et GPU " <<endl;
+
+ if(atol(argv[1])==0){
+    cout << "=========================================================================="	<< endl;
+    cout << "         			Partie CPU	                              " 	<< endl;
+    cout << "=========================================================================="	<< endl << endl;
+    launchUnitTest();
     cout << "=========================================================================="	<< endl;
     cout << "         			Partie GPU	                               " 	<< endl;
     cout << "=========================================================================="	<< endl << endl;
 	
-    //launchUnitTestGPU();
+     launchUnitTestGPU();
+}
 
+
+if(atol(argv[1])==1)
+{
+    cout << "=========================================================================="	<< endl;
+    cout << "         			Partie CPU Test de primalite	                               " 	<< endl;
+     cout << "=========================================================================="	<< endl << endl;
+       lancerIsPrimeWithInput(argc,argv);
+ 
+      
+    cout << "=========================================================================="	<< endl;
+    cout << "         			Partie GPU Test  de primalite	                               " 	<< endl;
+    cout << "=========================================================================="	<< endl << endl;
+          lancerIsPrimeWithInputGPU(argc,argv);
+}
+if(atol(argv[1])==2)
+{
+    cout << "=========================================================================="	<< endl;
+    cout << "         			Partie CPU	                               " 	<< endl;
+    cout << "=========================================================================="	<< endl << endl;
+            lancerSearchPrimes(argc,argv);
+ 
+    cout << "=========================================================================="	<< endl;
+    cout << "         			Partie GPU	                               " 	<< endl;
+    cout << "=========================================================================="	<< endl << endl;
+                   lancerSearchPrimesGPU(argc,argv);
+}
+
+if(atol(argv[1])==3)
+{
+    
+    cout << "=========================================================================="	<< endl;
+    cout << "         			Partie CPU	                               " 	<< endl;
+    cout << "=========================================================================="	<< endl << endl;
+   lancerFactorizedWithInput(argc,argv);
+    cout << "=========================================================================="	<< endl;
+    cout << "         			Partie GPU	                               " 	<< endl;
+    cout << "=========================================================================="	<< endl << endl;
    lancerFactorizedWithInputGPU(argc,argv);
+}
 
  	return EXIT_SUCCESS;
 }

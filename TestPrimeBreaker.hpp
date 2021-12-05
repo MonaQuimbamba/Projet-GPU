@@ -26,4 +26,7 @@ vector<uint64_t> getPrimesFrom0to100FromControlPrimeSetFile();
 void putPrimesFromLineInOutput(string line, vector<uint64_t> *output);
 vector<uint64_t> splitNumbersFromLine(string line);
 void lancerFactorizedWithInput(int argc,char **argv);
+void lancerIsPrimeWithInput(int argc,char **argv);
+void lancerSearchPrimes(int argc,char **argv);
+
 #endif //PROJET_GPU_TESTPRIMEBREAKER_HPP

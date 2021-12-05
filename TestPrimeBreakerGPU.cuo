@@ -399,6 +399,12 @@ vector<uint64_t> getPrimes(uint64_t borne_sup){
 		premiers[j] = 0;
 	}
 
+     cudaFree(dev_premiers);
+    cudaFree(dev_square_roots);
+   cudaFree(dev_possibles_premiers);
+  free(premiers);
+ free(square_roots);
+ free(possibles_premiers);
 	return premiers_packed;
 }	
 
@@ -407,7 +413,7 @@ vector<uint64_t> getPrimes(uint64_t borne_sup){
  void lancerFactorizedWithInputGPU(int argc,char **argv)
 {
 
-          if(argc < 2) printUsage(argv[0]);
+         
 
 
 
@@ -454,20 +460,26 @@ vector<uint64_t> getPrimes(uint64_t borne_sup){
            c.base=facteurs[i].base;
           c.expo=facteurs[i].expo;
           resulat.push_back(c);
-          }
+         }
 
    }
           const float timeComputeGPUFact = chrGPU.elapsedTime();
            cout << " Temps de factorisation en nombre premier : " << timeComputeGPUFact << " ms "<<endl;
           cout << " Factorisation GPU " <<printFacteurs(resulat)<<endl;
 
+   cudaFree(dev_primes);
+   cudaFree(dev_facteurs);
+  free(primes);
+ free(facteurs);
 
 }
 
-void lancerIsPrimeWithInputGPU(int argc,char **argv)
+
+void lancerIsPrimeGPUWithINput(int argc,char ** argv)
 {
 
-    	uint64_t N = UINT64_T_PRIME-1;
+
+    	uint64_t N = atoll(argv[2)-1;
 	uint64_t sqrtN = sqrt(N) + 1;
 	uint64_t nombresDePossiblesPremiers = N-2;
 
@@ -484,59 +496,19 @@ void lancerIsPrimeWithInputGPU(int argc,char **argv)
 
 	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(uint64_t) * (nombresDePossiblesPremiers), cudaMemcpyHostToDevice);
        	cudaMemcpy(dev_res_operations, res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyHostToDevice);
-         ChronoGPU chrGPU;
-      chrGPU.start();	
-isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
-      chrGPU.stop();
-	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
-       const float timeGPU = chrGPU.elapsedTime();
-        cout<< " Temps du test de primalite " << timeGPU << " ms "<<endl;
-        cout << "Est Premier ? " <<res_operations[0] <<endl;
-}
-
-
-
-void  lancerSearchPrimesGPU(int argc,char **argv)
-{
-	
-
-	uint64_t borne_sup = atoll(argv[2]);
-	uint64_t *possibles_premiers = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
-	for(int i = 0; i < (borne_sup-2); possibles_premiers[i] = i+2, i++);
-	uint64_t *square_roots = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
-	for(int i = 0; i < (borne_sup-2); square_roots[i] = sqrt(i+2), i++);
-	uint64_t *premiers = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
-	for(int i = 0; i < (borne_sup-2); premiers[i] = 0, i++);
-
-	
-
-
-	uint64_t *dev_possibles_premiers;
-	uint64_t *dev_square_roots;
-	uint64_t *dev_premiers;
-
-	cudaMalloc((void**)&dev_possibles_premiers,sizeof(uint64_t)*(borne_sup-2));
-	cudaMalloc((void**)&dev_square_roots,sizeof(uint64_t)*(borne_sup-2));
-	cudaMalloc((void**)&dev_premiers,sizeof(uint64_t)*(borne_sup-2));
-	
-	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
-	cudaMemcpy(dev_square_roots, square_roots, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
-
- 	cudaMemcpy(dev_premiers, premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
-
-        ChronoGPU chrGPU;
+        ChronoCPU chrGPU;
      chrGPU.start();
-	searchPrimeGPU<<<GRIDDIM(borne_sup-2),BLOCKDIM,SIZEMEM>>>(
-			dev_possibles_premiers, 
-			dev_square_roots, 
-			borne_sup, 
-			dev_premiers);
-   chrGPU.stop();
-	cudaMemcpy(premiers, dev_premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyDeviceToHost);
 
-   const float timeGPU = chrGPU.elapsedTime();
-   cout << " Temps de recherche : " << timeGPU <<" ms" <<endl;
+	isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
+     chrGPU.stop();       
+	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
+    const float timeGPU = chrGPU.elapsedTime();
+     cout << " Temps du test de primalite : "<< timeGPU <<"  ms"<<endl;
+    cout <<" Est Premier ?" <<res_operations[0] << endl;
 
+        cudaFree(dev_possibles_premiers);
+     cudaFree(dev_res_operations);
+     free(possibles_premiers);
+     free(res_operations);
 
-    
 }
