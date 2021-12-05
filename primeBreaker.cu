@@ -37,7 +37,7 @@ void isPrime(
 		gid += gridDim.x * blockDim.x;	
 	}
 
-	if (initial_gid < gridDim.x)
+	if (initial_gid < ((sqrtN+blockDim.x-1)/blockDim.x))
 		res_operations[0] = ((res_operations[0] != 0) && (res_operations[initial_gid] != 0));
 }
 
@@ -46,15 +46,12 @@ void isPrime(
   
  */
 __global__ void searchPrimeGPU(
-		unsigned int *res_operations,
 		uint64_t *possibles_premiers,
 		uint64_t *square_roots,
 		uint64_t borne_sup,
 		uint64_t *premiers)
 {
 	int gid = threadIdx.x + blockIdx.x * blockDim.x;
-	printf("ThreadIdx = %d , BlockIdx = %d \n", threadIdx.x, blockIdx.x);
-	
 	/*
 	if (gid == 0) {
 		printf("Afficher les données initialisées sur le GPU ");
@@ -80,18 +77,25 @@ __global__ void searchPrimeGPU(
 	}
 	*/
 	while (gid < borne_sup-2) {
-		printf("possibles_premiers[gid] = %d, square_root[gid] = %d\n", possibles_premiers[gid], square_roots[gid]);
-		/*
+		unsigned int *res_operations = (unsigned int*)malloc(sizeof(unsigned int)*((square_roots[gid]+blockDim.x-1)/blockDim.x));
+
 		isPrime<<<gridDim.x,blockDim.x,blockDim.x*sizeof(unsigned int)>>>
 			(possibles_premiers,
 			 res_operations,
 			 possibles_premiers[gid],
 			 square_roots[gid]
 			 );
-
-		premiers[gid] = premiers[gid] * res_operations[0];
-
+		/*	
+		printf("gid = %d\n", gid);
+		printf("wid = %d\n", wid);
+		printf("square_roots[gid] = %d\n", square_roots[gid]);
+		printf("possibles_premiers[gid] = %d\n", possibles_premiers[gid]);
+		printf("res_operations[0] = %d\n", res_operations[0]);	
 		*/
+		
+		premiers[gid] = res_operations[0];
+		
+		free(res_operations);
 		gid += gridDim.x * blockDim.x;
 		
 	}

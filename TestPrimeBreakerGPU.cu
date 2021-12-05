@@ -8,12 +8,10 @@ void launchUnitTestGPU(){
     cout << "         Lancement des tests unitaires.     " 	<< endl;
     cout << "============================================"	<< endl << endl;
 
-    /*
     testIfNonPrimeIsNotAssertedWithAIntegerPrimeNumberOnGPU();
     testIfPrimeIsAssertedWithAIntegerPrimeNumberOnGPU();
     testIfPrimeIsAssertedWithALargeUint64PrimeNumberOnGPU();
     testIfNonPrimeIsNotAssertedWithALargeUint64PrimeNumberOnGPU();
-    */
     testIfPrimesBetween0and100AreComputedOnGPU();
 
     cout << "============================================"	<< endl;
@@ -218,12 +216,10 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
 	}
 
 
-	unsigned int *dev_res_operations;
 	uint64_t *dev_possibles_premiers;
 	uint64_t *dev_square_roots;
 	uint64_t *dev_premiers;
 
-	cudaMalloc((void**)&dev_res_operations, sizeof(unsigned int)*GRIDDIM(borne_sup-2));
 	cudaMalloc((void**)&dev_possibles_premiers,sizeof(uint64_t)*(borne_sup-2));
 	cudaMalloc((void**)&dev_square_roots,sizeof(uint64_t)*(borne_sup-2));
 	cudaMalloc((void**)&dev_premiers,sizeof(uint64_t)*(borne_sup-2));
@@ -233,7 +229,6 @@ void testIfPrimesBetween0and100AreComputedOnGPU(){
 	cudaMemcpy(dev_premiers, premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
 
 	searchPrimeGPU<<<GRIDDIM(borne_sup-2),BLOCKDIM,SIZEMEM>>>(
-			dev_res_operations,
 			dev_possibles_premiers, 
 			dev_square_roots, 
 			borne_sup, 

@@ -25,7 +25,6 @@ void isPrime(	uint64_t *possibles_premiers,
 
 __global__
 void searchPrimeGPU(
-		unsigned int *res_operations,
 		uint64_t *possibles_premiers,
 		uint64_t *square_roots,
 		uint64_t borne_sup,
