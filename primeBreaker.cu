@@ -1,7 +1,7 @@
 #include "primeBreaker.hpp"
 
 
-/**	\brief Je suis une fonction d'évaluation partielle de la primalité d'un nombre premier.
+/**	\brief Je suis une fonction d'évaluation de la primalité d'un nombre premier.
   */
 __global__
 void isPrime(
@@ -41,27 +41,63 @@ void isPrime(
 		res_operations[0] = ((res_operations[0] != 0) && (res_operations[initial_gid] != 0));
 }
 
-/*
+/*	/brief	Je suis une fonction qui récupère les nombres premiers inférieur à une borne renseignée
+		à paramètre.
+  
+ */
 __global__ void searchPrimeGPU(
-		uint64_t *const dev_possiblesPremiers,
-		uint64_t  *const dev_primes,
-		uint64_t const limit,
-		int const taille
-		)
+		unsigned int *res_operations,
+		uint64_t *possibles_premiers,
+		uint64_t *square_roots,
+		uint64_t borne_sup,
+		uint64_t *premiers)
 {
-    int gid = threadIdx.x + blockIdx.x*blockDim.x;
+	int gid = threadIdx.x + blockIdx.x * blockDim.x;
+	printf("ThreadIdx = %d , BlockIdx = %d \n", threadIdx.x, blockIdx.x);
+	
+	/*
+	if (gid == 0) {
+		printf("Afficher les données initialisées sur le GPU ");
+		printf("possibles premiers ");
+		for (int i = 0; i < (borne_sup-2); i++){
+			printf("[%d]",possibles_premiers[i]);
+		}
+		printf("\n\n");
+		
+		printf("square_roots ");
+		for (int i = 0; i < (borne_sup-2); i++){
+			printf("[%d]",square_roots[i]);
+		}
+		printf("\n\n");
+		
+		printf("premiers ");
+		for (int i = 0; i < (borne_sup-2); i++){
+			printf("[%d]",premiers[i]);
+		}
+		printf("\n\n");
 
-    while(gid < taille)
-    {
+		printf("Fin affichage des données initialisées\n");	
+	}
+	*/
+	while (gid < borne_sup-2) {
+		printf("possibles_premiers[gid] = %d, square_root[gid] = %d\n", possibles_premiers[gid], square_roots[gid]);
+		/*
+		isPrime<<<gridDim.x,blockDim.x,blockDim.x*sizeof(unsigned int)>>>
+			(possibles_premiers,
+			 res_operations,
+			 possibles_premiers[gid],
+			 square_roots[gid]
+			 );
 
-        //isPrimeGPU(dev_tab_possibles_diviseurs,dev_resOperations,N,taille);
+		premiers[gid] = premiers[gid] * res_operations[0];
 
-      //  dev_primes[gid]=dev_resOperations[0];
-        gid+=blockDim.x*gridDim.x;
-    }
-
+		*/
+		gid += gridDim.x * blockDim.x;
+		
+	}
+	
 }
-*/
+
 
 /** \brief
     je suis la fonction qui permet de decomposeur un numero en facteurs premiers

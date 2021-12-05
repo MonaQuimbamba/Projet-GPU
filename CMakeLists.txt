@@ -3,7 +3,6 @@ cmake_minimum_required(VERSION 3.10)
 project(ProjetGPU LANGUAGES CUDA CXX)
 
 set(CMAKE_CUDA_STANDARD 14)
-set(CUDA_NVCC_FLAGS "-g -G")
 
 add_executable(PrimeBreaker
       	utils/chronoGPU.cu
@@ -15,3 +14,11 @@ add_executable(PrimeBreaker
 	TestPrimeBreakerGPU.cu
 	main.cu
 	)
+
+target_compile_options(PrimeBreaker PRIVATE $<$<COMPILE_LANGUAGE:CUDA>:
+                       	-g
+			-G
+                       	--relocatable-device-code=true
+                     >)
+
+set_property(TARGET PrimeBreaker PROPERTY CUDA_SEPARABLE_COMPILATION ON)
