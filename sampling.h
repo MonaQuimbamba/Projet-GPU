@@ -2,7 +2,7 @@
 #define PRIMEBREAKER_SAMPLING_H
 
 #define LOG2MAX_ISP 29
-#define LOG2MAX_ROP 18
+#define LOG2MAX_ROP 20
 #define GRIDDIM(X) ((X+BLOCKDIM-1)/BLOCKDIM)
 #define SIZEMEM (BLOCKDIM * sizeof(unsigned int))
 #define BLOCKDIM 256

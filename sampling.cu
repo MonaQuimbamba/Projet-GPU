@@ -28,9 +28,9 @@ createPrimalityTestsDatas()
 
 void generateDataFilesCPU(){
 	cout << " Lancement des tests de performances et génération des fichiers de données " << endl;
-    generateResearchOfPrimesDataFileCPU();
-    generatePrimalityTestDataFileCPU();
-    generatePrimeFactorisationDataFileCPU(); 
+    	generateResearchOfPrimesDataFileCPU();
+    	generatePrimalityTestDataFileCPU();
+    	generatePrimeFactorisationDataFileCPU(); 
     	cout << " Fin des tests de performances, les fichiers des résultats sont dans data/" << endl << endl;
 }
 

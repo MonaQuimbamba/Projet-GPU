@@ -254,3 +254,50 @@ vector<uint64_t> splitNumbersFromLine(string line){
     }
     return output;
 }
+
+
+
+void lancerFactorizedWithInput(int argc,char **argv)
+{
+
+     
+
+         uint64_t N = atoll(argv[2]);
+         ChronoCPU chrCPU;
+         vector<cell> resultat(0);
+         chrCPU.start();
+         factoCPU_v1(N,&resultat);
+         chrCPU.stop();
+         const float timeComputeCPUFact = chrCPU.elapsedTime();
+         cout <<"Temps de factorisation en nombre premier : "<< timeComputeCPUFact <<" ms "<<endl;
+        cout <<"Factorisation CPU " << printFacteurs(resultat)<<endl;
+
+}
+
+
+ void lancerIsPrimeWithInput(int argc,char **argv)
+{
+
+     uint64_t N= atoll(argv[2]);
+     ChronoCPU chrCPU;
+    chrCPU.start();
+    bool isPrime=isPrimeCPU_v0(N);
+    chrCPU.stop();
+   const float timeComputedOnCPU = chrCPU.elapsedTime();
+   cout << "Temps du test de primalite " << timeComputedOnCPU << "  ms "<<endl;
+   cout << "Est Premier ? "<<isPrime<<endl;
+
+}
+
+
+void lancerSearchPrimes(int argc,char **argv)
+{
+        uint64_t N = atoll(argv[2]);
+        ChronoCPU chrCPU;
+       chrCPU.start();
+      searchPrimesCPU_v0(N);
+     chrCPU.stop();
+     const float timeCPU = chrCPU.elapsedTime();
+    cout <<" Temps de recherche : "<< timeCPU <<" ms"<<endl;
+
+}

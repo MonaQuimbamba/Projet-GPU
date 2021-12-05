@@ -411,3 +411,142 @@ vector<uint64_t> getPrimes(uint64_t borne_sup){
 
 	return premiers_packed;
 }	
+
+
+
+ void lancerFactorizedWithInputGPU(int argc,char **argv)
+{
+
+          if(argc < 2) printUsage(argv[0]);
+
+
+
+          uint64_t N = atoll(argv[2]);
+        
+	vector<uint64_t> premiers_packed = getPrimes(N);
+	int taille = premiers_packed.size(); 
+	uint64_t *primes = (uint64_t*)malloc(sizeof(uint64_t) * taille);
+	for(int i = 0; i < taille; primes[i]=premiers_packed.at(i),i++);
+
+	cell  *facteurs=(cell*)malloc(sizeof(cell)*taille);
+	for(int i =0 ; i<taille; i++) {
+			facteurs[i].base=primes[i];
+			facteurs[i].expo=0;
+	}
+
+	uint64_t *dev_primes;
+	cell *dev_facteurs;
+	
+	cudaMalloc((void**)&dev_primes,sizeof(uint64_t)*taille);
+        cudaMalloc((void**)&dev_facteurs,sizeof(cell)*taille);
+       
+	cudaMemcpy(dev_primes,primes,sizeof(uint64_t)*taille,cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_facteurs,facteurs,sizeof(cell)*taille,cudaMemcpyHostToDevice);
+      
+    	ChronoGPU chrGPU;
+      chrGPU.start();
+        factGPU<<<GRIDDIM(taille),BLOCKDIM>>>(
+			N,
+			dev_primes,
+			taille,
+			dev_facteurs);
+	
+     	cudaMemcpy(facteurs,dev_facteurs,sizeof(cell)*taille,cudaMemcpyDeviceToHost);
+        chrGPU.stop();
+       
+     vector<cell> resulat(0);
+    for(int i=0 ; i <taille;i++)
+    {
+
+          if(facteurs[i].expo!=0)
+         {
+            cell c;
+           c.base=facteurs[i].base;
+          c.expo=facteurs[i].expo;
+          resulat.push_back(c);
+          }
+
+   }
+          const float timeComputeGPUFact = chrGPU.elapsedTime();
+           cout << " Temps de factorisation en nombre premier : " << timeComputeGPUFact << " ms "<<endl;
+          cout << " Factorisation GPU " <<printFacteurs(resulat)<<endl;
+
+
+}
+
+void lancerIsPrimeWithInputGPU(int argc,char **argv)
+{
+
+    	uint64_t N = UINT64_T_PRIME-1;
+	uint64_t sqrtN = sqrt(N) + 1;
+	uint64_t nombresDePossiblesPremiers = N-2;
+
+	uint64_t *possibles_premiers = (uint64_t*)malloc(sizeof(uint64_t) * (nombresDePossiblesPremiers));
+	for (int i = 0, j = 2.0; j < N; possibles_premiers[i] = j,i++,j++);
+	unsigned int *res_operations = (unsigned int*)malloc(sizeof(unsigned int) * GRIDDIM(sqrtN));
+	for (int i = 0; i < GRIDDIM(sqrtN); res_operations[i] = 1,i++);
+
+	uint64_t *dev_possibles_premiers;
+	cudaMalloc((void**)&dev_possibles_premiers, sizeof(uint64_t) * (nombresDePossiblesPremiers));
+	unsigned int *dev_res_operations;
+	cudaMalloc((void**)&dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN));
+
+
+	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(uint64_t) * (nombresDePossiblesPremiers), cudaMemcpyHostToDevice);
+       	cudaMemcpy(dev_res_operations, res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyHostToDevice);
+         ChronoGPU chrGPU;
+      chrGPU.start();	
+isPrime<<<GRIDDIM(sqrtN),BLOCKDIM,SIZEMEM>>>(dev_possibles_premiers, dev_res_operations, N, sqrtN);
+      chrGPU.stop();
+	cudaMemcpy(res_operations, dev_res_operations, sizeof(unsigned int) * GRIDDIM(sqrtN), cudaMemcpyDeviceToHost);
+       const float timeGPU = chrGPU.elapsedTime();
+        cout<< " Temps du test de primalite " << timeGPU << " ms "<<endl;
+        cout << "Est Premier ? " <<res_operations[0] <<endl;
+}
+
+
+
+void  lancerSearchPrimesGPU(int argc,char **argv)
+{
+	
+
+	uint64_t borne_sup = atoll(argv[2]);
+	uint64_t *possibles_premiers = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); possibles_premiers[i] = i+2, i++);
+	uint64_t *square_roots = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); square_roots[i] = sqrt(i+2), i++);
+	uint64_t *premiers = (uint64_t*)malloc(sizeof(uint64_t)*(borne_sup-2));
+	for(int i = 0; i < (borne_sup-2); premiers[i] = 0, i++);
+
+	
+
+
+	uint64_t *dev_possibles_premiers;
+	uint64_t *dev_square_roots;
+	uint64_t *dev_premiers;
+
+	cudaMalloc((void**)&dev_possibles_premiers,sizeof(uint64_t)*(borne_sup-2));
+	cudaMalloc((void**)&dev_square_roots,sizeof(uint64_t)*(borne_sup-2));
+	cudaMalloc((void**)&dev_premiers,sizeof(uint64_t)*(borne_sup-2));
+	
+	cudaMemcpy(dev_possibles_premiers, possibles_premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+	cudaMemcpy(dev_square_roots, square_roots, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+
+ 	cudaMemcpy(dev_premiers, premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyHostToDevice);
+
+        ChronoGPU chrGPU;
+     chrGPU.start();
+	searchPrimeGPU<<<GRIDDIM(borne_sup-2),BLOCKDIM,SIZEMEM>>>(
+			dev_possibles_premiers, 
+			dev_square_roots, 
+			borne_sup, 
+			dev_premiers);
+   chrGPU.stop();
+	cudaMemcpy(premiers, dev_premiers, sizeof(uint64_t)*(borne_sup-2), cudaMemcpyDeviceToHost);
+
+   const float timeGPU = chrGPU.elapsedTime();
+   cout << " Temps de recherche : " << timeGPU <<" ms" <<endl;
+
+
+    
+}
