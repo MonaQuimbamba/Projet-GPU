@@ -23,3 +23,8 @@ We build two version of each function one using only CPU and other using CPU and
 > cmake . ;
 > make ;
 > ./PrimeBreaker
+
+## contributors :
+
+* [Faisal Salhi](https://github.com/Xfireball8)
+* [Claudio Antonio](https://github.com/MonaQuimbamba)
